@@ -1,0 +1,63 @@
+services:
+  front_end:
+    image: challenge-frontend
+    container_name: front_end
+    profiles: ["front-only", "all"]
+    ports:
+      - 80:8080
+    working_dir: /app
+    volumes:
+      - ../apps/frontEnd:/app
+    tty: true
+
+  database:
+    image: mongo:latest
+    container_name: database
+    profiles: ["database-only", "back-only", "all"]
+    restart: always
+    ports:
+      - 27017:27017
+    environment:
+      - MONGO_INITDB_ROOT_USERNAME=esgi
+      - MONGO_INITDB_ROOT_PASSWORD=esgi
+    volumes:
+      - mongodb_data:/data/db/
+      - mongodb_log:/var/log/mongodb/
+
+  back_end:
+    image: challenge-backend
+    container_name: back_end
+    profiles: ["back-only", "all"]
+    ports:
+      - 8080:8080
+    working_dir: /app
+    volumes:
+      - ../apps/backEnd:/app
+    depends_on:
+      - database
+    tty: true
+
+  db_webviewer:
+    image: mongo-express:latest
+    container_name: db_webviewer
+    profiles: ["database-only", "back-only", "all"]
+    restart: always
+    environment:
+      - ME_CONFIG_MONGODB_ADMINUSERNAME=esgi
+      - ME_CONFIG_MONGODB_ADMINPASSWORD=esgi
+      - ME_CONFIG_MONGODB_PORT=27017
+      - ME_CONFIG_MONGODB_SERVER=database
+      - ME_CONFIG_BASICAUTH_USERNAME=esgi
+      - ME_CONFIG_BASICAUTH_PASSWORD=esgi
+    ports:
+      - 8082:8081
+    depends_on:
+      - database
+
+volumes:
+  mongodb_data:
+    driver: local
+    name: mongo_data
+  mongodb_log:
+    driver: local
+    name: mongo_log
