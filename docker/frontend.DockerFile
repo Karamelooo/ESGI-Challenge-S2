@@ -11,8 +11,8 @@ COPY ../apps/frontEnd/* ./
 
 WORKDIR /app
 
-COPY ./docker/frontend-entrypoint.sh /docker-entrypoint.sh
-RUN chmod 755 /docker-entrypoint.sh
+COPY --chown=node:root ./docker/frontend-entrypoint.sh /docker-entrypoint.sh
+RUN dos2unix /docker-entrypoint.sh
 
 EXPOSE 8080
 
