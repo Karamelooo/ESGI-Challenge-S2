@@ -12,6 +12,7 @@ COPY ../apps/backEnd/* ./
 WORKDIR /app
 
 COPY --chown=node:root ./docker/backend-entrypoint.sh /docker-entrypoint.sh
+RUN dos2unix /docker-entrypoint.sh
 
 EXPOSE 8080
 

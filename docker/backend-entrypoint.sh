@@ -16,3 +16,5 @@ else
 fi
 
 npm run dev
+
+exec "/bin/sh"
