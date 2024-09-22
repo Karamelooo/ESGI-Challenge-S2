@@ -3,6 +3,7 @@
   "version": "1.0.0",
   "description": "Challenge 2nd Semester ESGI",
   "scripts": {
+    "init": "bash ./scripts/init-env.sh",
     "build": "docker build . -t challenge-frontend -f ./docker/frontend.DockerFile && docker build . -t challenge-backend -f ./docker/backend.DockerFile",
     "docker:delete": "docker compose -f ./docker/compose.yml --profile all down -v --remove-orphans",
     "dev": "docker compose -f ./docker/compose.yml --profile all up -d",
