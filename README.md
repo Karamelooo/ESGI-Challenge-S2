@@ -11,6 +11,8 @@ Etape pour deployer le projet en local (dev)
 >###### le projet met 5 - 10 secondes a ce lancer
 
 ```bash
+    npm run init
+
     npm run build
 
     npm run dev
