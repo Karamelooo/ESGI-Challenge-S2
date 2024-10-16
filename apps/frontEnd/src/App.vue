@@ -18,7 +18,10 @@ import HelloWorld from './components/HelloWorld.vue'
           About
         </RouterLink>
         <RouterLink to="/register">
-          Register
+          Inscription
+        </RouterLink>
+        <RouterLink to="/register">
+          Connexion
         </RouterLink>
       </nav>
     </div>
