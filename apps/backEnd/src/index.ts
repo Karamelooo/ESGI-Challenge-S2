@@ -1,5 +1,5 @@
 import type { Application } from 'express'
-import express from 'express'
+import express, { Request, Response } from 'express'
 import mongoose from 'mongoose'
 import cors from 'cors'
 import 'dotenv/config'
@@ -24,11 +24,11 @@ app.use(cors({
 
 import User from './models/user.model';
 
-app.post('/register', async (req, res) => {
+app.post('/register', async (req: Request, res: Response) : Promise<any> => {
   try {
     const { email, password } = req.body
     if(!email || !password) {
-      return res.status(400).json({ message: 'Tous les champs sont requis' })
+      return res.status(422).json({ message: 'Tous les champs sont requis' })
     }
     const user = await User.findOne({ email })
     if(user) {
@@ -36,9 +36,9 @@ app.post('/register', async (req, res) => {
     }
     const newUser = new User({ email, password });
     await newUser.save();
-    //res.json({ message: user })
+    return res.status(200).json({ message: 'Utilisateur créé' })
   } catch (error) {
-    res.status(500).json({ message: error })
+    return res.status(500).json({ message: error })
   }
 })
 
