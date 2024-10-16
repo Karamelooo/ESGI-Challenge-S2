@@ -20,7 +20,7 @@ import HelloWorld from './components/HelloWorld.vue'
         <RouterLink to="/register">
           Inscription
         </RouterLink>
-        <RouterLink to="/register">
+        <RouterLink to="/login">
           Connexion
         </RouterLink>
       </nav>
