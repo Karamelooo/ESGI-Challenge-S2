@@ -18,13 +18,28 @@ const app: Application = express()
 app.use(express.json())
 
 app.use(cors({
-  origin: 'http://localhost:80',
+  origin: 'http://localhost',
   credentials: true
 }))
 
-app.post('/register', (req, res) => {
-  const { email, password } = req.body
-  res.json({ message: 'User' })
+import User from './models/user.model';
+
+app.post('/register', async (req, res) => {
+  try {
+    const { email, password } = req.body
+    if(!email || !password) {
+      return res.status(400).json({ message: 'Tous les champs sont requis' })
+    }
+    const user = await User.findOne({ email })
+    if(user) {
+      return res.status(400).json({ message: 'Cet utilisateur existe déjà' })
+    }
+    const newUser = new User({ email, password });
+    await newUser.save();
+    //res.json({ message: user })
+  } catch (error) {
+    res.status(500).json({ message: error })
+  }
 })
 
 app.listen(8080, () => {
