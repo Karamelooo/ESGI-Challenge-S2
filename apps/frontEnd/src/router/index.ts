@@ -10,9 +10,9 @@ const router = createRouter({
       component: HomeView,
     },
     {
-      path:'/product',
+      path: '/product',
       name: 'product',
-      component: productView
+      component: productView,
     },
     {
       path: '/about',
