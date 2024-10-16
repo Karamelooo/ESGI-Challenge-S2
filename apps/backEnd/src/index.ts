@@ -1,9 +1,9 @@
-import type { Application } from 'express'
-import express, { Request, Response } from 'express'
-import mongoose from 'mongoose'
+import type { Application, Request, Response } from 'express'
 import cors from 'cors'
-import 'dotenv/config'
+import express from 'express'
+import mongoose from 'mongoose'
 import authRoutes from './routes/auth.routes'
+import 'dotenv/config'
 // const mongoString = process.env.DB_URL;
 const mongoString = 'mongodb://esgi:esgi@database:27017'
 
@@ -19,14 +19,14 @@ app.use(express.json())
 
 app.use(cors({
   origin: 'http://localhost',
-  credentials: true
+  credentials: true,
 }))
 
 app.get('/test', (req: Request, res: Response) => {
-  res.json({ message: 'Le serveur fonctionne correctement' });
-});
+  res.json({ message: 'Le serveur fonctionne correctement' })
+})
 
-app.use('/auth', authRoutes);
+app.use('/auth', authRoutes)
 
 console.log(authRoutes)
 
