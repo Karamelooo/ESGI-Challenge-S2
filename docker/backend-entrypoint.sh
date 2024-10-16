@@ -9,8 +9,6 @@ if [ -n "$(find "/app/" -maxdepth 0 -type d -empty 2>/dev/null)" ]; then
     exit
 else
     echo "Projet Trouvé"
-    
-    cd backEnd
 
     npm install
 fi

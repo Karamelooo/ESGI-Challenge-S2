@@ -7,15 +7,11 @@ if [ -n "$(find "/app/" -maxdepth 0 -type d -empty 2>/dev/null)" ]; then
 
     npm create vite@latest -- --template vue-ts frontEnd
 
-    cd frontEnd
-
-    npm install
+    npm install --force
 else
     echo "Projet Trouvé"
     
-    cd frontEnd
-
-    npm install
+    npm install --force
 fi
 
 npm run dev -- --host

@@ -13,7 +13,7 @@
     "dev:frontend": "docker compose -f ./docker/compose.yml --profile front-only up -d",
     "dev:backend": "docker compose -f ./docker/compose.yml --profile database-only up -d && docker compose -f ./docker/compose.yml --profile back-only up -d",
     "dev:db": "docker compose -f ./docker/compose.yml --profile database-only up -d",
-    "dev:clean": "rimraf */dist ",
+    "dev:clean": "rimraf **/dist **/node_modules ",
     "test:unit": "npm --prefix ./apps/frontend run test:unit"
   },
   "author": "Groupe du style",
