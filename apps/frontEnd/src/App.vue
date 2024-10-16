@@ -17,6 +17,12 @@ import HelloWorld from './components/HelloWorld.vue'
         <RouterLink to="/about">
           About
         </RouterLink>
+        <RouterLink to="/register">
+          Inscription
+        </RouterLink>
+        <RouterLink to="/register">
+          Connexion
+        </RouterLink>
       </nav>
     </div>
   </header>
