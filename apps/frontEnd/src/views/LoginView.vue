@@ -19,7 +19,7 @@
     methods: {
       async login() {
         try {
-          const response = await axios.post('http://localhost:8080/login', {
+          const response = await axios.post('http://localhost:8080/auth/login', {
             email: this.email,
             password: this.password
           });
