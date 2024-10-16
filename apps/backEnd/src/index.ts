@@ -18,13 +18,13 @@ const app: Application = express()
 app.use(express.json())
 
 app.use(cors({
-  origin: 'http://localhost',
+  origin: 'http://localhost:80',
   credentials: true
 }))
 
 app.post('/register', (req, res) => {
   const { email, password } = req.body
-  res.json({ message: 'User registered' })
+  res.json({ message: 'User' })
 })
 
 app.listen(8080, () => {
