@@ -113,22 +113,32 @@ EOL
 )
 elif [ "$SELECTED" == "Créer .env exemple" ]; then
     VARIABLES=$(cat <<EOL
-# Exemple de variables d'environnement
+# Variables d'environnement pour le développement
 
-APP_ENV=example
-APP_DEBUG=false
-APP_URL=http://example.com
+# Front End
+FRONT_APP_ENV=exemple
+FRONT_APP_DEBUG=true
+FRONT_APP_URL=http://localhost:3000
 
-DB_HOST=localhost
-DB_PORT=3306
-DB_DATABASE=exemple_base
-DB_USERNAME=exemple_user
-DB_PASSWORD=exemple_motdepasse
+# Back End
+BACK_APP_ENV=exemple
+BACK_APP_DEBUG=true
+BACK_APP_URL=http://localhost:8080
 
-API_KEY=ExempleCléAPI
-SECRET_KEY=ExempleCléSecrète
+# Base de Données
+DB_HOST=database
+DB_PORT=27017
+DB_DATABASE=db_name
+DB_USERNAME=change_me
+DB_PASSWORD=change_me
 
-# Ajouter d'autres variables selon vos besoins
+# DB WebViewer
+WVDB_USERNAME=change_me
+WVDB_PASSWORD=change_me
+
+# API
+API_KEY=VotreCléAPI
+SECRET_KEY=VotreCléSecrète
 EOL
 )
 fi
