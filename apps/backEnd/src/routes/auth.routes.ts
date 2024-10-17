@@ -11,6 +11,12 @@ router.post('/register', async (req: Request, res: Response): Promise<any> => {
     if (!email || !password) {
       return res.status(422).json({ message: 'Tous les champs sont requis' })
     }
+
+    const passwordRegex = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[!@#$%^&*()_+\-=[\]{};':"\\|,.<>/?]).{12,}$/
+    if (!passwordRegex.test(password)) {
+      return res.status(422).json({ message: 'Le mot de passe doit contenir au moins 12 caractères, incluant des symboles, des chiffres, des lettres minuscules et majuscules' })
+    }
+
     const user = await User.findOne({ email })
     if (user) {
       return res.status(409).json({ message: 'Cet ufdkmvkdlkdgjdfllcklgkfmlkte déjà' })
