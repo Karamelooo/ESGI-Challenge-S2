@@ -9,6 +9,11 @@ export async function register(req: Request, res: Response): Promise<any> {
       return res.status(422).json({ message: 'Tous les champs sont requis' })
     }
 
+    const emailRegex = /^[\w.]+@[a-z0-9.-]+\.[a-z]{2,}$/i
+    if (!emailRegex.test(email)) {
+      return res.status(422).json({ message: 'L\'adresse email est invalide' })
+    }
+
     const passwordRegex = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[!@#$%^&*()_+\-=[\]{};':"\\|,.<>/?]).{12,}$/
     if (!passwordRegex.test(password)) {
       return res.status(422).json({ message: 'Le mot de passe doit contenir au moins 12 caractères, incluant des symboles, des chiffres, des lettres minuscules et majuscules' })
