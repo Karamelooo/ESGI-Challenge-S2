@@ -5,8 +5,10 @@ import { ref } from 'vue'
 
 const email = ref('')
 const password = ref('')
+const passwordVerification = ref('')
 const emailBlurred = ref(false)
 const passwordBlurred = ref(false)
+const passwordVerificationBlurred = ref(false)
 const passwordRegex = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[!@#$%^&*()_+\-=[\]{};':"\\|,.<>/?]).{12,}$/
 const emailRegex = /^[\w.]+@[a-z0-9.-]+\.[a-z]{2,}$/i
 
@@ -15,6 +17,7 @@ async function register() {
     const response = await axios.post('http://localhost:8080/auth/register', {
       email: email.value,
       password: password.value,
+      passwordVerification: passwordVerification.value,
     })
     showToast(response.data.message)
   }
@@ -51,6 +54,13 @@ function passwordValid() {
   return !passwordRegex.test(password.value)
 }
 
+function passwordVerificationValid() {
+  if (!passwordVerificationBlurred.value || !password.value) {
+    return ''
+  }
+  return password.value !== passwordVerification.value
+}
+
 function handleEmailBlur() {
   emailBlurred.value = true
 }
@@ -59,8 +69,12 @@ function handlePasswordBlur() {
   passwordBlurred.value = true
 }
 
+function handlePasswordVerificationBlur() {
+  passwordVerificationBlurred.value = true
+}
+
 function allFieldsEmpty() {
-  if (email.value === '' || password.value === '' || !passwordRegex.test(password.value) || !emailRegex.test(email.value)) {
+  if (email.value === '' || password.value === '' || passwordVerification.value === '' || !passwordRegex.test(password.value) || !emailRegex.test(email.value) || password.value !== passwordVerification.value) {
     return true
   }
   return false
@@ -70,11 +84,11 @@ function allFieldsEmpty() {
 <template>
   <form @submit.prevent="register">
     <fieldset>
-      <label for="email">Email</label>
+      <label for="email">Adresse email</label>
       <input
         v-model="email"
         type="email"
-        placeholder="Email"
+        placeholder="john@doe.com"
         :aria-invalid="emailValid()"
         required
         @blur="handleEmailBlur"
@@ -84,12 +98,22 @@ function allFieldsEmpty() {
       <input
         v-model="password"
         type="password"
-        placeholder="Mot de passe"
+        placeholder="Entrez un mot de passe de 12 caractères ou plus"
         :aria-invalid="passwordValid()"
         required
         @blur="handlePasswordBlur"
       >
       <small v-if="passwordValid() === true">Le mot de passe doit contenir 12 caractères, une majuscule, une minuscule, un chiffre et un caractère spécial</small>
+      <label for="password-verification">Vérification du mot de passe</label>
+      <input
+        v-model="passwordVerification"
+        type="password"
+        placeholder="Entrez le mot de passe précédemment saisi"
+        :aria-invalid="passwordVerificationValid()"
+        required
+        @blur="handlePasswordVerificationBlur"
+      >
+      <small v-if="passwordVerificationValid() === true">Les mots de passe ne correspondent pas</small>
     </fieldset>
     <button type="submit" :disabled="allFieldsEmpty()">
       S'inscrire

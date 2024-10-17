@@ -4,8 +4,8 @@ import User from '../models/user.model'
 
 export async function register(req: Request, res: Response): Promise<any> {
   try {
-    const { email, password } = req.body
-    if (!email || !password) {
+    const { email, password, passwordVerification } = req.body
+    if (!email || !password || !passwordVerification) {
       return res.status(422).json({ message: 'Tous les champs sont requis' })
     }
 
@@ -17,6 +17,10 @@ export async function register(req: Request, res: Response): Promise<any> {
     const passwordRegex = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[!@#$%^&*()_+\-=[\]{};':"\\|,.<>/?]).{12,}$/
     if (!passwordRegex.test(password)) {
       return res.status(422).json({ message: 'Le mot de passe doit contenir au moins 12 caractères, incluant des symboles, des chiffres, des lettres minuscules et majuscules' })
+    }
+
+    if (password !== passwordVerification) {
+      return res.status(422).json({ message: 'Les mots de passe ne correspondent pas' })
     }
 
     const user = await User.findOne({ email })
