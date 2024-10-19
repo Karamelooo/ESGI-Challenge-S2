@@ -4,8 +4,8 @@ import User from '../models/user.model'
 
 export async function register(req: Request, res: Response): Promise<any> {
   try {
-    const { email, password, passwordVerification } = req.body
-    if (!email || !password || !passwordVerification) {
+    const { firstname, lastname, email, password, passwordVerification } = req.body
+    if (!firstname || !lastname || !email || !password || !passwordVerification) {
       return res.status(422).json({ message: 'Tous les champs sont requis' })
     }
 
@@ -31,9 +31,9 @@ export async function register(req: Request, res: Response): Promise<any> {
     const saltRounds = 10
     const hashedPassword = await bcrypt.hash(password, saltRounds)
 
-    const newUser = new User({ email, password: hashedPassword })
+    const newUser = new User({ firstname, lastname, email, password: hashedPassword })
     await newUser.save()
-    return res.status(200).json({ message: 'Utilisateur créé' })
+    return res.status(200).json({ message: `Utilisateur créé avec l'adresse email suivante : ${newUser.email}` })
   }
   catch (error) {
     return res.status(500).json({ message: error })

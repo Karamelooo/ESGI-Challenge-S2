@@ -15,6 +15,7 @@ async function login() {
       email: email.value,
       password: password.value,
     })
+    localStorage.setItem('token', response.data.token)
     showToast(response.data.message)
   }
   catch (error) {
