@@ -3,12 +3,12 @@ import mongoose, { Schema } from 'mongoose'
 
 interface IRole extends Document {
   name: string
-  permissions: [string]
+  label: string
 }
 
 const roleSchema = new Schema({
-    name: { type: String, required: true },
-    permissions: [String], // a voir psk j'ai pas beaucoup d'idée de comment faire, on peux aussi retirer cette ligne
+  name: { type: String, required: true },
+  label: { type: String }
 });
 
 const Role = mongoose.model<IRole>('Role', roleSchema);
