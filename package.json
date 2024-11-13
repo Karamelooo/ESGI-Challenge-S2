@@ -19,5 +19,8 @@
   "license": "ISC",
   "dependencies": {
     "rimraf": "^6.0.1"
+  },
+  "devDependencies": {
+    "sass-embedded": "^1.80.6"
   }
 }
