@@ -2,7 +2,9 @@
 import axios from 'axios'
 import Toast from 'typescript-toastify'
 import { ref } from 'vue'
+import { useRouter } from 'vue-router'
 
+const router = useRouter()
 const email = ref('')
 const password = ref('')
 const emailBlurred = ref(false)
@@ -17,9 +19,10 @@ async function login() {
     })
     localStorage.setItem('token', response.data.token)
     showToast(response.data.message)
+    router.push('/index')
   }
   catch (error) {
-    showToast(error.response.data.message)
+    showToast(error)
   }
 }
 

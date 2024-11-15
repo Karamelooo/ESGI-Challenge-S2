@@ -6,14 +6,14 @@ export interface AuthRequest extends Request {
   userId?: string
 }
 
-export function authMiddleware(req: AuthRequest, res: Response, next: NextFunction) {
+export function authMiddleware(req: AuthRequest, res: Response, next: NextFunction): void {
   try {
     const token = req.headers.authorization?.split(' ')[1]
     if (!token) {
-      return res.status(401).json({ message: 'Authentification requise' })
+      res.status(401).json({ message: 'Authentification requise' })
     }
 
-    const decodedToken = jwt.verify(token, process.env.JWT_SECRET || 'secret') as { userId: string }
+    const decodedToken = jwt.verify(token, process.env.JWT_SECRET) as jwt.JwtPayload & { userId: string }
     req.userId = decodedToken.userId
     next()
   }

@@ -1,5 +1,17 @@
 <script setup lang="ts">
-import { RouterLink, RouterView } from 'vue-router'
+import { onMounted, ref, watch } from 'vue'
+import { RouterLink, RouterView, useRouter } from 'vue-router'
+import { authMiddleware } from './middlewares/auth.middleware'
+
+const isLoggedIn = ref(false)
+const router = useRouter()
+onMounted(() => {
+  isLoggedIn.value = authMiddleware()
+})
+
+watch(() => router.currentRoute.value.path, () => {
+  isLoggedIn.value = authMiddleware()
+})
 </script>
 
 <template>
@@ -14,12 +26,19 @@ import { RouterLink, RouterView } from 'vue-router'
         <RouterLink to="/about">
           About
         </RouterLink>
-        <RouterLink to="/register">
-          Inscription
-        </RouterLink>
-        <RouterLink to="/login">
-          Connexion
-        </RouterLink>
+        <template v-if="!isLoggedIn">
+          <RouterLink to="/register">
+            Inscription
+          </RouterLink>
+          <RouterLink to="/login">
+            Connexion
+          </RouterLink>
+        </template>
+        <template v-else>
+          <RouterLink to="/logout">
+            Déconnexion
+          </RouterLink>
+        </template>
       </nav>
     </div>
   </header>
