@@ -9,12 +9,12 @@ interface ICategory extends Document {
 }
 
 const categorySchema = new Schema({
-    name: { type: String, required: true },
-    label: { type: String, required: true },
-    description: String,
-    createdAt: { type: Date, default: Date.now }
-});
+  name: { type: String, required: true },
+  label: { type: String, required: true },
+  description: String,
+  createdAt: { type: Date, default: Date.now },
+})
 
-const Category = mongoose.model<ICategory>('Category', categorySchema);
+const Category = mongoose.model<ICategory>('Category', categorySchema)
 
 export default Category
