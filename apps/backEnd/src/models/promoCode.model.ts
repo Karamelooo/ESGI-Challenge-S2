@@ -11,14 +11,14 @@ interface IPromoCode extends Document {
 }
 
 const promoCodeSchema = new Schema({
-    code: { type: String, required: true, unique: true },
-    discountPercentage: { type: Number, required: true },
-    expirationDate: { type: Date, required: true },
-    isActive: { type: Boolean, default: true },
-    createdAt: { type: Date, default: Date.now },
-    createdBy: { type: Schema.Types.ObjectId, ref: 'User', required: true },
-});
+  code: { type: String, required: true, unique: true },
+  discountPercentage: { type: Number, required: true },
+  expirationDate: { type: Date, required: true },
+  isActive: { type: Boolean, default: true },
+  createdAt: { type: Date, default: Date.now },
+  createdBy: { type: Schema.Types.ObjectId, ref: 'User', required: true },
+})
 
-const PromoCode = mongoose.model<IPromoCode>('PromoCode', promoCodeSchema);
+const PromoCode = mongoose.model<IPromoCode>('PromoCode', promoCodeSchema)
 
 export default PromoCode

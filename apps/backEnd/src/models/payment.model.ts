@@ -12,15 +12,15 @@ interface IPayment extends Document {
 }
 
 const paymentSchema = new Schema({
-    order: { type: Schema.Types.ObjectId, ref: 'Order', required: true },
-    user: { type: Schema.Types.ObjectId, ref: 'User', required: true },
-    amount: { type: Number, required: true },
-    paymentMethod: { type: String, enum: ['CreditCard', 'PayPal'], required: true }, // a modifié
-    paymentStatus: { type: String, enum: ['Pending', 'Completed', 'Failed'], default: 'Pending' },
-    transactionId: { type: String },
-    createdAt: { type: Date, default: Date.now }
-}); // a retravailler psk je sais pas exactement comment ça fonctionne
+  order: { type: Schema.Types.ObjectId, ref: 'Order', required: true },
+  user: { type: Schema.Types.ObjectId, ref: 'User', required: true },
+  amount: { type: Number, required: true },
+  paymentMethod: { type: String, enum: ['CreditCard', 'PayPal'], required: true }, // a modifié
+  paymentStatus: { type: String, enum: ['Pending', 'Completed', 'Failed'], default: 'Pending' },
+  transactionId: { type: String },
+  createdAt: { type: Date, default: Date.now },
+}) // a retravailler psk je sais pas exactement comment ça fonctionne
 
-const Payment = mongoose.model<IPayment>('Payment', paymentSchema);
+const Payment = mongoose.model<IPayment>('Payment', paymentSchema)
 
 export default Payment

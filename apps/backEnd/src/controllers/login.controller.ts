@@ -1,5 +1,7 @@
 import type { Request, Response } from 'express'
+import process from 'node:process'
 import bcrypt from 'bcrypt'
+import jwt from 'jsonwebtoken'
 import User from '../models/user.model'
 
 export async function login(req: Request, res: Response): Promise<any> {
@@ -16,7 +18,8 @@ export async function login(req: Request, res: Response): Promise<any> {
     if (!isPasswordValid) {
       return res.status(409).json({ message: 'Aucune correspondance trouvée' })
     }
-    return res.status(200).json({ message: 'Connexion réussie' })
+    const token = jwt.sign({ userId: user._id }, process.env.JWT_SECRET || 'secret', { expiresIn: '1h' })
+    return res.status(200).json({ message: 'Connexion réussie', token })
   }
   catch (error) {
     return res.status(500).json({ message: error })

@@ -1,5 +1,7 @@
 import { createRouter, createWebHistory } from 'vue-router'
+import { authMiddleware } from '../middlewares/auth.middleware'
 import LoginView from '../views/LoginView.vue'
+import LogoutView from '../views/LogoutView.vue'
 import RegisterView from '../views/RegisterView.vue'
 
 const router = createRouter({
@@ -16,6 +18,22 @@ const router = createRouter({
       component: LoginView,
     },
     {
+<<<<<<< HEAD
+      path: '/product',
+      name: 'product',
+      component: productView,
+=======
+      path: '/logout',
+      name: 'logout',
+      component: LogoutView,
+>>>>>>> origin/main
+    },
+    {
+      path: '/logout',
+      name: 'logout',
+      component: LogoutView,
+    },
+    {
       path: '/product',
       name: 'product',
       component: productView,
@@ -27,6 +45,7 @@ const router = createRouter({
       // this generates a separate chunk (About.[hash].js) for this route
       // which is lazy-loaded when the route is visited.
       component: () => import('../views/AboutView.vue'),
+      beforeEnter: authMiddleware,
     },
   ],
 })
