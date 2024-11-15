@@ -1,3 +1,7 @@
+import { authMiddleware } from '@/middlewares/auth.middleware'
+import LoginView from '@/views/LoginView.vue'
+import LogoutView from '@/views/LogoutView.vue'
+import RegisterView from '@/views/RegisterView.vue'
 import { createRouter, createWebHistory } from 'vue-router'
 import { authMiddleware } from '../middlewares/auth.middleware'
 import LoginView from '../views/LoginView.vue'
