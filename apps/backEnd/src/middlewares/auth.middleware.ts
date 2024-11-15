@@ -11,7 +11,7 @@ export function authMiddleware(req: AuthRequest, res: Response, next: NextFuncti
     const token = req.headers.authorization?.split(' ')[1]
     if (!token) {
       res.status(401).json({ message: 'Authentification requise' })
-      return // Ajout du return pour arrêter l'exécution
+      return
     }
 
     const decodedToken = jwt.verify(token, process.env.JWT_SECRET as string) as jwt.JwtPayload & { userId: string }
