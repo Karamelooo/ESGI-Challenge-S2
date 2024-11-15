@@ -22,11 +22,11 @@ export default {
           ...this.product,
           images: this.product.images.split(',').map(img => img.trim()),
         }
-        await axios.post('http://localhost:8000/products', productData)
-        alert('Produit ajouté avec succès !')
+        await axios.post('http://localhost:8080/products/create', productData)
+        console.log('Produit ajouté avec succès !')
       }
       catch (error) {
-        alert('Erreur lors de l\'ajout du produit')
+        console.log('Erreur lors de l\'ajout du produit')
         console.error(error)
       }
     },
