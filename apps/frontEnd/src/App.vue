@@ -16,8 +16,6 @@ watch(() => router.currentRoute.value.path, () => {
 
 <template>
   <header>
-    <img alt="Vue logo" class="logo" src="@/assets/logo.svg" width="125" height="125">
-
     <div class="wrapper">
       <nav>
         <RouterLink to="/">
@@ -37,6 +35,9 @@ watch(() => router.currentRoute.value.path, () => {
         <template v-else>
           <RouterLink to="/logout">
             Déconnexion
+          </RouterLink>
+          <RouterLink to="/products">
+            Produits
           </RouterLink>
         </template>
       </nav>

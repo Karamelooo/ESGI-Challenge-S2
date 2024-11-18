@@ -24,6 +24,11 @@ const router = createRouter({
       component: LogoutView,
     },
     {
+      path: '/products',
+      name: 'products',
+      component: productView,
+    },
+    {
       path: '/about',
       name: 'about',
       // route level code-splitting

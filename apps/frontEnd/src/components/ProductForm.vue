@@ -38,10 +38,15 @@ export default {
   <div>
     <h2>Créer un nouveau produit</h2>
     <form @submit.prevent="addProduct">
+      <label for="name">Nom du produit</label>
       <input v-model="product.name" placeholder="Nom du produit" required>
+      <label for="description">Description</label>
       <input v-model="product.description" placeholder="Description">
+      <label for="price">Prix</label>
       <input v-model.number="product.price" placeholder="Prix" required>
+      <label for="stock">Stock</label>
       <input v-model.number="product.stock" placeholder="Stock" required>
+      <label for="images">Images (séparées par des virgules)</label>
       <input v-model="product.images" placeholder="Images (séparées par des virgules)">
       <button type="submit">
         Ajouter le produit
