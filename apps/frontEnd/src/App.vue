@@ -5,12 +5,15 @@ import { authMiddleware } from './middlewares/auth.middleware'
 
 const isLoggedIn = ref(false)
 const router = useRouter()
+const showProductSubmenu = ref(false)
+
 onMounted(() => {
   isLoggedIn.value = authMiddleware()
 })
 
 watch(() => router.currentRoute.value.path, () => {
   isLoggedIn.value = authMiddleware()
+  showProductSubmenu.value = router.currentRoute.value.path.startsWith('/products')
 })
 </script>
 
@@ -36,9 +39,16 @@ watch(() => router.currentRoute.value.path, () => {
           <RouterLink to="/logout">
             Déconnexion
           </RouterLink>
-          <RouterLink to="/products">
-            Produits
-          </RouterLink>
+          <div class="products-menu">
+            <RouterLink to="/products">
+              Produits
+            </RouterLink>
+            <div v-if="showProductSubmenu">
+              <RouterLink to="/products/create">
+                Créer
+              </RouterLink>
+            </div>
+          </div>
         </template>
       </nav>
     </div>
@@ -83,6 +93,34 @@ nav a:first-of-type {
   border: 0;
 }
 
+.products-menu {
+  display: inline-block;
+  position: relative;
+}
+
+.submenu {
+  position: absolute;
+  top: 100%;
+  left: 0;
+  background: white;
+  border: 1px solid var(--color-border);
+  border-radius: 4px;
+  padding: 0.5rem 0;
+  z-index: 100;
+}
+
+.submenu a {
+  display: block;
+  border: none;
+  padding: 0.5rem 1rem;
+  text-align: left;
+  white-space: nowrap;
+}
+
+.submenu a:hover {
+  background-color: #f5f5f5;
+}
+
 @media (min-width: 1024px) {
   header {
     display: flex;
@@ -104,7 +142,6 @@ nav a:first-of-type {
     text-align: left;
     margin-left: -1rem;
     font-size: 1rem;
-
     padding: 1rem 0;
     margin-top: 1rem;
   }

@@ -1,6 +1,6 @@
 <script setup>
+import { showToast } from '@/utils/toast'
 import axios from 'axios'
-import Toast from 'typescript-toastify'
 import { ref } from 'vue'
 import { useRouter } from 'vue-router'
 
@@ -24,20 +24,6 @@ async function login() {
   catch (error) {
     showToast(error)
   }
-}
-
-function showToast(message) {
-  const toast = new Toast({
-    position: 'top-right',
-    autoCloseTime: 2000,
-    canClose: true,
-    showProgress: true,
-    pauseOnHover: true,
-    pauseOnFocusLoss: true,
-    type: 'default',
-    theme: 'light',
-  })
-  toast.update({ toastMsg: message })
 }
 
 function emailValid() {

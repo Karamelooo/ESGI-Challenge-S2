@@ -1,6 +1,6 @@
 <script setup>
+import { showToast } from '@/utils/toast'
 import axios from 'axios'
-import Toast from 'typescript-toastify'
 import { ref } from 'vue'
 
 const firstname = ref('')
@@ -30,20 +30,6 @@ async function register() {
   catch (error) {
     showToast(error.response.data.message)
   }
-}
-
-function showToast(message) {
-  const toast = new Toast({
-    position: 'top-right',
-    autoCloseTime: 2000,
-    canClose: true,
-    showProgress: true,
-    pauseOnHover: true,
-    pauseOnFocusLoss: true,
-    type: 'default',
-    theme: 'light',
-  })
-  toast.update({ toastMsg: message })
 }
 
 function firstnameValid() {
