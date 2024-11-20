@@ -1,6 +1,7 @@
 import { authMiddleware } from '@/middlewares/auth.middleware'
 import LoginView from '@/views/LoginView.vue'
 import LogoutView from '@/views/LogoutView.vue'
+import ProductView from '@/views/ProductView.vue'
 import RegisterView from '@/views/RegisterView.vue'
 import { createRouter, createWebHistory } from 'vue-router'
 
@@ -21,6 +22,16 @@ const router = createRouter({
       path: '/logout',
       name: 'logout',
       component: LogoutView,
+    },
+    {
+      path: '/products',
+      name: 'products',
+      component: ProductView,
+    },
+    {
+      path: '/products/create',
+      name: 'products-create',
+      component: ProductView,
     },
     {
       path: '/about',
