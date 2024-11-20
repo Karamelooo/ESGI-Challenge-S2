@@ -18,7 +18,7 @@ const emailRegex = /^[\w.]+@[a-z0-9.-]+\.[a-z]{2,}$/i
 
 async function register() {
   try {
-    const response = await axios.post('http://localhost:8080/auth/register', {
+    const response = await axios.post(`${import.meta.env.VITE_BACK_APP_URL}/auth/register`, {
       firstname: firstname.value,
       lastname: lastname.value,
       email: email.value,

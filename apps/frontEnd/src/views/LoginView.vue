@@ -13,7 +13,7 @@ const passwordRegex = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[!@#$%^&*()_+\-=[\]{}
 const emailRegex = /^[\w.]+@[a-z0-9.-]+\.[a-z]{2,}$/i
 async function login() {
   try {
-    const response = await axios.post('http://localhost:8080/auth/login', {
+    const response = await axios.post(`${import.meta.env.VITE_BACK_APP_URL}/auth/login`, {
       email: email.value,
       password: password.value,
     })

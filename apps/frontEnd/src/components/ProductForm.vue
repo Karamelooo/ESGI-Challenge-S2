@@ -22,7 +22,7 @@ export default {
           ...this.product,
           images: this.product.images.split(',').map(img => img.trim()),
         }
-        await axios.post('http://localhost:8080/products/create', productData)
+        await axios.post(`${import.meta.env.VITE_BACK_APP_URL}/products/create`, productData)
         console.log('Produit ajouté avec succès !')
       }
       catch (error) {

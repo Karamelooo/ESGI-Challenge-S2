@@ -13,7 +13,7 @@ export default {
 
     async function fetchProducts() {
       try {
-        const response = await axios.get('http://localhost:8080/products')
+        const response = await axios.get(`${import.meta.env.VITE_BACK_APP_URL}/products`)
         products.value = response.data
       }
       catch (error) {
