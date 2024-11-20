@@ -19,6 +19,8 @@
   "author": "Groupe du style",
   "license": "ISC",
   "dependencies": {
+    "cors": "^2.8.5",
+    "jsonwebtoken": "^9.0.2",
     "rimraf": "^6.0.1"
   }
 }

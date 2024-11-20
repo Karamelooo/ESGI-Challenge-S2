@@ -7,7 +7,7 @@ const router = useRouter()
 
 onMounted(async () => {
   try {
-    await axios.post('http://localhost:8080/auth/logout')
+    await axios.post(`${import.meta.env.VITE_BACK_APP_URL}/auth/logout`)
 
     localStorage.removeItem('token')
 

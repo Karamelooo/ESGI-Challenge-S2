@@ -1,6 +1,6 @@
 <script setup>
+import { showToast } from '@/utils/toast'
 import axios from 'axios'
-import Toast from 'typescript-toastify'
 import { ref } from 'vue'
 
 const firstname = ref('')
@@ -18,7 +18,7 @@ const emailRegex = /^[\w.]+@[a-z0-9.-]+\.[a-z]{2,}$/i
 
 async function register() {
   try {
-    const response = await axios.post('http://localhost:8080/auth/register', {
+    const response = await axios.post(`${import.meta.env.VITE_BACK_APP_URL}/auth/register`, {
       firstname: firstname.value,
       lastname: lastname.value,
       email: email.value,
@@ -30,20 +30,6 @@ async function register() {
   catch (error) {
     showToast(error.response.data.message)
   }
-}
-
-function showToast(message) {
-  const toast = new Toast({
-    position: 'top-right',
-    autoCloseTime: 2000,
-    canClose: true,
-    showProgress: true,
-    pauseOnHover: true,
-    pauseOnFocusLoss: true,
-    type: 'default',
-    theme: 'light',
-  })
-  toast.update({ toastMsg: message })
 }
 
 function firstnameValid() {
