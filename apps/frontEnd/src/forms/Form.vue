@@ -1,6 +1,13 @@
 <script setup lang="ts">
 import { onMounted, ref } from 'vue'
 
+interface Validation {
+  pattern?: RegExp
+  required?: boolean
+  message: string
+  matchField?: string
+}
+
 interface Field {
   name: string
   type: string
@@ -8,6 +15,7 @@ interface Field {
   required?: boolean
   placeholder?: string
   options?: Array<{ value: any, label: string }>
+  validation?: Validation
 }
 
 interface Props {
@@ -27,12 +35,51 @@ const props = withDefaults(defineProps<Props>(), {
 const emit = defineEmits(['submitSuccess', 'submitError'])
 
 const formData = ref<Record<string, any>>({})
+const errors = ref<Record<string, string>>({})
+const touched = ref<Record<string, boolean>>({})
 
 onMounted(() => {
   formData.value = { ...props.initialData }
 })
 
+function validateField(field: Field, value: any) {
+  if (!field.validation)
+    return true
+
+  if (field.validation.required && !value) {
+    return false
+  }
+
+  if (field.validation.pattern && !field.validation.pattern.test(value)) {
+    return false
+  }
+
+  if (field.validation.matchField && value !== formData.value[field.validation.matchField]) {
+    return false
+  }
+
+  return true
+}
+
+function handleBlur(fieldName: string) {
+  touched.value[fieldName] = true
+  const field = props.fields.find(f => f.name === fieldName)
+  if (field && !validateField(field, formData.value[fieldName])) {
+    errors.value[fieldName] = field.validation?.message || 'Champ invalide'
+  }
+  else {
+    delete errors.value[fieldName]
+  }
+}
+
+function isFormValid() {
+  return props.fields.every(field => validateField(field, formData.value[field.name]))
+}
+
 async function handleSubmit() {
+  if (!isFormValid())
+    return
+
   try {
     const response = await fetch(props.submitUrl, {
       method: props.method,
@@ -42,15 +89,16 @@ async function handleSubmit() {
       body: JSON.stringify(formData.value),
     })
 
+    const data = await response.json()
+
     if (!response.ok) {
-      throw new Error('Erreur lors de la soumission du formulaire')
+      throw new Error(data.message || 'Erreur lors de la soumission du formulaire')
     }
 
-    const data = await response.json()
     emit('submitSuccess', data)
   }
-  catch (error) {
-    emit('submitError', error)
+  catch (error: any) {
+    emit('submitError', error.message)
   }
 }
 </script>
@@ -68,7 +116,12 @@ async function handleSubmit() {
           :name="field.name"
           :required="field.required"
           :placeholder="field.placeholder"
+          :aria-invalid="touched[field.name] && errors[field.name] ? 'true' : touched[field.name] ? 'false' : undefined"
+          @blur="handleBlur(field.name)"
         >
+        <small v-if="touched[field.name] && errors[field.name]" class="error-message">
+          {{ errors[field.name] }}
+        </small>
       </template>
 
       <!-- Textarea -->
@@ -99,8 +152,14 @@ async function handleSubmit() {
       </template>
     </div>
 
-    <button type="submit">
+    <button type="submit" :disabled="!isFormValid()">
       {{ submitButtonText }}
     </button>
   </form>
 </template>
+
+<style scoped>
+.error-message {
+  color: #dc3545;
+}
+</style>
