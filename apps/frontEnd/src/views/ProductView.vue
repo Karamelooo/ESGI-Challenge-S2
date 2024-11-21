@@ -1,96 +1,115 @@
-<script>
-import ProductForm from '@/components/ProductForm.vue'
+<script setup lang="ts">
+import Form from '@/forms/Form.vue'
 import axios from 'axios'
 import { onMounted, ref } from 'vue'
 import { useRoute, useRouter } from 'vue-router'
 
-export default {
-  components: { ProductForm },
-  setup() {
-    const route = useRoute()
-    const products = ref([])
-    const editingProduct = ref(null)
-
-    async function fetchProducts() {
-      try {
-        const response = await axios.get(`${import.meta.env.VITE_BACK_APP_URL}/products`)
-        products.value = response.data
-      }
-      catch (error) {
-        console.error('Erreur lors de la récupération des produits:', error)
-      }
-    }
-
-    async function editProduct(productId) {
-      try {
-        const response = await axios.get(`http://localhost:8080/products/${productId}`)
-        editingProduct.value = response.data
-      }
-      catch (error) {
-        console.error('Erreur lors de la récupération du produit:', error)
-      }
-    }
-
-    async function updateProduct() {
-      try {
-        await axios.put(`http://localhost:8080/products/${editingProduct.value._id}`, editingProduct.value)
-        editingProduct.value = null
-        await fetchProducts()
-      }
-      catch (error) {
-        console.error('Erreur lors de la mise à jour du produit:', error)
-      }
-    }
-
-    onMounted(() => {
-      fetchProducts()
-    })
-
-    return {
-      route,
-      products,
-      editProduct,
-      editingProduct,
-      updateProduct,
-    }
-  },
+const route = useRoute()
+const router = useRouter()
+const products = ref<Product[]>([])
+interface Product {
+  _id: string
+  name: string
+  description?: string
+  images?: string[]
+  stock: number
+  price: number
 }
+
+const editingProduct = ref<Product | null>(null)
+const baseUrl = import.meta.env.VITE_BACK_APP_URL
+
+const productFields = [
+  {
+    name: 'name',
+    type: 'text',
+    label: 'Nom',
+    required: true,
+  },
+  {
+    name: 'description',
+    type: 'textarea',
+    label: 'Description',
+  },
+  {
+    name: 'price',
+    type: 'number',
+    label: 'Prix',
+    required: true,
+  },
+  {
+    name: 'stock',
+    type: 'number',
+    label: 'Stock',
+    required: true,
+  },
+  {
+    name: 'images',
+    type: 'text',
+    label: 'Images (séparées par des virgules)',
+  },
+]
+
+async function fetchProducts() {
+  try {
+    const response = await axios.get(`${import.meta.env.VITE_BACK_APP_URL}/products`)
+    products.value = response.data
+  }
+  catch (error) {
+    console.error('Erreur lors de la récupération des produits:', error)
+  }
+}
+
+async function editProduct(productId: string) {
+  try {
+    const response = await axios.get(`${import.meta.env.VITE_BACK_APP_URL}/products/${productId}`)
+    editingProduct.value = response.data
+  }
+  catch (error) {
+    console.error('Erreur lors de la récupération du produit:', error)
+  }
+}
+
+function handleSubmitSuccess() {
+  editingProduct.value = null
+  fetchProducts()
+  if (route.path === '/products/create') {
+    router.push('/products')
+  }
+}
+
+onMounted(() => {
+  fetchProducts()
+})
 </script>
 
 <template>
   <div>
     <h1>Gestion des Produits</h1>
-    <ProductForm v-if="route.path === '/products/create'" />
+    <Form
+      v-if="route.path === '/products/create'"
+      :fields="productFields"
+      :submit-url="`${baseUrl}/products/create`"
+      method="POST"
+      submit-button-text="Créer"
+      @submit-success="handleSubmitSuccess"
+    />
     <div v-else-if="editingProduct">
       <h2>Modifier le produit</h2>
-      <form @submit.prevent="updateProduct">
-        <div>
-          <label for="name">Nom</label>
-          <input id="name" v-model="editingProduct.name" required>
-        </div>
-        <div>
-          <label for="description">Description</label>
-          <textarea id="description" v-model="editingProduct.description" />
-        </div>
-        <div>
-          <label for="price">Prix</label>
-          <input id="price" v-model.number="editingProduct.price" type="number" required>
-        </div>
-        <div>
-          <label for="stock">Stock</label>
-          <input id="stock" v-model.number="editingProduct.stock" type="number" required>
-        </div>
-        <div>
-          <label for="images">Images (séparées par des virgules)</label>
-          <input id="images" v-model="editingProduct.images">
-        </div>
-        <button type="submit">
-          Sauvegarder
-        </button>
-        <button type="button" @click="editingProduct = null">
-          Annuler
-        </button>
-      </form>
+      <Form
+        :fields="productFields"
+        :submit-url="`${baseUrl}/products/${editingProduct._id}`"
+        method="PUT"
+        :initial-data="editingProduct"
+        submit-button-text="Sauvegarder"
+        @submit-success="handleSubmitSuccess"
+      >
+        <template #after-form>
+          <button type="button" @click="editingProduct = null">
+            Annuler
+          </button>
+        </template>
+      </Form>
     </div>
     <div v-else>
       <h2>Liste des produits</h2>
