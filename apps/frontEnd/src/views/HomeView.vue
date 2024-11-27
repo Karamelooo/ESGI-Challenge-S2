@@ -20,21 +20,71 @@ watch(currentSlide, (newSlide) => {
 <template>
   <main>
     <div id="carousel" class="carousel">
-      <button class="contrast" @click="prevSlide">
-        ‹
-      </button>
+      <div>
+        <button class="contrast" @click="prevSlide">
+          ‹
+        </button>
+        <button class="contrast" style="right: 0em" @click="nextSlide">
+          ›
+        </button>
+      </div>
       <div class="carousel-track">
         <img src="@/assets/images/1000x400.png" alt="Slide 1">
         <img src="@/assets/images/1000x400.png" alt="Slide 2">
         <img src="@/assets/images/1000x400.png" alt="Slide 3">
       </div>
-      <button class="contrast" @click="nextSlide">
-        ›
-      </button>
     </div>
     <div id="content">
-      <div id="best" />
-      <div id="new" />
+      <div id="best">
+        <h3>Best</h3>
+        <div class="product">
+          <img src="@/assets/images/125x200.png" alt="DummyProduct">
+          <img src="@/assets/images/125x200.png" alt="DummyProduct">
+          <img src="@/assets/images/125x200.png" alt="DummyProduct">
+          <img src="@/assets/images/125x200.png" alt="DummyProduct">
+          <img src="@/assets/images/125x200.png" alt="DummyProduct">
+          <img src="@/assets/images/125x200.png" alt="DummyProduct">
+          <img src="@/assets/images/125x200.png" alt="DummyProduct">
+          <img src="@/assets/images/125x200.png" alt="DummyProduct">
+          <img src="@/assets/images/125x200.png" alt="DummyProduct">
+          <img src="@/assets/images/125x200.png" alt="DummyProduct">
+          <img src="@/assets/images/125x200.png" alt="DummyProduct">
+          <img src="@/assets/images/125x200.png" alt="DummyProduct">
+          <img src="@/assets/images/125x200.png" alt="DummyProduct">
+          <img src="@/assets/images/125x200.png" alt="DummyProduct">
+          <img src="@/assets/images/125x200.png" alt="DummyProduct">
+          <img src="@/assets/images/125x200.png" alt="DummyProduct">
+          <img src="@/assets/images/125x200.png" alt="DummyProduct">
+          <img src="@/assets/images/125x200.png" alt="DummyProduct">
+          <img src="@/assets/images/125x200.png" alt="DummyProduct">
+          <img src="@/assets/images/125x200.png" alt="DummyProduct">
+          <img src="@/assets/images/125x200.png" alt="DummyProduct">
+        </div>
+      </div>
+      <div id="new">
+        <h3>Nouveauté</h3>
+        <div class="product">
+          <img src="@/assets/images/125x200.png" alt="DummyProduct">
+          <img src="@/assets/images/125x200.png" alt="DummyProduct">
+          <img src="@/assets/images/125x200.png" alt="DummyProduct">
+          <img src="@/assets/images/125x200.png" alt="DummyProduct">
+          <img src="@/assets/images/125x200.png" alt="DummyProduct">
+          <img src="@/assets/images/125x200.png" alt="DummyProduct">
+          <img src="@/assets/images/125x200.png" alt="DummyProduct">
+          <img src="@/assets/images/125x200.png" alt="DummyProduct">
+          <img src="@/assets/images/125x200.png" alt="DummyProduct">
+          <img src="@/assets/images/125x200.png" alt="DummyProduct">
+          <img src="@/assets/images/125x200.png" alt="DummyProduct">
+          <img src="@/assets/images/125x200.png" alt="DummyProduct">
+          <img src="@/assets/images/125x200.png" alt="DummyProduct">
+          <img src="@/assets/images/125x200.png" alt="DummyProduct">
+          <img src="@/assets/images/125x200.png" alt="DummyProduct">
+          <img src="@/assets/images/125x200.png" alt="DummyProduct">
+          <img src="@/assets/images/125x200.png" alt="DummyProduct">
+          <img src="@/assets/images/125x200.png" alt="DummyProduct">
+          <img src="@/assets/images/125x200.png" alt="DummyProduct">
+        </div>
+      </div>
     </div>
   </main>
 </template>
@@ -42,19 +92,20 @@ watch(currentSlide, (newSlide) => {
 <style scoped>
 .carousel {
   display: flex;
-  align-items: center; /* Aligner les boutons et les images verticalement */
-  justify-content: center; /* Centrer le carousel horizontalement */
+  align-items: center;
+  justify-content: center;
   overflow: hidden;
   width: 100%;
-  margin: auto; /* Centrer horizontalement */
-  position: relative; /* Position relative pour l'alignement interne */
+  height: 15em;
+  margin: auto;
+  position: relative;
 }
 
 .carousel-track {
   display: flex;
   transition: transform 0.5s ease-in-out;
   transform: translateX(calc(-100% * var(--current-slide, 0)));
-  width: 100%; /* Occupe toute la largeur disponible */
+  width: 100%;
 }
 
 .carousel img {
@@ -65,18 +116,33 @@ watch(currentSlide, (newSlide) => {
 }
 
 button.contrast {
-  background: rgba(0, 0, 0, 0.5); /* Couleur de fond semi-transparente */
+  position: fixed;
+  background: rgba(0, 0, 0, 0.5);
   color: white;
   border: none;
   padding: 0.5em 1em;
   cursor: pointer;
   font-size: 1.2rem;
-  border-radius: 0.3em; /* Bords arrondis */
-  flex-shrink: 0; /* Les boutons conservent leur taille */
-  z-index: 2; /* Assurer que les boutons sont devant */
+  border-radius: 0.3em;
+  flex-shrink: 0;
+  z-index: 2;
 }
 
 button.contrast:hover {
-  background: rgba(0, 0, 0, 0.7); /* Rendre les boutons plus visibles au survol */
+  background: rgba(0, 0, 0, 0.7);
+}
+
+#content {
+  margin-left: 1.5em;
+}
+
+.product img {
+  margin-right: 1.2em;
+  margin-bottom: 1.5em;
+}
+
+#best {
+  margin-top: 1.6em;
+  margin-bottom: 3em;
 }
 </style>
