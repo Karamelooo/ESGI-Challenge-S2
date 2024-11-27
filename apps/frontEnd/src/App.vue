@@ -1,57 +1,11 @@
 <script setup lang="ts">
-import { onMounted, ref, watch } from 'vue'
-import { RouterLink, RouterView, useRouter } from 'vue-router'
-import { authMiddleware } from './middlewares/auth.middleware'
-
-const isLoggedIn = ref(false)
-const router = useRouter()
-const showProductSubmenu = ref(false)
-
-onMounted(() => {
-  isLoggedIn.value = authMiddleware()
-})
-
-watch(() => router.currentRoute.value.path, () => {
-  isLoggedIn.value = authMiddleware()
-  showProductSubmenu.value = router.currentRoute.value.path.startsWith('/products')
-})
+import Header from '@/components/Header.vue'
+import { RouterView } from 'vue-router'
 </script>
 
 <template>
   <header>
-    <div class="wrapper">
-      <nav>
-        <RouterLink to="/">
-          Home
-        </RouterLink>
-        <RouterLink to="/about">
-          About
-        </RouterLink>
-        <template v-if="!isLoggedIn">
-          <RouterLink to="/register">
-            Inscription
-          </RouterLink>
-          <RouterLink to="/login">
-            Connexion
-          </RouterLink>
-        </template>
-        <template v-else>
-          <RouterLink to="/logout">
-            Déconnexion
-          </RouterLink>
-          <div class="products-menu">
-            <RouterLink to="/products">
-              Produits
-            </RouterLink>
-            <div v-if="showProductSubmenu">
-              <RouterLink to="/products/create">
-                Créer
-              </RouterLink>
-            </div>
-          </div>
-        </template>
-      </nav>
-    </div>
+    <Header />
   </header>
 
   <RouterView />
