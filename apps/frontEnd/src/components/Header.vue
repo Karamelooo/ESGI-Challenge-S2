@@ -6,6 +6,16 @@ import { authMiddleware } from '../middlewares/auth.middleware'
 const isLoggedIn = ref(false)
 const router = useRouter()
 const searchQuery = ref('') // Modèle pour le champ de recherche
+const navbarContent = [
+  {
+    label: 'Home',
+    route: '/',
+  },
+  {
+    label: 'About',
+    route: '/login',
+  },
+]
 
 onMounted(() => {
   isLoggedIn.value = authMiddleware()
@@ -23,11 +33,11 @@ function handleSearch() {
 </script>
 
 <template>
-  <div>
-    <div id="top-header" class="top-header">
-      <nav>
+  <div class="container">
+    <div id="top-header">
+      <nav class="nav-content">
         <div id="logo">
-          <img alt="Vue logo" class="logo" src="@/assets/logo.svg" width="50" height="50">
+          <img alt="Vue logo" class="logo" src="@/assets/logoD.svg" width="100" height="100">
         </div>
         <div id="search-bar">
           <form id="search-form" @submit.prevent="handleSearch">
@@ -62,19 +72,10 @@ function handleSearch() {
     <div id="navbar" class="navbar">
       <nav>
         <ul>
-          <li>
-            <a>
-              <RouterLink to="/">
-                Home
-              </RouterLink>
-            </a>
-          </li>
-          <li>
-            <a>
-              <RouterLink to="/about">
-                About
-              </RouterLink>
-            </a>
+          <li v-for="(key, index) in Object.keys(navbarContent)" :key="index">
+            <RouterLink :to="navbarContent[index].route">
+              {{ navbarContent[index].label }}
+            </RouterLink>
           </li>
         </ul>
       </nav>
@@ -83,12 +84,16 @@ function handleSearch() {
 </template>
 
 <style scoped>
-.top-header {
+.container {
+  margin-left: 5em;
+}
+
+.nav-content {
+  width: 90vw;
   display: flex;
   padding: .5em;
   align-items: baseline;
   flex-direction: row;
-  gap: 20em;
 }
 
 #search-bar {
