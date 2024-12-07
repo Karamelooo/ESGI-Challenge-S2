@@ -34,4 +34,5 @@ console.log(authRoutes)
 
 app.listen(8080, () => {
   console.log('Server started and listening on port 8080')
+  console.log('sa')
 })
