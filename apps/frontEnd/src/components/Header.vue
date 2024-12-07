@@ -13,7 +13,21 @@ const navbarContent = [
   },
   {
     label: 'About',
-    route: '/login',
+    route: '/about',
+  },
+  {
+    label: 'Licenses',
+    route: '/licenses',
+    sub: [
+      {
+        label: 'pokemon',
+        route: '/license/pokemon',
+      },
+      {
+        label: 'Magic',
+        route: '/license/magic',
+      },
+    ],
   },
 ]
 
@@ -73,7 +87,21 @@ function handleSearch() {
       <nav>
         <ul>
           <li v-for="(key, index) in Object.keys(navbarContent)" :key="index">
-            <RouterLink :to="navbarContent[index].route">
+            <details v-if="navbarContent[index].sub" class="dropdown">
+              <summary>
+                <RouterLink :to="navbarContent[index].route">
+                  {{ navbarContent[index].label }}
+                </RouterLink>
+              </summary>
+              <ul>
+                <li v-for="(key2, index2) in Object.keys(navbarContent[index].sub)" :key="index2">
+                  <RouterLink :to="navbarContent[index].sub[index2].route">
+                    {{ navbarContent[index].sub[index2].label }}
+                  </RouterLink>
+                </li>
+              </ul>
+            </details>
+            <RouterLink v-else :to="navbarContent[index].route">
               {{ navbarContent[index].label }}
             </RouterLink>
           </li>
@@ -87,7 +115,6 @@ function handleSearch() {
 .container {
   margin-left: 5em;
 }
-
 .nav-content {
   width: 90vw;
   display: flex;
