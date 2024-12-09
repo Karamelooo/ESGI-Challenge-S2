@@ -78,22 +78,18 @@ export async function deleteProduct(req: Request, res: Response): Promise<void> 
 export async function searchProducts(req: Request, res: Response): Promise<void> {
   try {
     const { query } = req.query
-    console.log('Recherche avec query:', query)
-    
     const searchRegex = new RegExp(query as string, 'i')
-    
+
     const products = await Product.find({
       $or: [
         { name: searchRegex },
         { description: searchRegex }
       ]
     }).populate('category')
-    
-    console.log('Résultats trouvés:', products)
+
     res.json(products)
   }
   catch (error) {
-    console.error('Erreur de recherche:', error)
     res.status(500).json({ message: 'Erreur lors de la recherche des produits', error })
   }
 }
