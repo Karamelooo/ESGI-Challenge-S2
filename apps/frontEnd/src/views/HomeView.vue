@@ -44,7 +44,7 @@ async function searchProducts() {
     isLoading.value = true
     error.value = null
 
-    const response = await axios.get(`${import.meta.env.VITE_BACK_APP_URL}/api/products/search`, {
+    const response = await axios.get(`/api/products/search`, {
       params: { query: searchQuery.value }
     })
     searchResults.value = response.data
