@@ -1,5 +1,6 @@
 <script setup lang="ts">
 import { ref, watch } from 'vue'
+import axios from 'axios'
 
 const currentSlide = ref(2)
 const slides = 3 // Nombre total d'images
@@ -14,6 +15,53 @@ function prevSlide() {
 
 watch(currentSlide, (newSlide) => {
   document.documentElement.style.setProperty('--current-slide', newSlide)
+})
+
+interface Product {
+  _id: string
+  name: string
+  description: string
+  price: number
+  category: any
+  stock: number
+  images: string[]
+}
+
+const searchQuery = ref('')
+const searchResults = ref<Product[]>([])
+const isLoading = ref(false)
+const error = ref<string | null>(null)
+
+// Fonction de recherche avec debounce
+let timeoutId: NodeJS.Timeout
+async function searchProducts() {
+  try {
+    if (!searchQuery.value.trim()) {
+      searchResults.value = []
+      return
+    }
+
+    isLoading.value = true
+    error.value = null
+
+    const response = await axios.get(`${import.meta.env.VITE_BACK_APP_URL}/api/products/search`, {
+      params: { query: searchQuery.value }
+    })
+    searchResults.value = response.data
+  }
+  catch (err) {
+    error.value = "Erreur lors de la recherche"
+    console.error(err)
+  }
+  finally {
+    isLoading.value = false
+  }
+}
+
+// Debounce la recherche pour éviter trop d'appels API
+watch(searchQuery, () => {
+  clearTimeout(timeoutId)
+  timeoutId = setTimeout(searchProducts, 300)
 })
 </script>
 
@@ -86,6 +134,41 @@ watch(currentSlide, (newSlide) => {
         </div>
       </div>
     </div>
+    <div class="search-container">
+      <input 
+        type="text"
+        v-model="searchQuery"
+        placeholder="Rechercher un produit..."
+        class="search-input"
+      >
+      
+      <div v-if="isLoading" class="search-loading">
+        Recherche en cours...
+      </div>
+      
+      <div v-else-if="error" class="search-error">
+        {{ error }}
+      </div>
+      
+      <div v-else-if="searchQuery && searchResults.length > 0" class="search-results">
+        <div v-for="product in searchResults" 
+             :key="product._id" 
+             class="search-result-item">
+          <div class="product-image" v-if="product.images && product.images.length">
+            <img :src="product.images[0]" :alt="product.name">
+          </div>
+          <div class="product-info">
+            <h4>{{ product.name }}</h4>
+            <p class="description">{{ product.description }}</p>
+            <p class="price">{{ product.price }}€</p>
+          </div>
+        </div>
+      </div>
+      
+      <div v-else-if="searchQuery" class="no-results">
+        Aucun résultat trouvé
+      </div>
+    </div>
   </main>
 </template>
 
@@ -144,5 +227,79 @@ button.contrast:hover {
 #best {
   margin-top: 1.6em;
   margin-bottom: 3em;
+}
+
+.search-container {
+  position: relative;
+  margin: 1em auto;
+  width: 100%;
+  max-width: 600px;
+}
+
+.search-input {
+  width: 100%;
+  padding: 0.8em;
+  border-radius: var(--radius);
+  border: 1px solid #ddd;
+}
+
+.search-results {
+  position: absolute;
+  width: 100%;
+  background: white;
+  border: 1px solid #ddd;
+  border-radius: var(--radius);
+  margin-top: 0.5em;
+  max-height: 400px;
+  overflow-y: auto;
+  z-index: 1000;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+}
+
+.search-result-item {
+  padding: 1em;
+  border-bottom: 1px solid #eee;
+  display: flex;
+  gap: 1em;
+}
+
+.product-image img {
+  width: 60px;
+  height: 60px;
+  object-fit: cover;
+  border-radius: var(--radius);
+}
+
+.product-info {
+  flex: 1;
+}
+
+.product-info h4 {
+  margin: 0 0 0.5em 0;
+}
+
+.description {
+  font-size: 0.9em;
+  color: #666;
+  margin: 0.2em 0;
+}
+
+.price {
+  font-weight: bold;
+  color: #2c3e50;
+  margin: 0.2em 0;
+}
+
+.search-loading, .search-error, .no-results {
+  padding: 1em;
+  text-align: center;
+  background: white;
+  border: 1px solid #ddd;
+  border-radius: var(--radius);
+  margin-top: 0.5em;
+}
+
+.search-error {
+  color: #dc3545;
 }
 </style>
