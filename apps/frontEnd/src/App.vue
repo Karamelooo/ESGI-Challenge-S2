@@ -1,6 +1,7 @@
 <script setup lang="ts">
-import Header from '@/components/Header.vue'
-import { RouterView } from 'vue-router'
+import Header from '@/components/Header.vue';
+import PaymentForm from '@/components/PaymentForm.vue';
+import { RouterView } from 'vue-router';
 </script>
 
 <template>
@@ -9,6 +10,10 @@ import { RouterView } from 'vue-router'
   </header>
 
   <RouterView />
+  <div>
+    <h1>Checkout</h1>
+    <PaymentForm />
+  </div>
 </template>
 
 <style scoped>

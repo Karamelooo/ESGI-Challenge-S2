@@ -1,38 +1,147 @@
-import type { Application, Request, Response } from 'express'
-import cors from 'cors'
-import express from 'express'
-import mongoose from 'mongoose'
-import authRoutes from './routes/auth.routes'
-import productRoutes from './routes/product.routes'
-import 'dotenv/config'
-// const mongoString = process.env.DB_URL;
-const mongoString = 'mongodb://esgi:esgi@database:27017'
+import bodyParser from 'body-parser';
+import cors from 'cors';
+import 'dotenv/config';
+import type { Application, Request, Response } from 'express';
+import express from 'express';
+import mongoose from 'mongoose';
+import Payment from './models/payment.model';
 
-mongoose.connect(mongoString).then(() => {
-  console.log('Database Connected')
-}).catch((error: Error) => {
-  console.error(error)
-})
+import Stripe from 'stripe';
+import authRoutes from './routes/auth.routes';
+import productRoutes from './routes/product.routes';
 
-const app: Application = express()
+// Initialize Stripe
+const stripe = new Stripe(process.env.STRIPE_SECRET_KEY as string, {
+  apiVersion: '2024-11-20.acacia',
+});
 
-app.use(express.json())
+// MongoDB connection
+const mongoString = 'mongodb://esgi:esgi@database:27017';
 
-app.use(cors({
-  origin: 'http://localhost',
-  credentials: true,
-}))
+mongoose
+  .connect(mongoString)
+  .then(() => {
+    console.log('Database Connected');
+  })
+  .catch((error: Error) => {
+    console.error(error);
+  });
 
+const app: Application = express();
+
+app.use(express.json());
+
+app.use(
+  cors({
+    origin: 'http://localhost',
+    credentials: true,
+  })
+);
+
+// Test route
 app.get('/test', (req: Request, res: Response) => {
-  res.json({ message: 'Le serveur fonctionne correctement' })
-})
+  res.json({ message: 'Le serveur fonctionne correctement' });
+});
 
-app.use('/auth', authRoutes)
-app.use('/products', productRoutes)
+// Stripe Payment Intent Endpoint
+app.post('/create-payment-intent', async (req: Request, res: Response) => {
+  const { amount, currency, userId } = req.body;
 
-console.log(authRoutes)
+  try {
+    // Create a payment intent
+    const paymentIntent = await stripe.paymentIntents.create({
+      amount,
+      currency,
+      metadata: { userId }, // Optional metadata
+    });
+
+    // Save the payment to the database
+    const newPayment = new Payment({
+      paymentIntentId: paymentIntent.id,
+      amount,
+      currency,
+      status: paymentIntent.status,
+      userId, // Optional: associate with a user
+    });
+
+    await newPayment.save();
+
+    // Respond with the client secret
+    res.json({ clientSecret: paymentIntent.client_secret });
+  } catch (error) {
+    console.error('Error creating payment intent:', error);
+    res.status(500).json({ error: (error as Error).message });
+  }
+});
+
+// Stripe Webhook Endpoint
+const stripeWebhookSecret = process.env.STRIPE_WEBHOOK_SECRET as string;
+
+app.post(
+  '/webhook',
+  bodyParser.raw({ type: 'application/json' }),
+  (req: Request, res: Response) => {
+    const sig = req.headers['stripe-signature'];
+
+    let event;
+
+    try {
+      // Verify the event with Stripe
+      event = stripe.webhooks.constructEvent(req.body, sig!, stripeWebhookSecret);
+    } catch (err) {
+      console.error('Webhook signature verification failed.', err);
+      res.status(400).send(`Webhook Error: ${(err as Error).message}`);
+      return;
+    }
+
+    // Handle the event
+    switch (event.type) {
+      case 'payment_intent.succeeded': {
+        const paymentIntent = event.data.object as Stripe.PaymentIntent;
+        // Update the payment status in the database
+        Payment.findOneAndUpdate(
+          { paymentIntentId: paymentIntent.id },
+          { status: paymentIntent.status },
+          (err: any) => {
+            if (err) {
+              console.error('Database update error:', err);
+            } else {
+              console.log('Payment succeeded:', paymentIntent.id);
+            }
+          }
+        );
+        break;
+      }
+      case 'payment_intent.payment_failed': {
+        const paymentIntent = event.data.object as Stripe.PaymentIntent;
+        // Update the payment status in the database
+        Payment.findOneAndUpdate(
+          { paymentIntentId: paymentIntent.id },
+          { status: paymentIntent.status },
+          (err: any) => {
+            if (err) {
+              console.error('Database update error:', err);
+            } else {
+              console.log('Payment failed:', paymentIntent.id);
+            }
+          }
+        );
+        break;
+      }
+      default:
+        console.log(`Unhandled event type ${event.type}`);
+    }
+
+    // Send a response to Stripe
+    res.json({ received: true });
+  }
+);
+// Routes
+app.use('/auth', authRoutes);
+app.use('/products', productRoutes);
+
+console.log(authRoutes);
 
 app.listen(8080, () => {
-  console.log('Server started and listening on port 8080')
-  console.log('sa')
-})
+  console.log('Server started and listening on port 8080');
+});

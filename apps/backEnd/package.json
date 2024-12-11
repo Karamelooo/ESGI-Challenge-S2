@@ -9,6 +9,7 @@
     "lint:fix": "eslint . --fix"
   },
   "dependencies": {
+    "@stripe/stripe-js": "^5.2.0",
     "axios": "^1.7.7",
     "bcrypt": "^5.1.1",
     "cors": "^2.8.5",
@@ -17,6 +18,7 @@
     "jsonwebtoken": "^9.0.2",
     "mongoose": "^8.6.3",
     "nodemailer": "^6.9.15",
+    "stripe": "^17.4.0",
     "typescript": "^5.6.3"
   },
   "devDependencies": {
@@ -28,6 +30,7 @@
     "@types/mongoose": "^5.11.96",
     "@types/node": "^22.7.5",
     "@types/nodemailer": "^6.4.16",
+    "@types/stripe-v3": "^3.1.33",
     "eslint": "^9.12.0"
   }
 }
