@@ -6,11 +6,6 @@ import { authenticateToken, authorizeRoles, blacklistToken } from '../middleware
 var AsyncRouter = require("express-async-router").AsyncRouter;
 var router = AsyncRouter();
 
-
-
-  
- 
-  
   
   // Route: Register
   router.post('/register', register);
