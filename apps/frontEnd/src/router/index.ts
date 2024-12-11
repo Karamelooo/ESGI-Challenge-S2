@@ -1,3 +1,4 @@
+import PaymentForm from '@/components/PaymentForm.vue'
 import { authMiddleware } from '@/middlewares/auth.middleware'
 import HomeView from '@/views/HomeView.vue'
 import LoginView from '@/views/LoginView.vue'
@@ -38,6 +39,11 @@ const router = createRouter({
       path: '/products/create',
       name: 'products-create',
       component: ProductView,
+    },
+    {
+      path: '/payment',
+      name: 'payment',
+      component: PaymentForm,
     },
     {
       path: '/about',
