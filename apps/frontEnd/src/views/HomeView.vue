@@ -32,33 +32,45 @@ const searchResults = ref<Product[]>([])
 const isLoading = ref(false)
 const error = ref<string | null>(null)
 
-// Fonction de recherche avec debounce
 let timeoutId: NodeJS.Timeout
 async function searchProducts() {
   try {
-    if (!searchQuery.value.trim()) {
-      searchResults.value = []
-      return
-    }
-
     isLoading.value = true
     error.value = null
 
-    const response = await axios.get(`/api/products/search`, {
-      params: { query: searchQuery.value }
+    const apiUrl = `${import.meta.env.VITE_API_URL}/products/search`
+    console.log('URL appelée:', apiUrl)
+
+    const response = await axios.get(apiUrl, {
+      params: { 
+        query: searchQuery.value.trim() 
+      },
+      headers: {
+        'Accept': 'application/json',
+        'Content-Type': 'application/json'
+      },
+      withCredentials: true
     })
-    searchResults.value = response.data
+    
+    console.log("Réponse API:", response.data)
+    
+    if (Array.isArray(response.data)) {
+      searchResults.value = response.data
+    } else {
+      searchResults.value = []
+      console.error("Format de réponse inattendu:", response.data)
+    }
   }
   catch (err) {
+    console.error("Erreur détaillée:", err)
     error.value = "Erreur lors de la recherche"
-    console.error(err)
+    searchResults.value = []
   }
   finally {
     isLoading.value = false
   }
 }
 
-// Debounce la recherche pour éviter trop d'appels API
 watch(searchQuery, () => {
   clearTimeout(timeoutId)
   timeoutId = setTimeout(searchProducts, 300)
@@ -107,13 +119,13 @@ watch(searchQuery, () => {
           <img src="@/assets/images/125x200.png" alt="DummyProduct">
           <img src="@/assets/images/125x200.png" alt="DummyProduct">
           <img src="@/assets/images/125x200.png" alt="DummyProduct">
+          <img src="@/assets/images/125x200.png" alt="DummyProduct">
+          <img src="@/assets/images/125x200.png" alt="DummyProduct">
         </div>
       </div>
       <div id="new">
         <h3>Nouveauté</h3>
         <div class="product">
-          <img src="@/assets/images/125x200.png" alt="DummyProduct">
-          <img src="@/assets/images/125x200.png" alt="DummyProduct">
           <img src="@/assets/images/125x200.png" alt="DummyProduct">
           <img src="@/assets/images/125x200.png" alt="DummyProduct">
           <img src="@/assets/images/125x200.png" alt="DummyProduct">
@@ -150,20 +162,17 @@ watch(searchQuery, () => {
         {{ error }}
       </div>
       
-      <div v-else-if="searchQuery && searchResults.length > 0" class="search-results">
-        <div v-for="product in searchResults" 
-             :key="product._id" 
-             class="search-result-item">
-          <div class="product-image" v-if="product.images && product.images.length">
-            <img :src="product.images[0]" :alt="product.name">
-          </div>
-          <div class="product-info">
-            <h4>{{ product.name }}</h4>
-            <p class="description">{{ product.description }}</p>
-            <p class="price">{{ product.price }}€</p>
-          </div>
-        </div>
+  <div v-else-if="searchQuery && searchResults.length > 0" class="search-results">
+    <div v-for="product in searchResults" 
+         :key="product._id" 
+         class="search-result-item">
+      <div class="product-info">
+        <h4>{{ product.name || 'Sans nom' }}</h4>
+        <p class="description">{{ product.description || 'Pas de description' }}</p>
+        <p class="price" v-if="product.price">{{ product.price.toFixed(2) }}€</p>
       </div>
+    </div>
+  </div>
       
       <div v-else-if="searchQuery" class="no-results">
         Aucun résultat trouvé
