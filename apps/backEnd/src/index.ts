@@ -138,6 +138,7 @@ app.use('/auth', authRoutes);
 app.use('/products', productRoutes);
 
 app.use('/api/cart', cartRoutes);
+console.log(cartRoutes, "caaart")
 console.log(authRoutes);
 
 app.listen(8080, () => {
