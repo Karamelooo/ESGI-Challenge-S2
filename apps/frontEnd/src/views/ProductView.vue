@@ -1,8 +1,10 @@
 <script setup lang="ts">
-import Form from '@/forms/Form.vue'
-import axios from 'axios'
-import { onMounted, ref } from 'vue'
-import { useRoute, useRouter } from 'vue-router'
+import Form from '@/forms/Form.vue';
+import axios from 'axios';
+import { onMounted, ref } from 'vue';
+import { useRoute, useRouter } from 'vue-router';
+import { useCartStore } from '../stores/cart';
+const cartStore = useCartStore(); 
 
 const route = useRoute()
 const router = useRouter()
@@ -125,7 +127,11 @@ onMounted(() => {
           <button @click="editProduct(product._id)">
             Éditer
           </button>
+          <button @click="cartStore.addToCart({ id: product._id, name: product.name, price: product.price })">
+  Ajouter au panier
+</button>
         </div>
+      
       </div>
       <p v-else>
         Aucun produit disponible
@@ -133,3 +139,4 @@ onMounted(() => {
     </div>
   </div>
 </template>
+../stores/cart.store

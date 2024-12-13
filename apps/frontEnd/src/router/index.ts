@@ -1,5 +1,6 @@
 import PaymentForm from '@/components/PaymentForm.vue'
 import { authMiddleware } from '@/middlewares/auth.middleware'
+import CartView from '@/views/CartView.vue'
 import HomeView from '@/views/HomeView.vue'
 import LoginView from '@/views/LoginView.vue'
 import LogoutView from '@/views/LogoutView.vue'
@@ -45,6 +46,11 @@ const router = createRouter({
       name: 'payment',
       component: PaymentForm,
     },
+    {
+      path: '/cart',
+      name: 'cart',
+      component: CartView,
+    },  
     {
       path: '/about',
       name: 'about',

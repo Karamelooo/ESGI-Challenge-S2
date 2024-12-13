@@ -8,7 +8,9 @@ import Payment from './models/payment.model';
 
 import Stripe from 'stripe';
 import authRoutes from './routes/auth.routes';
+import cartRoutes from './routes/cart.routes';
 import productRoutes from './routes/product.routes';
+
 
 // Initialize Stripe
 const stripe = new Stripe(process.env.STRIPE_SECRET_KEY as string, {
@@ -66,7 +68,6 @@ app.post('/create-payment-intent', async (req: Request, res: Response) => {
 
     await newPayment.save();
 
-    // Respond with the client secret
     res.json({ clientSecret: paymentIntent.client_secret });
   } catch (error) {
     console.error('Error creating payment intent:', error);
@@ -74,7 +75,6 @@ app.post('/create-payment-intent', async (req: Request, res: Response) => {
   }
 });
 
-// Stripe Webhook Endpoint
 const stripeWebhookSecret = process.env.STRIPE_WEBHOOK_SECRET as string;
 
 app.post(
@@ -86,7 +86,7 @@ app.post(
     let event;
 
     try {
-      // Verify the event with Stripe
+  
       event = stripe.webhooks.constructEvent(req.body, sig!, stripeWebhookSecret);
     } catch (err) {
       console.error('Webhook signature verification failed.', err);
@@ -94,11 +94,10 @@ app.post(
       return;
     }
 
-    // Handle the event
+
     switch (event.type) {
       case 'payment_intent.succeeded': {
         const paymentIntent = event.data.object as Stripe.PaymentIntent;
-        // Update the payment status in the database
         Payment.findOneAndUpdate(
           { paymentIntentId: paymentIntent.id },
           { status: paymentIntent.status },
@@ -114,7 +113,6 @@ app.post(
       }
       case 'payment_intent.payment_failed': {
         const paymentIntent = event.data.object as Stripe.PaymentIntent;
-        // Update the payment status in the database
         Payment.findOneAndUpdate(
           { paymentIntentId: paymentIntent.id },
           { status: paymentIntent.status },
@@ -132,7 +130,6 @@ app.post(
         console.log(`Unhandled event type ${event.type}`);
     }
 
-    // Send a response to Stripe
     res.json({ received: true });
   }
 );
@@ -140,6 +137,7 @@ app.post(
 app.use('/auth', authRoutes);
 app.use('/products', productRoutes);
 
+app.use('/api/cart', cartRoutes);
 console.log(authRoutes);
 
 app.listen(8080, () => {

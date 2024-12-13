@@ -1,24 +1,22 @@
-import type { Document, ObjectId } from 'mongoose'
-import mongoose from 'mongoose'
+import mongoose, { Document, Schema } from 'mongoose';
 
 interface IPayment extends Document {
-  order: ObjectId
-  user: ObjectId
-  amount: number
-  paymentMethod: string
-  paymentStatus: string
-  transactionId: string
-  createdAt: Date
+  userId: string;
+  productName: string;
+  amount: number;
+  currency: string;
+  status: string;
+  invoiceUrl: string;
+  createdAt: Date;
 }
 
-const PaymentSchema = new mongoose.Schema({
-  paymentIntentId: { type: String, required: true },
+const PaymentSchema = new Schema<IPayment>({
+  userId: { type: String, required: true },
+  productName: { type: String, required: true },
   amount: { type: Number, required: true },
   currency: { type: String, required: true },
   status: { type: String, required: true },
-  paymentMethod: { type: String, required: false}, 
-  user: { type: mongoose.Schema.Types.ObjectId, ref: 'User', required: false }, 
-  order: { type: mongoose.Schema.Types.ObjectId, ref: 'Order', required: false }, 
+  invoiceUrl: { type: String, required: true },
   createdAt: { type: Date, default: Date.now },
 }); // a retravailler psk je sais pas exactement comment ça fonctionne
 
