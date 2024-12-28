@@ -12,8 +12,8 @@ const navbarContent = [
     route: '/',
   },
   {
-    label: 'About',
-    route: '/about',
+    label: 'Produits',
+    route: '/products',
   },
   {
     label: 'Licenses',
@@ -75,6 +75,9 @@ function handleSearch() {
             </RouterLink>
           </template>
           <template v-else>
+            <RouterLink to="/admin">
+              Admin
+            </RouterLink>
             <RouterLink to="/logout">
               Déconnexion
             </RouterLink>
