@@ -1,4 +1,6 @@
 import { authMiddleware } from '@/middlewares/auth.middleware'
+import AdminView from '@/views/AdminView.vue'
+import AdminProductView from '@/views/AdminProductView.vue'
 import HomeView from '@/views/HomeView.vue'
 import LoginView from '@/views/LoginView.vue'
 import LogoutView from '@/views/LogoutView.vue'
@@ -35,9 +37,19 @@ const router = createRouter({
       component: ProductView,
     },
     {
-      path: '/products/create',
-      name: 'products-create',
-      component: ProductView,
+      path: '/admin',
+      name: 'admin',
+      component: AdminView,
+    },
+    {
+      path: '/admin/products',
+      name: 'admin-products',
+      component: AdminProductView,
+    },
+    {
+      path: '/admin/products/create',
+      name: 'admin-products-create',
+      component: AdminProductView,
     },
     {
       path: '/about',
