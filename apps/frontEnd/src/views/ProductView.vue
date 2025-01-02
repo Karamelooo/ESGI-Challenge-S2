@@ -127,7 +127,7 @@ onMounted(() => {
           <button @click="editProduct(product._id)">
             Éditer
           </button>
-          <button @click="cartStore.addToCart({ id: product._id, name: product.name, price: product.price })">
+          <button @click="cartStore.addToCart({ id: product._id, name: product.name, price: product.price }, )">
   Ajouter au panier
 </button>
         </div>
@@ -139,4 +139,3 @@ onMounted(() => {
     </div>
   </div>
 </template>
-../stores/cart.store
