@@ -54,7 +54,7 @@ const productFields = [
 
 async function fetchProducts() {
   try {
-    const response = await axios.get(`${import.meta.env.VITE_BACK_APP_URL}/products`)
+    const response = await axios.get(`http://localhost:8080/products`)
     products.value = response.data
   }
   catch (error) {
@@ -64,7 +64,7 @@ async function fetchProducts() {
 
 async function editProduct(productId: string) {
   try {
-    const response = await axios.get(`${import.meta.env.VITE_BACK_APP_URL}/products/${productId}`)
+    const response = await axios.get(`http://localhost:8080/products/${productId}`)
     editingProduct.value = response.data
   }
   catch (error) {
