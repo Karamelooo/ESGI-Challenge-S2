@@ -1,5 +1,7 @@
+import type { Request, Response } from 'express';
 import { Router } from 'express';
 import * as cartController from '../controllers/cart.controller';
+
 
 const router = Router();
 
@@ -15,7 +17,7 @@ router.post('/remove', cartController.removeFromCart);
 // Clear cart
 router.post('/clear', cartController.clearCart);
 
-router.get('/test', (req, res) => {
+router.get('/', (req: Request, res: Response) => {
     res.json({ message: 'Cart route is working!' });
   });
 

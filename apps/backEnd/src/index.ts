@@ -137,9 +137,8 @@ app.post(
 app.use('/auth', authRoutes);
 app.use('/products', productRoutes);
 
-app.use('/api/cart', cartRoutes);
-console.log(cartRoutes, "caaart")
-console.log(authRoutes);
+app.use('/cart', cartRoutes);
+//console.log('aaaaaaaaaaaaaaaa', app.router);
 
 app.listen(8080, () => {
   console.log('Server started and listening on port 8080');

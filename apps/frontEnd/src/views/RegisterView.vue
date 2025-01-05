@@ -1,11 +1,11 @@
 <script setup>
-import Form from '@/forms/Form.vue'
-import { showToast } from '@/utils/toast'
-import { useRouter } from 'vue-router'
+import Form from '@/forms/Form.vue';
+import { showToast } from '@/utils/toast';
+import { useRouter } from 'vue-router';
 
 const router = useRouter()
 
-const baseUrl = import.meta.env.VITE_BACK_APP_URL
+const baseUrl = 'http://localhost:8080'
 
 const fields = [
   {
