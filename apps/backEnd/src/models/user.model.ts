@@ -41,6 +41,8 @@ const userSchema = new Schema({
     type: Boolean,
     default: false
   },
+  loginAttempts: { type: Number, default: 0 },
+  lockUntil: { type: Date, default: null },
   resetPasswordToken: String,
   resetPasswordExpiration: Date,
 })
