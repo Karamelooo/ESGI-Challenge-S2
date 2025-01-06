@@ -113,4 +113,4 @@ export async function createUser(req: Request, res: Response): Promise<void> {
   catch (error) {
     res.status(400).json({ message: 'Erreur lors de la création de l\'utilisateur', error })
   }
-} 
+}

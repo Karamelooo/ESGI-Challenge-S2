@@ -98,17 +98,17 @@ onMounted(() => {
 </script>
 
 <template>
-  <div class="create-button-container">
-    <router-link to="/admin/users/create" class="create-button">
-      Créer un utilisateur
-    </router-link>
-  </div>
   <div>
     <h1>Gestion des Utilisateurs</h1>
+    <div class="create-button-container">
+      <router-link to="/admin/users/create" class="create-button">
+        Créer un utilisateur
+      </router-link>
+    </div>
     <Form
       v-if="route.path === '/admin/users/create'"
       :fields="userFields"
-      :submit-url="`${baseUrl}/users/create`"
+      :submit-url="`${baseUrl}/auth/register`"
       method="POST"
       submit-button-text="Créer"
       @submit-success="handleSubmitSuccess"
@@ -194,4 +194,4 @@ onMounted(() => {
 .create-button:hover {
   background-color: #45a049;
 }
-</style> 
+</style>
