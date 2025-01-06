@@ -23,8 +23,24 @@ export async function login(req: Request, res: Response): Promise<any> {
     if (!isPasswordValid) {
       return res.status(409).json({ message: 'Aucune correspondance trouvée' })
     }
-    const token = jwt.sign({ userId: user._id }, process.env.JWT_SECRET || 'secret', { expiresIn: '1h' })
-    return res.status(200).json({ message: 'Connexion réussie', token })
+    const token = jwt.sign(
+      { 
+        userId: user._id,
+        roles: user.roles 
+      }, 
+      process.env.JWT_SECRET || 'secret', 
+      { expiresIn: '1h' }
+    )
+    
+    return res.status(200).json({ 
+      message: 'Connexion réussie', 
+      token,
+      user: {
+        id: user._id,
+        email: user.email,
+        roles: user.roles
+      }
+    })
   }
   catch (error) {
     return res.status(500).json({ message: error })
