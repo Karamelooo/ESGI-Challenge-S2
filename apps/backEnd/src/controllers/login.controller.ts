@@ -14,6 +14,11 @@ export async function login(req: Request, res: Response): Promise<any> {
     if (!user) {
       return res.status(409).json({ message: 'Aucune correspondance trouvée' })
     }
+    if (!user.isActive) {
+      return res.status(409).json({ 
+        message: 'Aucune correspondance trouvée'
+      })
+    }
     const isPasswordValid = await bcrypt.compare(password, user.password)
     if (!isPasswordValid) {
       return res.status(409).json({ message: 'Aucune correspondance trouvée' })
