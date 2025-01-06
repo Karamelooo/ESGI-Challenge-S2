@@ -2,6 +2,9 @@
 import { ref, watch } from 'vue'
 import axios from 'axios'
 
+// Vérifier que l'URL de l'API est bien définie
+console.log('URL API:', import.meta.env.VITE_BACK_APP_URL)
+
 const currentSlide = ref(2)
 const slides = 3 // Nombre total d'images
 
@@ -35,8 +38,10 @@ const error = ref<string | null>(null)
 let timeoutId: NodeJS.Timeout
 async function searchProducts() {
   try {
-    isLoading.value = true
-    error.value = null
+    if (!searchQuery.value.trim()) {
+      searchResults.value = []
+      return
+    }
 
     const apiUrl = `${import.meta.env.VITE_API_URL}/products/search`
     console.log('URL appelée:', apiUrl)
@@ -63,11 +68,7 @@ async function searchProducts() {
   }
   catch (err) {
     console.error("Erreur détaillée:", err)
-    error.value = "Erreur lors de la recherche"
     searchResults.value = []
-  }
-  finally {
-    isLoading.value = false
   }
 }
 
@@ -150,29 +151,20 @@ watch(searchQuery, () => {
       <input 
         type="text"
         v-model="searchQuery"
-        placeholder="Rechercher un produit..."
+        placeholder="Rechercher par nom ou description..."
         class="search-input"
       >
       
-      <div v-if="isLoading" class="search-loading">
-        Recherche en cours...
+      <div v-if="searchQuery && searchResults.length > 0" class="search-results">
+        <div v-for="product in searchResults" 
+             :key="product._id" 
+             class="search-result-item">
+          <div class="product-info">
+            <h4>{{ product.name || 'Sans nom' }}</h4>
+            <p>{{ product.description || 'Pas de description' }}</p>
+          </div>
+        </div>
       </div>
-      
-      <div v-else-if="error" class="search-error">
-        {{ error }}
-      </div>
-      
-  <div v-else-if="searchQuery && searchResults.length > 0" class="search-results">
-    <div v-for="product in searchResults" 
-         :key="product._id" 
-         class="search-result-item">
-      <div class="product-info">
-        <h4>{{ product.name || 'Sans nom' }}</h4>
-        <p class="description">{{ product.description || 'Pas de description' }}</p>
-        <p class="price" v-if="product.price">{{ product.price.toFixed(2) }}€</p>
-      </div>
-    </div>
-  </div>
       
       <div v-else-if="searchQuery" class="no-results">
         Aucun résultat trouvé
