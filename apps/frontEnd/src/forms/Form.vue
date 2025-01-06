@@ -98,7 +98,8 @@ async function handleSubmit() {
     emit('submitSuccess', response.data)
   }
   catch (error: any) {
-    emit('submitError', error.message)
+    const errorMessage = error.response?.data?.message || error.message || 'Une erreur est survenue'
+    emit('submitError', errorMessage)
   }
 }
 </script>
