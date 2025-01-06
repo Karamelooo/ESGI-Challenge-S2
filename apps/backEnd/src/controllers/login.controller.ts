@@ -3,6 +3,7 @@ import process from 'node:process'
 import bcrypt from 'bcrypt'
 import jwt from 'jsonwebtoken'
 import User from '../models/user.model'
+import { sendLockoutEmail } from '../services/email.service'
 
 export async function login(req: Request, res: Response): Promise<any> {
   try {
@@ -19,10 +20,34 @@ export async function login(req: Request, res: Response): Promise<any> {
         message: 'Aucune correspondance trouvée'
       })
     }
+    if (user.lockUntil && user.lockUntil <= new Date()) {
+      user.loginAttempts = 0
+      user.lockUntil = null
+      await user.save()
+    }
+    else if (user.lockUntil && user.lockUntil > new Date()) {
+      return res.status(423).json({ 
+        message: 'Essai sur cet email bloqué. Veuillez réessayer plus tard.' 
+      })
+    }
     const isPasswordValid = await bcrypt.compare(password, user.password)
     if (!isPasswordValid) {
+      user.loginAttempts += 1
+      
+      if (user.loginAttempts >= 3) {
+        const lockUntil = new Date()
+        lockUntil.setMinutes(lockUntil.getMinutes() + 30)
+        user.lockUntil = lockUntil
+        await sendLockoutEmail(user.email, lockUntil)
+      }
+      
+      await user.save()
+      
       return res.status(409).json({ message: 'Aucune correspondance trouvée' })
     }
+    user.loginAttempts = 0
+    user.lockUntil = null
+    await user.save()
     const token = jwt.sign(
       { 
         userId: user._id,
