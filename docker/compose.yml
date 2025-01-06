@@ -33,7 +33,7 @@ services:
     container_name: back_end
     profiles: ["back-only", "all"]
     ports:
-      - "8080:8080"
+      - "9080:8080"
     working_dir: /app
     volumes:
       - ../apps/backEnd:/app
@@ -58,7 +58,7 @@ services:
       - ME_CONFIG_BASICAUTH_USERNAME=${WVDB_USERNAME}
       - ME_CONFIG_BASICAUTH_PASSWORD=${WVDB_PASSWORD}
     ports:
-      - "8082:8081"
+      - "9082:8081"
     depends_on:
       - database
 
