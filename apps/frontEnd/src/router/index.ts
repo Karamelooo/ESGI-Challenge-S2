@@ -78,6 +78,16 @@ const router = createRouter({
       // which is lazy-loaded when the route is visited.
       component: () => import('../views/AboutView.vue'),
       beforeEnter: authMiddleware,
+    },
+    {
+      path: '/request-reset-password',
+      name: 'request-reset-password',
+      component: () => import('@/views/RequestResetPasswordView.vue')
+    },
+    {
+      path: '/reset-password/:token',
+      name: 'reset-password',
+      component: () => import('@/views/ResetPasswordView.vue')
     }
   ],
 })

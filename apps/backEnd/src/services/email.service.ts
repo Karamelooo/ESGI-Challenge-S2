@@ -39,3 +39,19 @@ export async function sendLockoutEmail(email: string, lockUntil: Date) {
     `
   })
 }
+
+export async function sendResetPasswordEmail(email: string, token: string) {
+  const resetLink = `${process.env.FRONT_APP_URL}/reset-password/${token}`
+
+  await transporter.sendMail({
+    from: '"Deckorama" <noreply@deckorama.com>',
+    to: email,
+    subject: "Deckorama - Réinitialisation de votre mot de passe",
+    html: `
+      <h1>Réinitialisation de votre mot de passe</h1>
+      <p>Pour réinitialiser votre mot de passe, veuillez cliquer sur le lien suivant :</p>
+      <a href="${resetLink}">Réinitialiser mon mot de passe</a>
+      <p>Ce lien expire dans 1 heure.</p>
+    `
+  })
+}
