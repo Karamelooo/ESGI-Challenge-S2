@@ -7,6 +7,7 @@ import LogoutView from '@/views/LogoutView.vue'
 import ProductView from '@/views/ProductView.vue'
 import RegisterView from '@/views/RegisterView.vue'
 import ConfirmEmailView from '@/views/ConfirmEmailView.vue'
+import AdminUserView from '@/views/AdminUserView.vue'
 import { createRouter, createWebHistory } from 'vue-router'
 
 const router = createRouter({
@@ -56,6 +57,16 @@ const router = createRouter({
       path: '/confirm-email/:token',
       name: 'confirm-email',
       component: ConfirmEmailView,
+    },
+    {
+      path: '/admin/users',
+      name: 'admin-users',
+      component: AdminUserView,
+    },
+    {
+      path: '/admin/users/create',
+      name: 'admin-users-create',
+      component: AdminUserView,
     },
     {
       path: '/about',
