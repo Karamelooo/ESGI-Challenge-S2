@@ -1,6 +1,8 @@
 import type { Request, Response } from 'express'
 import bcrypt from 'bcrypt'
 import User from '../models/user.model'
+import crypto from 'crypto'
+import { sendConfirmationEmail } from '../services/email.service'
 
 export async function register(req: Request, res: Response): Promise<any> {
   try {
@@ -28,12 +30,29 @@ export async function register(req: Request, res: Response): Promise<any> {
       return res.status(409).json({ message: 'Cet utilisateur existe déjà' })
     }
 
+    const confirmationToken = crypto.randomBytes(32).toString('hex')
+    const tokenExpiration = new Date()
+    tokenExpiration.setHours(tokenExpiration.getHours() + 24)
+
     const saltRounds = 10
     const hashedPassword = await bcrypt.hash(password, saltRounds)
 
-    const newUser = new User({ firstname, lastname, email, password: hashedPassword })
+    const newUser = new User({
+      firstname,
+      lastname,
+      email,
+      password: hashedPassword,
+      confirmationToken,
+      confirmationTokenExpiration: tokenExpiration,
+      isActive: false
+    })
     await newUser.save()
-    return res.status(200).json({ message: `Utilisateur créé avec l'adresse email suivante : ${newUser.email}` })
+
+    await sendConfirmationEmail(email, confirmationToken)
+
+    return res.status(200).json({ 
+      message: 'Un email de confirmation a été envoyé à votre adresse email. Veuillez cliquer sur le lien pour activer votre compte.'
+    })
   }
   catch (error) {
     return res.status(500).json({ message: error })

@@ -6,6 +6,7 @@ import LoginView from '@/views/LoginView.vue'
 import LogoutView from '@/views/LogoutView.vue'
 import ProductView from '@/views/ProductView.vue'
 import RegisterView from '@/views/RegisterView.vue'
+import ConfirmEmailView from '@/views/ConfirmEmailView.vue'
 import { createRouter, createWebHistory } from 'vue-router'
 
 const router = createRouter({
@@ -52,6 +53,11 @@ const router = createRouter({
       component: AdminProductView,
     },
     {
+      path: '/confirm-email/:token',
+      name: 'confirm-email',
+      component: ConfirmEmailView,
+    },
+    {
       path: '/about',
       name: 'about',
       // route level code-splitting
@@ -59,7 +65,7 @@ const router = createRouter({
       // which is lazy-loaded when the route is visited.
       component: () => import('../views/AboutView.vue'),
       beforeEnter: authMiddleware,
-    },
+    }
   ],
 })
 

@@ -16,7 +16,6 @@ services:
     image: mongo:latest
     container_name: database
     profiles: ["database-only", "back-only", "all"]
-    restart: always
     ports:
       - "27017:27017"
     env_file:
@@ -47,7 +46,6 @@ services:
     image: mongo-express:latest
     container_name: db_webviewer
     profiles: ["database-only", "back-only", "all"]
-    restart: always
     env_file:
       - .env  # Ajout de l'env_file
     environment:
