@@ -1,13 +1,14 @@
 <script setup lang="ts">
 import Header from '@/components/Header.vue'
 import { RouterView } from 'vue-router'
+import CookiePopup from './components/CookiePopup.vue'
 </script>
 
 <template>
   <header>
     <Header />
   </header>
-
+  <CookiePopup />
   <RouterView />
 </template>
 
