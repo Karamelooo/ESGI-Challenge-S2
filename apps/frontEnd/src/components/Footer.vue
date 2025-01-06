@@ -4,9 +4,11 @@ export default {
   data() {
     return {
       legalDocuments: {
-        terms: '/path/to/terms_of_service.pdf',
-        privacy: '/path/to/privacy_policy.pdf',
-        cookies: '/path/to/cookie_policy.pdf',
+        cgu: '../assets/legals/CGU.pdf',
+        cgv: '../assets/legals/CGV.pdf"',
+        mentions: '../assets/legals/mentions-legales.pdf',
+        confidentialite: '../assets/legals/politique-de-confidentialité.pdf',
+        marque: '../assets/legals/placeholder.pdf',
       },
     }
   },
@@ -17,16 +19,18 @@ export default {
   <footer class="container">
     <nav>
       <ul>
-        <li><a :href="legalDocuments.terms" download="../assets/legals/CGU.pdf">Conditions d'utilisation</a></li>
-        <li><a :href="legalDocuments.privacy" download="../assets/legals/CGV.pdf">Conditions Générales de Vente</a></li>
-        <li><a :href="legalDocuments.cookies" download="../assets/legals/mentions-legales.pdf">Mentions Légales</a></li>
+        <li><a :href="legalDocuments.cgu" download="../assets/legals/CGU.pdf">Conditions d'utilisation</a></li>
+        <li><a :href="legalDocuments.cgv" download="../assets/legals/CGV.pdf">Conditions Générales de Vente</a></li>
+        <li><a :href="legalDocuments.mentions" download="../assets/legals/mentions-legales.pdf">Mentions Légales</a></li>
+        <li><a :href="legalDocuments.confidentialite" download="../assets/legals/politique-de-confidentialité.pdf">Politique de confidentialité</a></li>
+        <li><a :href="legalDocuments.marque" download="../assets/legals/placeholder.pdf">Dépot de marque</a></li>
       </ul>
     </nav>
     <p class="message">
-      Fait avec ❤️ et beaucoup de ☕️
+      Fait avec le ❤️ et beaucoup de ☕️
     </p>
     <p class="trademark">
-      Deckorama&reg;
+      Copyright Deckorama &copy {{ new Date().getFullYear() }}
     </p>
   </footer>
 </template>
