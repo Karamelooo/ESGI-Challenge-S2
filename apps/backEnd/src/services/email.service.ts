@@ -26,3 +26,16 @@ export async function sendConfirmationEmail(email: string, token: string) {
     `
   })
 }
+
+export async function sendLockoutEmail(email: string, lockUntil: Date) {
+  await transporter.sendMail({
+    from: '"Deckorama" <noreply@deckorama.com>',
+    to: email,
+    subject: "Deckorama - Compte temporairement bloqué",
+    html: `
+      <h1>Compte temporairement bloqué</h1>
+      <p>Suite à plusieurs tentatives de connexion échouées, votre compte a été temporairement bloqué.</p>
+      <p>Vous pourrez réessayer de vous connecter à partir de : ${lockUntil.toLocaleString()}</p>
+    `
+  })
+}
