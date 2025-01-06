@@ -6,7 +6,18 @@ import LoginView from '@/views/LoginView.vue'
 import LogoutView from '@/views/LogoutView.vue'
 import ProductView from '@/views/ProductView.vue'
 import RegisterView from '@/views/RegisterView.vue'
+import ConfirmEmailView from '@/views/ConfirmEmailView.vue'
 import { createRouter, createWebHistory } from 'vue-router'
+import { useAuthStore } from '@/stores/auth'
+
+const adminGuard = (to, from, next) => {
+  const authStore = useAuthStore()
+  if (!authStore.isAdmin) {
+    next('/')
+    return
+  }
+  next()
+}
 
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
@@ -40,16 +51,24 @@ const router = createRouter({
       path: '/admin',
       name: 'admin',
       component: AdminView,
+      beforeEnter: adminGuard,
+      children: [
+        {
+          path: 'products',
+          name: 'admin-products',
+          component: AdminProductView,
+        },
+        {
+          path: 'products/create',
+          name: 'admin-products-create',
+          component: AdminProductView,
+        }
+      ]
     },
     {
-      path: '/admin/products',
-      name: 'admin-products',
-      component: AdminProductView,
-    },
-    {
-      path: '/admin/products/create',
-      name: 'admin-products-create',
-      component: AdminProductView,
+      path: '/confirm-email/:token',
+      name: 'confirm-email',
+      component: ConfirmEmailView,
     },
     {
       path: '/about',
@@ -59,7 +78,7 @@ const router = createRouter({
       // which is lazy-loaded when the route is visited.
       component: () => import('../views/AboutView.vue'),
       beforeEnter: authMiddleware,
-    },
+    }
   ],
 })
 

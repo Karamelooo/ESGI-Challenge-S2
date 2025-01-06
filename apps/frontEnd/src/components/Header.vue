@@ -2,6 +2,7 @@
 import { onMounted, ref, watch } from 'vue'
 import { RouterLink, useRouter } from 'vue-router'
 import { authMiddleware } from '../middlewares/auth.middleware'
+import { useAuthStore } from '@/stores/auth'
 
 const isLoggedIn = ref(false)
 const router = useRouter()
@@ -30,6 +31,8 @@ const navbarContent = [
     ],
   },
 ]
+
+const authStore = useAuthStore()
 
 onMounted(() => {
   isLoggedIn.value = authMiddleware()
@@ -75,7 +78,7 @@ function handleSearch() {
             </RouterLink>
           </template>
           <template v-else>
-            <RouterLink to="/admin">
+            <RouterLink v-if="authStore.isAdmin" to="/admin">
               Admin
             </RouterLink>
             <RouterLink to="/logout">
