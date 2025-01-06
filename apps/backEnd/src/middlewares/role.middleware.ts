@@ -2,11 +2,12 @@ import type { Request, Response, NextFunction } from 'express'
 import jwt from 'jsonwebtoken'
 
 export const checkRole = (roles: string[]) => {
-  return (req: Request, res: Response, next: NextFunction) => {
+  return async (req: Request, res: Response, next: NextFunction): Promise<void> => {
     const token = req.headers.authorization?.split(' ')[1]
     
     if (!token) {
-      return res.status(401).json({ message: 'Token manquant' })
+      res.status(401).json({ message: 'Token manquant' })
+      return
     }
 
     try {
@@ -15,12 +16,14 @@ export const checkRole = (roles: string[]) => {
 
       const hasRole = roles.some(role => userRoles.includes(role))
       if (!hasRole) {
-        return res.status(403).json({ message: 'Accès non autorisé' })
+        res.status(403).json({ message: 'Accès non autorisé' })
+        return
       }
 
       next()
     } catch (error) {
-      return res.status(401).json({ message: 'Token invalide' })
+      res.status(401).json({ message: 'Token invalide' })
+      return
     }
   }
 }

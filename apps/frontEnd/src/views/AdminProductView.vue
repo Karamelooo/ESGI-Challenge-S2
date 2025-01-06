@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import Form from '@/forms/Form.vue'
-import axios from 'axios'
+import api from '@/services/api'
 import { onMounted, ref } from 'vue'
 import { useRoute, useRouter } from 'vue-router'
 
@@ -52,7 +52,7 @@ const productFields = [
 
 async function fetchProducts() {
   try {
-    const response = await axios.get(`${import.meta.env.VITE_BACK_APP_URL}/products`)
+    const response = await api.get('/products')
     products.value = response.data
   }
   catch (error) {
@@ -62,7 +62,7 @@ async function fetchProducts() {
 
 async function editProduct(productId: string) {
   try {
-    const response = await axios.get(`${import.meta.env.VITE_BACK_APP_URL}/products/${productId}`)
+    const response = await api.get(`/products/${productId}`)
     editingProduct.value = response.data
   }
   catch (error) {

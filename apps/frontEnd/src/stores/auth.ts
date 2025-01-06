@@ -14,7 +14,6 @@ export const useAuthStore = defineStore('auth', {
 
   getters: {
     isAdmin: (state) => {
-      console.log('Vérification isAdmin:', state.user?.roles)
       return state.user?.roles ? state.user.roles.includes('ROLE_ADMIN') : false
     },
     isUser: (state) => {
@@ -25,8 +24,8 @@ export const useAuthStore = defineStore('auth', {
 
   actions: {
     setUser(userData: User) {
-      console.log('Setting user with roles:', userData)
       this.user = userData
+      localStorage.setItem('user', JSON.stringify(userData))
     },
 
     setToken(token: string) {
@@ -38,6 +37,14 @@ export const useAuthStore = defineStore('auth', {
       this.user = null
       this.token = null
       localStorage.removeItem('token')
+      localStorage.removeItem('user')
+    },
+
+    initializeStore() {
+      const userStr = localStorage.getItem('user')
+      if (userStr) {
+        this.user = JSON.parse(userStr)
+      }
     }
   }
 }) 
