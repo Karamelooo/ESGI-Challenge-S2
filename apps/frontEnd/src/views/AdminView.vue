@@ -17,7 +17,7 @@ import { ref } from 'vue'
       </ul>
     </nav>
     <main>
-        Dashboard ici
+      <router-view></router-view>
     </main>
   </div>
 </template>

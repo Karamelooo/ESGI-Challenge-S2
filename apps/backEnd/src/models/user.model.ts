@@ -6,7 +6,7 @@ interface IUser extends Document {
   lastname: string
   email: string
   password: string
-  roles: object
+  roles: string[]
   address: object
   createdAt: Date
   confirmationToken: string
@@ -19,7 +19,11 @@ const userSchema = new Schema({
   lastname: { type: String, required: true },
   email: { type: String, required: true, unique: true },
   password: { type: String, required: true },
-  roles: [{ type: Schema.Types.ObjectId, ref: 'Role' }],
+  roles: {
+    type: [String],
+    default: ['ROLE_USER'],
+    enum: ['ROLE_USER', 'ROLE_ADMIN']
+  },
   address: {
     street: String,
     city: String,
