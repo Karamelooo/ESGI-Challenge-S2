@@ -53,11 +53,18 @@ function handleError(error) {
 </script>
 
 <template>
-  <Form
-    :fields="fields"
-    :submit-url="`${baseUrl}/auth/login`"
-    submit-button-text="Se connecter"
-    @submit-success="handleSuccess"
-    @submit-error="handleError"
-  />
+  <div>
+    <Form
+      :fields="fields"
+      :submit-url="`${baseUrl}/auth/login`"
+      submit-button-text="Se connecter"
+      @submit-success="handleSuccess"
+      @submit-error="handleError"
+    />
+    <div class="password-reset-link">
+      <router-link to="/request-reset-password">
+        Mot de passe oublié ?
+      </router-link>
+    </div>
+  </div>
 </template>

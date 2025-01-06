@@ -14,6 +14,8 @@ interface IUser extends Document {
   isActive: boolean
   loginAttempts: number
   lockUntil: Date | null
+  resetPasswordToken: string
+  resetPasswordExpiration: Date
 }
 
 const userSchema = new Schema({
@@ -39,8 +41,8 @@ const userSchema = new Schema({
     type: Boolean,
     default: false
   },
-  loginAttempts: { type: Number, default: 0 },
-  lockUntil: { type: Date, default: null }
+  resetPasswordToken: String,
+  resetPasswordExpiration: Date,
 })
 
 const User = mongoose.model<IUser>('User', userSchema)
