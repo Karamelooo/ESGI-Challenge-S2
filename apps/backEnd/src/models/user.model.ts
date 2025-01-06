@@ -9,6 +9,9 @@ interface IUser extends Document {
   roles: object
   address: object
   createdAt: Date
+  confirmationToken: string
+  confirmationTokenExpiration: Date
+  isActive: boolean
 }
 
 const userSchema = new Schema({
@@ -24,6 +27,12 @@ const userSchema = new Schema({
     country: String,
   },
   createdAt: { type: Date, default: Date.now },
+  confirmationToken: String,
+  confirmationTokenExpiration: Date,
+  isActive: {
+    type: Boolean,
+    default: false
+  }
 })
 
 const User = mongoose.model<IUser>('User', userSchema)
