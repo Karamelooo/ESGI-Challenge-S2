@@ -42,21 +42,21 @@ onMounted(() => {
   formData.value = { ...props.initialData }
 })
 
-function validateField(field: Field, value: any) {
+function validateField(field: Field, value: any): boolean {
   if (!field.validation)
     return true
 
-  if (field.validation.required && !value) {
+  if (field.validation.required && !value)
     return false
-  }
 
-  if (field.validation.pattern && !field.validation.pattern.test(value)) {
-    return false
-  }
+  if (!field.required && !value)
+    return true
 
-  if (field.validation.matchField && value !== formData.value[field.validation.matchField]) {
+  if (field.validation.pattern && value && !field.validation.pattern.test(value))
     return false
-  }
+
+  if (field.validation.matchField && value !== formData.value[field.validation.matchField])
+    return false
 
   return true
 }

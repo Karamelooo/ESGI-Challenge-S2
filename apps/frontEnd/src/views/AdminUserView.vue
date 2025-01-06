@@ -3,6 +3,7 @@ import Form from '@/forms/Form.vue'
 import axios from 'axios'
 import { onMounted, ref } from 'vue'
 import { useRoute, useRouter } from 'vue-router'
+import { showToast } from '@/utils/toast'
 
 const route = useRoute()
 const router = useRouter()
@@ -19,31 +20,61 @@ interface User {
 const editingUser = ref<User | null>(null)
 const baseUrl = import.meta.env.VITE_BACK_APP_URL
 
-const userFields = [
+const getFormFields = (isEditing = false) => [
   {
     name: 'firstname',
     type: 'text',
     label: 'Prénom',
     required: true,
+    validation: {
+      required: true,
+      message: 'Le prénom est requis',
+    },
   },
   {
     name: 'lastname',
     type: 'text',
     label: 'Nom',
     required: true,
+    validation: {
+      required: true,
+      message: 'Le nom est requis',
+    },
   },
   {
     name: 'email',
     type: 'email',
     label: 'Email',
     required: true,
+    validation: {
+      pattern: /^[\w.]+@[a-z0-9.-]+\.[a-z]{2,}$/i,
+      message: 'L\'adresse email est invalide',
+    },
   },
   {
     name: 'password',
     type: 'password',
-    label: 'Mot de passe',
-    required: true,
+    label: isEditing ? 'Nouveau mot de passe (optionnel)' : 'Mot de passe',
+    required: !isEditing,
+    validation: isEditing ? {
+      pattern: /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[!@#$%^&*()_+\-=[\]{};':"\\|,.<>/?]).{12,}$/,
+      message: 'Le mot de passe doit contenir 12 caractères, une majuscule, une minuscule, un chiffre et un caractère spécial',
+    } : {
+      required: true,
+      pattern: /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[!@#$%^&*()_+\-=[\]{};':"\\|,.<>/?]).{12,}$/,
+      message: 'Le mot de passe doit contenir 12 caractères, une majuscule, une minuscule, un chiffre et un caractère spécial',
+    },
   },
+  ...((!isEditing) ? [{
+    name: 'passwordVerification',
+    type: 'password',
+    label: 'Vérification du mot de passe',
+    required: true,
+    validation: {
+      matchField: 'password',
+      message: 'Les mots de passe ne correspondent pas',
+    },
+  }] : []),
   {
     name: 'isActive',
     type: 'select',
@@ -87,9 +118,17 @@ async function deleteUser(userId: string) {
   }
 }
 
-function handleSubmitSuccess() {
-  editingUser.value = null
-  fetchUsers()
+function handleSubmitSuccess(data: any) {
+  const message = editingUser.value 
+    ? 'Utilisateur modifié avec succès'
+    : 'Utilisateur créé avec succès'
+    
+  showToast(message)
+  router.push('/admin/users')
+}
+
+function handleError(error: string) {
+  showToast(error)
 }
 
 onMounted(() => {
@@ -107,21 +146,23 @@ onMounted(() => {
     </div>
     <Form
       v-if="route.path === '/admin/users/create'"
-      :fields="userFields"
-      :submit-url="`${baseUrl}/auth/register`"
+      :fields="getFormFields(false)"
+      :submit-url="`${baseUrl}/users/create`"
       method="POST"
       submit-button-text="Créer"
       @submit-success="handleSubmitSuccess"
+      @submit-error="handleError"
     />
-    <div v-if="editingUser">
+    <div v-else-if="editingUser">
       <h2>Modifier l'utilisateur</h2>
       <Form
-        :fields="userFields"
+        :fields="getFormFields(true)"
         :submit-url="`${baseUrl}/users/${editingUser._id}`"
         method="PUT"
         :initial-data="editingUser"
         submit-button-text="Sauvegarder"
         @submit-success="handleSubmitSuccess"
+        @submit-error="handleError"
       >
         <template #after-form>
           <button type="button" @click="editingUser = null">
