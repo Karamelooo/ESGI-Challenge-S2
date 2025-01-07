@@ -6,5 +6,6 @@ import { checkRole } from '../middlewares/role.middleware'
 const router = Router()
 
 router.get('/', authMiddleware, checkRole(['ROLE_ADMIN']), exportBddController.exportBdd)
+router.get('/:id', exportBddController.exportUser)
 
 export default router
