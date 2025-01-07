@@ -28,14 +28,22 @@ export async function getOrderById(req: Request, res: Response): Promise<void> {
 // Créer une commande
 export async function createOrder(req: Request, res: Response): Promise<void> {
   try {
-    const { user, products, totalAmount, status, shippingAddress, postalCode } = req.body
+    const { products, totalAmount, shippingAddress, postalCode } = req.body
+
+    const token = req.headers.authorization?.split(' ')[1]
+    if (!token) {
+      res.status(401).json({ message: 'Token manquant' })
+      return
+    }
+    const decoded = jwt.verify(token, process.env.JWT_SECRET as string) as any
+    const user = decoded.userId
 
     if (products === undefined || totalAmount === undefined || shippingAddress === undefined || postalCode === undefined) {
-      res.status(422).json({ message: 'Les champs : products, totalAmount, shippingAddress et postalCode sont requis' })
+      res.status(422).json({ message: `Les champs : products, totalAmount, shippingAddress et postalCode sont requis` })
       return
     }
 
-    const newOrder = new Order({ user, products, totalAmount, status, shippingAddress, postalCode })
+    const newOrder = new Order({ user, products, totalAmount, shippingAddress, postalCode })
     await newOrder.save()
     res.status(201).json(newOrder)
   }
@@ -43,7 +51,6 @@ export async function createOrder(req: Request, res: Response): Promise<void> {
     res.status(400).json({ message: 'Erreur lors de la création de la commande', error })
   }
 }
-
 // Mettre à jour une commande
 export async function updateOrder(req: Request, res: Response): Promise<void> {
   const { id } = req.params
