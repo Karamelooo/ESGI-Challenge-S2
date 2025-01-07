@@ -5,6 +5,7 @@ import express from 'express'
 import mongoose from 'mongoose'
 import path from 'node:path'
 import authRoutes from './routes/auth.routes'
+import exportbddRoutes from './routes/exportbdd.routes'
 import cartRoutes from './routes/cart.routes'
 import orderRoutes from './routes/order.routes'
 import paymentRoutes from './routes/payment.routes'
@@ -35,6 +36,7 @@ app.get('/test', (req: Request, res: Response) => {
 app.use('/auth', authRoutes)
 app.use('/products', productRoutes)
 app.use('/orders', orderRoutes)
+app.use('/exportbdd', exportbddRoutes)
 
 app.use('/uploads', express.static(path.join(__dirname, '../../uploads')))
 
