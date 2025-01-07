@@ -14,11 +14,21 @@ export function authMiddleware(req: AuthRequest, res: Response, next: NextFuncti
       return
     }
 
-    const decodedToken = jwt.verify(token, process.env.JWT_SECRET as string) as jwt.JwtPayload & { userId: string }
+    const secret = process.env.JWT_SECRET
+    if (!secret) {
+      throw new Error('Configuration JWT manquante sur le serveur')
+    }
+
+    const decodedToken = jwt.verify(token, secret) as jwt.JwtPayload & { userId: string }
     req.userId = decodedToken.userId
     next()
   }
   catch (error) {
-    res.status(401).json({ message: error })
+    if (error instanceof Error) {
+      res.status(401).json({ message: error.message })
+    }
+    else {
+      res.status(401).json({ message: 'Erreur d\'authentification' })
+    }
   }
 }

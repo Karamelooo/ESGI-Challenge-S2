@@ -1,6 +1,17 @@
 <script setup lang="ts">
+import Footer from '@/components/Footer.vue'
 import Header from '@/components/Header.vue'
+import { useAuthStore } from '@/stores/auth'
+import { onMounted } from 'vue'
 import { RouterView } from 'vue-router'
+import CookiePopup from './components/CookiePopup.vue'
+import '@/plugins/axios'
+
+const authStore = useAuthStore()
+
+onMounted(() => {
+  authStore.initializeStore()
+})
 </script>
 
 <template>
@@ -8,7 +19,11 @@ import { RouterView } from 'vue-router'
     <Header />
   </header>
 
+  <CookiePopup />
+
   <RouterView />
+
+  <Footer />
 </template>
 
 <style scoped>

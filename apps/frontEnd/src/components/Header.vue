@@ -1,4 +1,5 @@
 <script setup lang="ts">
+import { useAuthStore } from '@/stores/auth'
 import { onMounted, ref, watch } from 'vue'
 import { RouterLink, useRouter } from 'vue-router'
 import { authMiddleware } from '../middlewares/auth.middleware'
@@ -12,24 +13,12 @@ const navbarContent = [
     route: '/',
   },
   {
-    label: 'About',
-    route: '/about',
-  },
-  {
-    label: 'Licenses',
-    route: '/licenses',
-    sub: [
-      {
-        label: 'pokemon',
-        route: '/license/pokemon',
-      },
-      {
-        label: 'Magic',
-        route: '/license/magic',
-      },
-    ],
+    label: 'Produits',
+    route: '/products',
   },
 ]
+
+const authStore = useAuthStore()
 
 onMounted(() => {
   isLoggedIn.value = authMiddleware()
@@ -75,6 +64,15 @@ function handleSearch() {
             </RouterLink>
           </template>
           <template v-else>
+            <RouterLink v-if="authStore.isAdmin" to="/admin">
+              Admin
+            </RouterLink>
+            <RouterLink to="/cart">
+              Panier
+            </RouterLink>
+            <RouterLink to="/orders">
+              Historique des commandes
+            </RouterLink>
             <RouterLink to="/logout">
               Déconnexion
             </RouterLink>

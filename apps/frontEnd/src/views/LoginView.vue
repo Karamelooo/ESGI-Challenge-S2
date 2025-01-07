@@ -2,9 +2,12 @@
 import Form from '@/forms/Form.vue'
 import { showToast } from '@/utils/toast'
 import { useRouter } from 'vue-router'
+import { useAuthStore } from '@/stores/auth'
 
 const router = useRouter()
 const baseUrl = import.meta.env.VITE_BACK_APP_URL
+
+const authStore = useAuthStore()
 
 const fields = [
   {
@@ -32,7 +35,14 @@ const fields = [
 ]
 
 function handleSuccess(data) {
-  localStorage.setItem('token', data.token)
+  authStore.setToken(data.token)
+  if (data.user) {
+    authStore.setUser({
+      id: data.user.id,
+      email: data.user.email,
+      roles: data.user.roles
+    })
+  }
   showToast(data.message)
   router.push('/')
 }
@@ -50,4 +60,9 @@ function handleError(error) {
     @submit-success="handleSuccess"
     @submit-error="handleError"
   />
+  <div class="reset-password-link">
+    <router-link to="/reset-password-request">
+      Mot de passe oublié ?
+    </router-link>
+  </div>
 </template>

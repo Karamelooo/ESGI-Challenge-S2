@@ -1,5 +1,6 @@
 <script setup lang="ts">
 import { onMounted, ref } from 'vue'
+import api from '@/services/api'
 
 interface Validation {
   pattern?: RegExp
@@ -16,6 +17,8 @@ interface Field {
   placeholder?: string
   options?: Array<{ value: any, label: string }>
   validation?: Validation
+  multiple?: boolean
+  accept?: string
 }
 
 interface Props {
@@ -37,26 +40,27 @@ const emit = defineEmits(['submitSuccess', 'submitError'])
 const formData = ref<Record<string, any>>({})
 const errors = ref<Record<string, string>>({})
 const touched = ref<Record<string, boolean>>({})
+const filePreview = ref<Record<string, string[]>>({})
 
 onMounted(() => {
   formData.value = { ...props.initialData }
 })
 
-function validateField(field: Field, value: any) {
+function validateField(field: Field, value: any): boolean {
   if (!field.validation)
     return true
 
-  if (field.validation.required && !value) {
+  if (field.validation.required && !value)
     return false
-  }
 
-  if (field.validation.pattern && !field.validation.pattern.test(value)) {
-    return false
-  }
+  if (!field.required && !value)
+    return true
 
-  if (field.validation.matchField && value !== formData.value[field.validation.matchField]) {
+  if (field.validation.pattern && value && !field.validation.pattern.test(value))
     return false
-  }
+
+  if (field.validation.matchField && value !== formData.value[field.validation.matchField])
+    return false
 
   return true
 }
@@ -76,29 +80,70 @@ function isFormValid() {
   return props.fields.every(field => validateField(field, formData.value[field.name]))
 }
 
+async function handleFileChange(event: Event, fieldName: string) {
+  const input = event.target as HTMLInputElement
+  const files = input.files
+  
+  if (!files) return
+  
+  formData.value[fieldName] = []
+  filePreview.value[fieldName] = []
+  
+  for (const file of files) {
+    const reader = new FileReader()
+    reader.onload = (e) => {
+      if (e.target?.result) {
+        filePreview.value[fieldName].push(e.target.result as string)
+      }
+    }
+    reader.readAsDataURL(file)
+    
+    formData.value[fieldName].push(file)
+  }
+}
+
 async function handleSubmit() {
-  if (!isFormValid())
-    return
+  if (!isFormValid()) return
 
   try {
-    const response = await fetch(props.submitUrl, {
-      method: props.method,
-      headers: {
-        'Content-Type': 'application/json',
-      },
-      body: JSON.stringify(formData.value),
-    })
+    const hasFiles = Object.values(formData.value).some(value => 
+      Array.isArray(value) && value[0] instanceof File
+    )
 
-    const data = await response.json()
+    let dataToSend: FormData | Record<string, any>
+    let headers: Record<string, string> = {}
 
-    if (!response.ok) {
-      throw new Error(data.message || 'Erreur lors de la soumission du formulaire')
+    if (hasFiles) {
+      dataToSend = new FormData()
+      for (const [key, value] of Object.entries(formData.value)) {
+        if (Array.isArray(value) && value[0] instanceof File) {
+          value.forEach((file) => {
+            dataToSend.append('images', file)
+          })
+        } else {
+          dataToSend.append(key, value)
+        }
+      }
+    } else {
+      dataToSend = formData.value
+      headers['Content-Type'] = 'application/json'
     }
 
-    emit('submitSuccess', data)
-  }
-  catch (error: any) {
-    emit('submitError', error.message)
+    const response = await api.request({
+      url: props.submitUrl,
+      method: props.method,
+      data: dataToSend,
+      headers
+    })
+
+    if (!response.data) {
+      throw new Error('Erreur lors de la soumission du formulaire')
+    }
+
+    emit('submitSuccess', response.data)
+  } catch (error: any) {
+    const errorMessage = error.response?.data?.message || error.message || 'Une erreur est survenue'
+    emit('submitError', errorMessage)
   }
 }
 </script>
@@ -150,6 +195,27 @@ async function handleSubmit() {
           </option>
         </select>
       </template>
+      <template v-if="field.type === 'file'">
+        <label :for="field.name">{{ field.label }}</label>
+        <input
+          :id="field.name"
+          :type="field.type"
+          :name="field.name"
+          :required="field.required"
+          :multiple="field.multiple"
+          :accept="field.accept"
+          @change="(e) => handleFileChange(e, field.name)"
+        >
+        <div v-if="filePreview[field.name]" class="image-preview">
+          <img 
+            v-for="(preview, index) in filePreview[field.name]"
+            :key="index"
+            :src="preview"
+            :alt="'Preview ' + index"
+            class="preview-image"
+          >
+        </div>
+      </template>
     </div>
 
     <button type="submit" :disabled="!isFormValid()">
@@ -161,5 +227,19 @@ async function handleSubmit() {
 <style scoped>
 .error-message {
   color: #dc3545;
+}
+
+.image-preview {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  margin-top: 10px;
+}
+
+.preview-image {
+  width: 100px;
+  height: 100px;
+  object-fit: cover;
+  border-radius: 4px;
 }
 </style>
