@@ -8,8 +8,12 @@ jobs:
       - uses: actions/setup-node@v4
         with:
           node-version: 20
+      - name: Create .env file
+      - uses: SpicyPizza/create-envfile@v2.0
+        with:
           DB_USERNAME: esgi
           DB_PASSWORD: esgi
+          directory: /docker
       - name: start only MongoDB
         run: npm run dev:db
       - name: Test
