@@ -45,8 +45,10 @@ const productFields = [
   },
   {
     name: 'images',
-    type: 'text',
-    label: 'Images (séparées par des virgules)',
+    type: 'file',
+    label: 'Images',
+    multiple: true,
+    accept: 'image/*'
   },
 ]
 
