@@ -4,6 +4,7 @@ import cors from 'cors'
 import express from 'express'
 import mongoose from 'mongoose'
 import authRoutes from './routes/auth.routes'
+import orderRoutes from './routes/order.routes'
 import productRoutes from './routes/product.routes'
 import 'dotenv/config'
 // const mongoString = process.env.DB_URL;
@@ -31,6 +32,7 @@ app.get('/test', (req: Request, res: Response) => {
 
 app.use('/auth', authRoutes)
 app.use('/products', productRoutes)
+app.use('/orders', orderRoutes)
 
 app.use('/uploads', express.static(path.join(__dirname, '../../uploads')))
 
