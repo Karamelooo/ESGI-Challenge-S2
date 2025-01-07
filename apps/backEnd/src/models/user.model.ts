@@ -26,7 +26,7 @@ const userSchema = new Schema({
   roles: {
     type: [String],
     default: ['ROLE_USER'],
-    enum: ['ROLE_USER', 'ROLE_ADMIN']
+    enum: ['ROLE_USER', 'ROLE_ADMIN'],
   },
   address: {
     street: String,
@@ -39,7 +39,7 @@ const userSchema = new Schema({
   confirmationTokenExpiration: Date,
   isActive: {
     type: Boolean,
-    default: false
+    default: false,
   },
   loginAttempts: { type: Number, default: 0 },
   lockUntil: { type: Date, default: null },

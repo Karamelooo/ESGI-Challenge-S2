@@ -1,10 +1,10 @@
-import type { Request, Response, NextFunction } from 'express'
+import type { NextFunction, Request, Response } from 'express'
 import jwt from 'jsonwebtoken'
 
-export const checkRole = (roles: string[]) => {
+export function checkRole(roles: string[]) {
   return async (req: Request, res: Response, next: NextFunction): Promise<void> => {
     const token = req.headers.authorization?.split(' ')[1]
-    
+
     if (!token) {
       res.status(401).json({ message: 'Token manquant' })
       return
@@ -21,9 +21,9 @@ export const checkRole = (roles: string[]) => {
       }
 
       next()
-    } catch (error) {
+    }
+    catch (error) {
       res.status(401).json({ message: 'Token invalide' })
-      return
     }
   }
 }
