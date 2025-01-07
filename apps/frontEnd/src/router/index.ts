@@ -11,6 +11,7 @@ import RegisterView from '@/views/RegisterView.vue'
 import OrderHistoryView from '@/views/OrderHistoryView.vue'
 import RequestResetPasswordView from '@/views/RequestResetPasswordView.vue'
 import ResetPasswordView from '@/views/ResetPasswordView.vue'
+import AdminOrderHistoryView from '@/views/AdminOrderHistoryView.vue'
 import { createRouter, createWebHistory } from 'vue-router'
 
 function adminGuard(to, from, next) {
@@ -96,6 +97,12 @@ const router = createRouter({
       path: '/orders',
       name: 'orders',
       component: OrderHistoryView,
+      beforeEnter: authMiddleware,
+    },
+    {
+      path: '/admin/orders',
+      name: 'admin-orders',
+      component: AdminOrderHistoryView,
       beforeEnter: authMiddleware,
     },
   ],

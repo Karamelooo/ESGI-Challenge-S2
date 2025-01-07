@@ -14,6 +14,9 @@ import { ref } from 'vue'
         <li>
           <router-link to="/admin/products">Produits</router-link>
         </li>
+        <li>
+          <router-link to="/admin/orders">Commandes</router-link>
+        </li>
       </ul>
     </nav>
     <main>
