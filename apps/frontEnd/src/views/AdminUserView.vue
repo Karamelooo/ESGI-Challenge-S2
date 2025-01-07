@@ -4,6 +4,7 @@ import axios from 'axios'
 import { onMounted, ref } from 'vue'
 import { useRoute, useRouter } from 'vue-router'
 import { showToast } from '@/utils/toast'
+import AdvancedTable from '../components/AdvancedTable.vue'
 
 const route = useRoute()
 const router = useRouter()
@@ -141,6 +142,31 @@ async function requestPasswordReset(email: string) {
   }
 }
 
+// Ajout de la configuration du tableau
+const headers = [
+  { key: 'firstname', label: 'Prénom', searchable: true },
+  { key: 'lastname', label: 'Nom', searchable: true },
+  { key: 'email', label: 'Email', searchable: true },
+  { key: 'isActive', label: 'Statut', searchable: true },
+]
+
+const tableActions = [
+  {
+    label: 'Éditer',
+    method: (user: User) => editUser(user._id),
+  },
+  {
+    label: 'Réinitialiser mot de passe',
+    method: (user: User) => requestPasswordReset(user.email),
+    class: 'warning',
+  },
+  {
+    label: 'Supprimer',
+    method: (user: User) => deleteUser(user._id),
+    class: 'danger',
+  },
+]
+
 onMounted(() => {
   fetchUsers()
 })
@@ -183,23 +209,12 @@ onMounted(() => {
     </div>
     <div v-else>
       <h2>Liste des utilisateurs</h2>
-      <div v-if="users.length" class="users-grid">
-        <div v-for="user in users" :key="user._id" class="user-card">
-          <h3>{{ user.firstname }} {{ user.lastname }}</h3>
-          <p>Email: {{ user.email }}</p>
-          <p>Statut: {{ user.isActive ? 'Compte activé' : 'En attente de confirmation' }}</p>
-          <div class="button-group">
-            <button @click="editUser(user._id)">
-              Éditer
-            </button>
-            <button @click="requestPasswordReset(user.email)" class="warning">
-              Réinitialiser mot de passe
-            </button>
-            <button @click="deleteUser(user._id)" class="danger">
-              Supprimer
-            </button>
-          </div>
-        </div>
+      <div v-if="users.length">
+        <AdvancedTable 
+          :headers="headers" 
+          :data="users" 
+          :actions="tableActions"
+        />
       </div>
       <p v-else>
         Aucun utilisateur disponible
