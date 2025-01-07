@@ -8,7 +8,8 @@ export default {
         cgv: '../assets/legals/CGV.pdf"',
         mentions: '../assets/legals/mentions-legales.pdf',
         confidentialite: '../assets/legals/politique-de-confidentialité.pdf',
-        marque: '../assets/legals/placeholder.pdf',
+        marque: '../assets/legals/dossier_depot_marque_fr.pdf',
+        marqueBE: '../assets/legals/dossier_depot_marque_bel.pdf',
       },
     }
   },
@@ -23,7 +24,8 @@ export default {
         <li><a :href="legalDocuments.cgv" download="../assets/legals/CGV.pdf">Conditions Générales de Vente</a></li>
         <li><a :href="legalDocuments.mentions" download="../assets/legals/mentions-legales.pdf">Mentions Légales</a></li>
         <li><a :href="legalDocuments.confidentialite" download="../assets/legals/politique-de-confidentialité.pdf">Politique de confidentialité</a></li>
-        <li><a :href="legalDocuments.marque" download="../assets/legals/placeholder.pdf">Dépot de marque</a></li>
+        <li><a :href="legalDocuments.marque" download="../assets/legals/dossier_depot_marque_fr.pdf">Dépot de marque France</a></li>
+        <li><a :href="legalDocuments.marqueBE" download="../assets/legals/dossier_depot_marque_bel.pdf">Dépot de marque Belgique</a></li>
       </ul>
     </nav>
     <p class="message">
