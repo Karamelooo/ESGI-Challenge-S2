@@ -8,6 +8,8 @@ import ProductView from '@/views/ProductView.vue'
 import RegisterView from '@/views/RegisterView.vue'
 import ConfirmEmailView from '@/views/ConfirmEmailView.vue'
 import AdminUserView from '@/views/AdminUserView.vue'
+import RequestResetPassword from '../views/RequestResetPassword.vue'
+import ResetPassword from '../views/ResetPassword.vue'
 import { createRouter, createWebHistory } from 'vue-router'
 
 const router = createRouter({
@@ -76,6 +78,16 @@ const router = createRouter({
       // which is lazy-loaded when the route is visited.
       component: () => import('../views/AboutView.vue'),
       beforeEnter: authMiddleware,
+    },
+    {
+      path: '/reset-password-request',
+      name: 'RequestResetPassword',
+      component: RequestResetPassword
+    },
+    {
+      path: '/reset-password/:token',
+      name: 'ResetPassword',
+      component: ResetPassword
     }
   ],
 })

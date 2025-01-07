@@ -131,6 +131,16 @@ function handleError(error: string) {
   showToast(error)
 }
 
+async function requestPasswordReset(email: string) {
+  try {
+    const response = await axios.post(`${baseUrl}/auth/reset-password-request`, { email })
+    showToast('Email de réinitialisation envoyé avec succès')
+  }
+  catch (error: any) {
+    showToast(error.response?.data?.message || 'Erreur lors de l\'envoi de l\'email de réinitialisation')
+  }
+}
+
 onMounted(() => {
   fetchUsers()
 })
@@ -177,10 +187,13 @@ onMounted(() => {
         <div v-for="user in users" :key="user._id" class="user-card">
           <h3>{{ user.firstname }} {{ user.lastname }}</h3>
           <p>Email: {{ user.email }}</p>
-          <p>Statut: {{ user.isActive ? 'Actif' : 'Inactif' }}</p>
+          <p>Statut: {{ user.isActive ? 'Compte activé' : 'En attente de confirmation' }}</p>
           <div class="button-group">
             <button @click="editUser(user._id)">
               Éditer
+            </button>
+            <button @click="requestPasswordReset(user.email)" class="warning">
+              Réinitialiser mot de passe
             </button>
             <button @click="deleteUser(user._id)" class="danger">
               Supprimer
@@ -212,11 +225,15 @@ onMounted(() => {
 .button-group {
   display: flex;
   gap: 0.5rem;
-  margin-top: 1rem;
+}
+
+.warning {
+  background-color: #f59e0b;
+  color: white;
 }
 
 .danger {
-  background-color: #dc3545;
+  background-color: #dc2626;
   color: white;
 }
 

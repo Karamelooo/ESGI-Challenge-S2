@@ -50,4 +50,9 @@ function handleError(error) {
     @submit-success="handleSuccess"
     @submit-error="handleError"
   />
+  <div class="reset-password-link">
+    <router-link to="/reset-password-request">
+      Mot de passe oublié ?
+    </router-link>
+  </div>
 </template>

@@ -12,6 +12,8 @@ interface IUser extends Document {
   confirmationToken: string
   confirmationTokenExpiration: Date
   isActive: boolean
+  resetPasswordToken: string
+  resetPasswordExpiration: Date
 }
 
 const userSchema = new Schema({
@@ -32,7 +34,9 @@ const userSchema = new Schema({
   isActive: {
     type: Boolean,
     default: false
-  }
+  },
+  resetPasswordToken: String,
+  resetPasswordExpiration: Date,
 })
 
 const User = mongoose.model<IUser>('User', userSchema)
