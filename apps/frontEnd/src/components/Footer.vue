@@ -1,16 +1,13 @@
 <script setup lang='ts'>
 import { showToast } from '@/utils/toast'
+import CGU from '../assets/legals/CGU.pdf'
+import CGV from '../assets/legals/CGV.pdf'
+import MARQUEBE from '../assets/legals/dossier_depot_marque_bel.pdf'
+import MARQUE from '../assets/legals/dossier_depot_marque_fr.pdf'
+import MENTIONS from '../assets/legals/mentions-legales.pdf'
+import CONFI from '../assets/legals/politique-de-confidentialité.pdf'
 
 const baseUrl = import.meta.env.VITE_BACK_APP_URL
-
-const legalDocuments = {
-  cgu: '../assets/legals/CGU.pdf',
-  cgv: '../assets/legals/CGV.pdf',
-  mentions: '../assets/legals/mentions-legales.pdf',
-  confidentialite: '../assets/legals/politique-de-confidentialité.pdf',
-  marque: '../assets/legals/dossier_depot_marque_fr.pdf',
-  marqueBE: '../assets/legals/dossier_depot_marque_bel.pdf',
-}
 
 async function downloadUserData() {
   const user = JSON.parse(localStorage.getItem('user'))
@@ -53,12 +50,12 @@ async function downloadUserData() {
   <footer class="container">
     <nav>
       <ul>
-        <li><a :href="legalDocuments.cgu" download="../assets/legals/CGU.pdf">Conditions d'utilisation</a></li>
-        <li><a :href="legalDocuments.cgv" download="../assets/legals/CGV.pdf">Conditions Générales de Vente</a></li>
-        <li><a :href="legalDocuments.mentions" download="../assets/legals/mentions-legales.pdf">Mentions Légales</a></li>
-        <li><a :href="legalDocuments.confidentialite" download="../assets/legals/politique-de-confidentialité.pdf">Politique de confidentialité</a></li>
-        <li><a :href="legalDocuments.marque" download="../assets/legals/dossier_depot_marque_fr.pdf">Dépot de marque France</a></li>
-        <li><a :href="legalDocuments.marqueBE" download="../assets/legals/dossier_depot_marque_bel.pdf">Dépot de marque Belgique</a></li>
+        <li><a :href="CGU" download="../assets/legals/CGU.pdf">Conditions d'utilisation</a></li>
+        <li><a :href="CGV" download="../assets/legals/CGV.pdf">Conditions Générales de Vente</a></li>
+        <li><a :href="MENTIONS" download="../assets/legals/mentions-legales.pdf">Mentions Légales</a></li>
+        <li><a :href="CONFI" download="../assets/legals/politique-de-confidentialité.pdf">Politique de confidentialité</a></li>
+        <li><a :href="MARQUE" download="../assets/legals/dossier_depot_marque_fr.pdf">Dépot de marque France</a></li>
+        <li><a :href="MARQUEBE" download="../assets/legals/dossier_depot_marque_bel.pdf">Dépot de marque Belgique</a></li>
         <li>
           <button @click="downloadUserData">
             Télécharger les données utilisateur
