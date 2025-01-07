@@ -1,15 +1,15 @@
-import cors from 'cors'
-import 'dotenv/config'
 import type { Application, Request, Response } from 'express'
+import path from 'node:path'
+import cors from 'cors'
 import express from 'express'
 import mongoose from 'mongoose'
-import path from 'node:path'
 import authRoutes from './routes/auth.routes'
-import exportbddRoutes from './routes/exportbdd.routes'
 import cartRoutes from './routes/cart.routes'
+import exportbddRoutes from './routes/exportbdd.routes'
 import orderRoutes from './routes/order.routes'
 import paymentRoutes from './routes/payment.routes'
 import productRoutes from './routes/product.routes'
+import 'dotenv/config'
 // const mongoString = process.env.DB_URL;
 const mongoString = 'mongodb://esgi:esgi@database:27017'
 
@@ -40,8 +40,8 @@ app.use('/exportbdd', exportbddRoutes)
 
 app.use('/uploads', express.static(path.join(__dirname, '../../uploads')))
 
-app.use('/cart',cartRoutes)
-app.use('/payment',paymentRoutes)
+app.use('/cart', cartRoutes)
+app.use('/payment', paymentRoutes)
 console.log(authRoutes)
 
 app.listen(8080, () => {

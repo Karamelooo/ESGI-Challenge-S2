@@ -1,8 +1,8 @@
-import 'dotenv/config';
-import Stripe from 'stripe';
+import Stripe from 'stripe'
+import 'dotenv/config'
 
-const stripe = new Stripe(process.env.STRIPE_SECRET_KEY as string, { 
-  apiVersion: '2024-12-18.acacia', 
-});
+const stripe = new Stripe(process.env.STRIPE_SECRET_KEY as string, {
+  apiVersion: '2024-12-18.acacia',
+})
 
-export default stripe;
+export default stripe

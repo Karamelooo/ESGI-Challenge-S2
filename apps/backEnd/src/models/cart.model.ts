@@ -1,13 +1,14 @@
-import mongoose, { Document, ObjectId, Schema } from 'mongoose';
+import type { Document, ObjectId } from 'mongoose'
+import mongoose, { Schema } from 'mongoose'
 
 interface CartItem {
-  productId: mongoose.Types.ObjectId;
-  quantity: number;
+  productId: mongoose.Types.ObjectId
+  quantity: number
 }
 
 export interface CartDocument extends Document {
-  userId: ObjectId;
-  items: CartItem[];
+  userId: ObjectId
+  items: CartItem[]
 }
 
 const CartSchema = new Schema<CartDocument>({
@@ -18,6 +19,6 @@ const CartSchema = new Schema<CartDocument>({
       quantity: { type: Number, required: true, default: 1 },
     },
   ],
-});
+})
 
-export default mongoose.model<CartDocument>('Cart', CartSchema);
+export default mongoose.model<CartDocument>('Cart', CartSchema)
