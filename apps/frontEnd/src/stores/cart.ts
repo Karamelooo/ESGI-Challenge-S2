@@ -2,9 +2,9 @@ import axios from 'axios';
 import { defineStore } from 'pinia';
 import { useUserStore } from './user';
 import { authMiddleware } from '@/middlewares/auth.middleware';
+import { showToast } from '@/utils/toast';
 
 const baseUrl = import.meta.env.VITE_BACK_APP_URL;
-
 
 export const useCartStore = defineStore('cart', {
   state: () => ({
@@ -27,6 +27,7 @@ export const useCartStore = defineStore('cart', {
         this.total = response.data.total;
       } catch (error) {
         console.error('Erreur lors de la récupération du panier:', error);
+        showToast('Erreur lors de la récupération du panier');
       }
     },
 
@@ -34,13 +35,15 @@ export const useCartStore = defineStore('cart', {
       const userStore = authMiddleware();
       if (!userStore) throw new Error('Utilisateur non authentifié');
       try {
-        await axios.post(`${baseUrl}/cart/add`, {
+        const response = await axios.post(`${baseUrl}/cart/add`, {
           productId: product.id,
           quantity: 1,
         });
-        await this.fetchCart(); // Refresh cart
+        await this.fetchCart();
+        showToast(response.data.message);
       } catch (error) {
         console.error('Erreur lors de l\'ajout au panier:', error);
+        showToast('Produit non disponible');
       }
     },
 
@@ -48,10 +51,12 @@ export const useCartStore = defineStore('cart', {
       const userStore = authMiddleware();
       if (!userStore) throw new Error('Utilisateur non authentifié');
       try {
-        await axios.post(`${baseUrl}/cart/remove`, { productId });
-        await this.fetchCart(); // Refresh cart
+        const response = await axios.post(`${baseUrl}/cart/remove`, { productId });
+        await this.fetchCart();
+        showToast(response.data.message);
       } catch (error) {
         console.error('Erreur lors de la suppression du produit du panier:', error);
+        showToast('Erreur lors de la suppression du produit du panier');
       }
     },
 
@@ -59,11 +64,13 @@ export const useCartStore = defineStore('cart', {
       const userStore = authMiddleware();
       if (!userStore) throw new Error('Utilisateur non authentifié');
       try {
-        await axios.post(`${baseUrl}/cart/clear`);
+        const response = await axios.post(`${baseUrl}/cart/clear`);
         this.items = [];
         this.total = 0;
+        showToast(response.data.message);
       } catch (error) {
         console.error('Erreur lors de la vidange du panier:', error);
+        showToast('Erreur lors de la vidange du panier');
       }
     },
   },

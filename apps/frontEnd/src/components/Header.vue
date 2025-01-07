@@ -81,6 +81,9 @@ function handleSearch() {
             <RouterLink v-if="authStore.isAdmin" to="/admin">
               Admin
             </RouterLink>
+            <RouterLink to="/cart">
+              Panier
+            </RouterLink>
             <RouterLink to="/orders">
               Historique des commandes
             </RouterLink>

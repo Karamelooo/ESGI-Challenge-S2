@@ -25,6 +25,8 @@
   import { loadStripe, type StripeCardElement, type StripeElements } from '@stripe/stripe-js';
 import axios from 'axios';
 import { onMounted, ref } from 'vue';
+
+const baseUrl = import.meta.env.VITE_BACKEND_URL;
   
   // à ajouter: publishable key
   const stripePromise = loadStripe('pk_test_your_publishable_key');
@@ -55,7 +57,7 @@ import { onMounted, ref } from 'vue';
       }
   
       
-      const { data } = await axios.post('http://localhost:8080/create-payment-intent', {
+      const { data } = await axios.post(`${baseUrl}/create-payment-intent`, {
         amount: 1000,
         currency: 'eur',
       });
