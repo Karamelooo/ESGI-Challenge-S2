@@ -45,7 +45,7 @@ onMounted(() => {
           <p>Prix: {{ product.price }}€</p>
           <p>Stock: {{ product.stock }}</p>
           <div v-if="product.images && product.images.length">
-            <img :src="`${baseUrl}${product.images[0]}`" :alt="product.name">
+            <img style="width: 100px; height: 100px;" :src="`${baseUrl}${product.images[0]}`" :alt="product.name">
           </div>
         </div>
       </div>

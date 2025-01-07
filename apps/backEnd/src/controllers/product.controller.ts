@@ -1,8 +1,8 @@
 import type { Request, Response } from 'express'
-import Product from '../models/product.model'
+import fs from 'node:fs'
+import path from 'node:path'
 import multer from 'multer'
-import path from 'path'
-import fs from 'fs'
+import Product from '../models/product.model'
 
 const uploadDir = path.join(__dirname, '../../../uploads/products')
 if (!fs.existsSync(uploadDir)) {
@@ -14,9 +14,9 @@ const storage = multer.diskStorage({
     cb(null, uploadDir)
   },
   filename: (req, file, cb) => {
-    const uniqueSuffix = `${Date.now()}-${Math.round(Math.random() * 1E9)}`
+    const uniqueSuffix = `${Date.now()}-${Math.round(Math.random() * 1e9)}`
     cb(null, `${file.fieldname}-${uniqueSuffix}${path.extname(file.originalname)}`)
-  }
+  },
 })
 
 export const upload = multer({ storage })
@@ -48,7 +48,7 @@ export async function createProduct(req: Request, res: Response): Promise<void> 
   try {
     const { name, description, price, stock } = req.body
     const files = req.files as Express.Multer.File[]
-    
+
     const images = files ? files.map(file => `/uploads/products/${file.filename}`) : []
 
     const newProduct = new Product({
@@ -56,12 +56,13 @@ export async function createProduct(req: Request, res: Response): Promise<void> 
       description,
       price: Number(price),
       stock: Number(stock),
-      images
+      images,
     })
 
     await newProduct.save()
     res.status(201).json(newProduct)
-  } catch (error) {
+  }
+  catch (error) {
     console.error('Erreur lors de la création du produit:', error)
     res.status(400).json({ message: 'Erreur lors de la création du produit', error })
   }
@@ -89,20 +90,22 @@ export async function updateProduct(req: Request, res: Response): Promise<void> 
           }
         }
       }
-      
+
       productData.images = files.map(file => `/uploads/products/${file.filename}`)
-    } else {
+    }
+    else {
       productData.images = oldProduct.images
     }
 
     const updatedProduct = await Product.findByIdAndUpdate(
       id,
       productData,
-      { new: true }
+      { new: true },
     ).populate('category')
 
     res.json(updatedProduct)
-  } catch (error) {
+  }
+  catch (error) {
     res.status(400).json({ message: 'Erreur lors de la mise à jour du produit', error })
   }
 }
@@ -117,7 +120,6 @@ export async function deleteProduct(req: Request, res: Response): Promise<void> 
       return
     }
 
-    // Supprimer les images associées
     if (product.images) {
       product.images.forEach((imagePath) => {
         const fullPath = path.join(__dirname, '../../', imagePath)
@@ -129,7 +131,8 @@ export async function deleteProduct(req: Request, res: Response): Promise<void> 
 
     await Product.findByIdAndDelete(id)
     res.status(204).send()
-  } catch (error) {
+  }
+  catch (error) {
     res.status(400).json({ message: 'Erreur lors de la suppression du produit', error })
   }
 }

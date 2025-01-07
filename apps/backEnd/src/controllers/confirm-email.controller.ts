@@ -7,7 +7,7 @@ export async function confirmEmail(req: Request, res: Response): Promise<any> {
 
     const user = await User.findOne({
       confirmationToken: token,
-      confirmationTokenExpiration: { $gt: new Date() }
+      confirmationTokenExpiration: { $gt: new Date() },
     })
 
     if (!user) {

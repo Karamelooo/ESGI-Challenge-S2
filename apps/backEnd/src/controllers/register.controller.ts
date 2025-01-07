@@ -1,7 +1,7 @@
 import type { Request, Response } from 'express'
+import crypto from 'node:crypto'
 import bcrypt from 'bcrypt'
 import User from '../models/user.model'
-import crypto from 'crypto'
 import { sendConfirmationEmail } from '../services/email.service'
 
 export async function register(req: Request, res: Response): Promise<any> {
@@ -44,14 +44,14 @@ export async function register(req: Request, res: Response): Promise<any> {
       password: hashedPassword,
       confirmationToken,
       confirmationTokenExpiration: tokenExpiration,
-      isActive: false
+      isActive: false,
     })
     await newUser.save()
 
     await sendConfirmationEmail(email, confirmationToken)
 
-    return res.status(200).json({ 
-      message: 'Un email de confirmation a été envoyé à votre adresse email. Veuillez cliquer sur le lien pour activer votre compte.'
+    return res.status(200).json({
+      message: 'Un email de confirmation a été envoyé à votre adresse email. Veuillez cliquer sur le lien pour activer votre compte.',
     })
   }
   catch (error) {

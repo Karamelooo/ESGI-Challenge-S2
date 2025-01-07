@@ -1,11 +1,11 @@
 import type { Application, Request, Response } from 'express'
+import path from 'node:path'
 import cors from 'cors'
 import express from 'express'
 import mongoose from 'mongoose'
 import authRoutes from './routes/auth.routes'
 import productRoutes from './routes/product.routes'
 import 'dotenv/config'
-import path from 'path'
 // const mongoString = process.env.DB_URL;
 const mongoString = 'mongodb://esgi:esgi@database:27017'
 
@@ -21,7 +21,7 @@ app.use(express.json({ limit: '50mb' }))
 app.use(express.urlencoded({ extended: true, limit: '50mb' }))
 
 app.use(cors({
-  origin: ['http://localhost:9000', "http://komsterr.ovh:9000"],
+  origin: ['http://localhost:9000', 'http://komsterr.ovh:9000'],
   credentials: true,
 }))
 

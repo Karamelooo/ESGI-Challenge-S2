@@ -1,8 +1,8 @@
 import { Router } from 'express'
 import * as productController from '../controllers/product.controller'
-import { checkRole } from '../middlewares/role.middleware'
-import { authMiddleware } from '../middlewares/auth.middleware'
 import { upload } from '../controllers/product.controller'
+import { authMiddleware } from '../middlewares/auth.middleware'
+import { checkRole } from '../middlewares/role.middleware'
 
 const router = Router()
 
