@@ -1,16 +1,16 @@
 import { authMiddleware } from '@/middlewares/auth.middleware'
-import AdminView from '@/views/AdminView.vue'
+import { useAuthStore } from '@/stores/auth'
 import AdminProductView from '@/views/AdminProductView.vue'
+import AdminView from '@/views/AdminView.vue'
+import ConfirmEmailView from '@/views/ConfirmEmailView.vue'
 import HomeView from '@/views/HomeView.vue'
 import LoginView from '@/views/LoginView.vue'
 import LogoutView from '@/views/LogoutView.vue'
 import ProductView from '@/views/ProductView.vue'
 import RegisterView from '@/views/RegisterView.vue'
-import ConfirmEmailView from '@/views/ConfirmEmailView.vue'
 import { createRouter, createWebHistory } from 'vue-router'
-import { useAuthStore } from '@/stores/auth'
 
-const adminGuard = (to, from, next) => {
+function adminGuard(to, from, next) {
   const authStore = useAuthStore()
   if (!authStore.isAdmin) {
     next('/')
@@ -62,8 +62,8 @@ const router = createRouter({
           path: 'products/create',
           name: 'admin-products-create',
           component: AdminProductView,
-        }
-      ]
+        },
+      ],
     },
     {
       path: '/confirm-email/:token',
@@ -82,13 +82,13 @@ const router = createRouter({
     {
       path: '/request-reset-password',
       name: 'request-reset-password',
-      component: () => import('@/views/RequestResetPasswordView.vue')
+      component: () => import('@/views/RequestResetPasswordView.vue'),
     },
     {
       path: '/reset-password/:token',
       name: 'reset-password',
-      component: () => import('@/views/ResetPasswordView.vue')
-    }
+      component: () => import('@/views/ResetPasswordView.vue'),
+    },
   ],
 })
 
