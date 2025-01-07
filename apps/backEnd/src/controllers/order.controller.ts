@@ -1,7 +1,6 @@
 import type { Request, Response } from 'express'
-import Order from '../models/order.model'
-import Product from '../models/product.model'
 import jwt from 'jsonwebtoken'
+import Order from '../models/order.model'
 
 // Obtenir toutes les commandes
 export async function getOrders(req: Request, res: Response): Promise<void> {
