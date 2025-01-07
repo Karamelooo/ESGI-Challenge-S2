@@ -38,8 +38,8 @@ export async function createOrder(req: Request, res: Response): Promise<void> {
     const decoded = jwt.verify(token, process.env.JWT_SECRET as string) as any
     const user = decoded.userId
 
-    if (products === undefined || totalAmount === undefined || shippingAddress === undefined || postalCode === undefined) {
-      res.status(422).json({ message: `Les champs : products, totalAmount, shippingAddress et postalCode sont requis` })
+    if (products === undefined || totalAmount === undefined || shippingAddress === undefined) {
+      res.status(422).json({ message: `Les champs : products, totalAmount et shippingAddress sont requis` })
       return
     }
 
