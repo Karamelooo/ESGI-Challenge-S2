@@ -23,8 +23,8 @@ export async function requestResetPassword(req: Request, res: Response): Promise
 
     await sendResetPasswordEmail(email, resetToken)
 
-    return res.status(200).json({ 
-      message: 'Un email de réinitialisation a été envoyé à votre adresse email' 
+    return res.status(200).json({
+      message: 'Un email de réinitialisation a été envoyé à votre adresse email',
     })
   }
   catch (error) {
@@ -49,12 +49,14 @@ export async function resetPassword(req: Request, res: Response): Promise<any> {
     if (!passwordRegex.test(password)) {
       return res.status(422).json({ 
         message: 'Le mot de passe doit contenir au moins 12 caractères, incluant des symboles, des chiffres, des lettres minuscules et majuscules' 
+      return res.status(400).json({
+        message: 'Le mot de passe doit contenir au moins 12 caractères, incluant des symboles, des chiffres, des lettres minuscules et majuscules',
       })
     }
 
     const user = await User.findOne({
       resetPasswordToken: token,
-      resetPasswordExpiration: { $gt: new Date() }
+      resetPasswordExpiration: { $gt: new Date() },
     })
 
     if (!user) {
@@ -75,3 +77,5 @@ export async function resetPassword(req: Request, res: Response): Promise<any> {
     return res.status(500).json({ message: error })
   }
 } 
+
+}

@@ -45,8 +45,10 @@ const productFields = [
   },
   {
     name: 'images',
-    type: 'text',
-    label: 'Images (séparées par des virgules)',
+    type: 'file',
+    label: 'Images',
+    multiple: true,
+    accept: 'image/*'
   },
 ]
 
@@ -125,7 +127,7 @@ onMounted(() => {
           <p>Prix: {{ product.price }}€</p>
           <p>Stock: {{ product.stock }}</p>
           <div v-if="product.images && product.images.length">
-            <img :src="product.images[0]" :alt="product.name">
+            <img style="width: 100px; height: 100px;" :src="`${baseUrl}${product.images[0]}`" :alt="product.name">
           </div>
           <button @click="editProduct(product._id)">
             Éditer

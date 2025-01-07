@@ -1,8 +1,8 @@
 import { Router } from 'express'
+import { confirmEmail } from '../controllers/confirm-email.controller'
 import { login } from '../controllers/login.controller'
 import { logout } from '../controllers/logout.controller'
 import { register } from '../controllers/register.controller'
-import { confirmEmail } from '../controllers/confirm-email.controller'
 import { requestPasswordReset, resetPassword } from '../controllers/reset-password.controller'
 import { requestResetPassword, resetPassword } from '../controllers/reset-password.controller'
 

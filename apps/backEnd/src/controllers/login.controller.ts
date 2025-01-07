@@ -16,8 +16,8 @@ export async function login(req: Request, res: Response): Promise<any> {
       return res.status(409).json({ message: 'Aucune correspondance trouvée' })
     }
     if (!user.isActive) {
-      return res.status(409).json({ 
-        message: 'Aucune correspondance trouvée'
+      return res.status(409).json({
+        message: 'Aucune correspondance trouvée',
       })
     }
     if (user.lockUntil && user.lockUntil <= new Date()) {
@@ -26,45 +26,45 @@ export async function login(req: Request, res: Response): Promise<any> {
       await user.save()
     }
     else if (user.lockUntil && user.lockUntil > new Date()) {
-      return res.status(423).json({ 
-        message: 'Essai sur cet email bloqué. Veuillez réessayer plus tard.' 
+      return res.status(423).json({
+        message: 'Essai sur cet email bloqué. Veuillez réessayer plus tard.',
       })
     }
     const isPasswordValid = await bcrypt.compare(password, user.password)
     if (!isPasswordValid) {
       user.loginAttempts += 1
-      
+
       if (user.loginAttempts >= 3) {
         const lockUntil = new Date()
         lockUntil.setMinutes(lockUntil.getMinutes() + 30)
         user.lockUntil = lockUntil
         await sendLockoutEmail(user.email, lockUntil)
       }
-      
+
       await user.save()
-      
+
       return res.status(409).json({ message: 'Aucune correspondance trouvée' })
     }
     user.loginAttempts = 0
     user.lockUntil = null
     await user.save()
     const token = jwt.sign(
-      { 
+      {
         userId: user._id,
-        roles: user.roles 
-      }, 
-      process.env.JWT_SECRET || 'secret', 
-      { expiresIn: '1h' }
+        roles: user.roles,
+      },
+      process.env.JWT_SECRET || 'secret',
+      { expiresIn: '1h' },
     )
-    
-    return res.status(200).json({ 
-      message: 'Connexion réussie', 
+
+    return res.status(200).json({
+      message: 'Connexion réussie',
       token,
       user: {
         id: user._id,
         email: user.email,
-        roles: user.roles
-      }
+        roles: user.roles,
+      },
     })
   }
   catch (error) {
