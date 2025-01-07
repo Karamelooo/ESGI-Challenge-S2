@@ -1,0 +1,16 @@
+name: test unitaire backEnd
+on: push
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 20
+          DB_USERNAME: esgi
+          DB_PASSWORD: esgi
+      - name: start only MongoDB
+        run: npm run dev:db
+      - name: Test
+        run: npm run test:unit
