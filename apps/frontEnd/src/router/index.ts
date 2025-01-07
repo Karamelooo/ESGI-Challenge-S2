@@ -12,6 +12,9 @@ import OrderHistoryView from '@/views/OrderHistoryView.vue'
 import RequestResetPasswordView from '@/views/RequestResetPasswordView.vue'
 import ResetPasswordView from '@/views/ResetPasswordView.vue'
 import AdminOrderHistoryView from '@/views/AdminOrderHistoryView.vue'
+import AdminUserView from '@/views/AdminUserView.vue'
+import RequestResetPassword from '../views/RequestResetPassword.vue'
+import ResetPassword from '../views/ResetPassword.vue'
 import { createRouter, createWebHistory } from 'vue-router'
 
 function adminGuard(to, from, next) {
@@ -75,6 +78,16 @@ const router = createRouter({
       component: ConfirmEmailView,
     },
     {
+      path: '/admin/users',
+      name: 'admin-users',
+      component: AdminUserView,
+    },
+    {
+      path: '/admin/users/create',
+      name: 'admin-users-create',
+      component: AdminUserView,
+    },
+    {
       path: '/about',
       name: 'about',
       // route level code-splitting
@@ -82,6 +95,16 @@ const router = createRouter({
       // which is lazy-loaded when the route is visited.
       component: () => import('../views/AboutView.vue'),
       beforeEnter: authMiddleware,
+    },
+    {
+      path: '/reset-password-request',
+      name: 'RequestResetPassword',
+      component: RequestResetPassword
+    },
+    {
+      path: '/reset-password/:token',
+      name: 'ResetPassword',
+      component: ResetPassword
     },
     {
       path: '/request-reset-password',

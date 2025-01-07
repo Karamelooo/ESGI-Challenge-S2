@@ -7,6 +7,7 @@ import authRoutes from './routes/auth.routes'
 import exportbddRoutes from './routes/exportbdd.routes'
 import orderRoutes from './routes/order.routes'
 import productRoutes from './routes/product.routes'
+import userRoutes from './routes/user.routes'
 import 'dotenv/config'
 // const mongoString = process.env.DB_URL;
 const mongoString = 'mongodb://esgi:esgi@database:27017'
@@ -33,6 +34,7 @@ app.get('/test', (req: Request, res: Response) => {
 
 app.use('/auth', authRoutes)
 app.use('/products', productRoutes)
+app.use('/users', userRoutes)
 app.use('/orders', orderRoutes)
 app.use('/exportbdd', exportbddRoutes)
 
