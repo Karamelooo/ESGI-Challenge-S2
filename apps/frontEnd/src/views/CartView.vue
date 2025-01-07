@@ -25,6 +25,6 @@ import { useRouter } from 'vue-router';
   const total = computed(() => cartStore.total);
 
 const goToPayment = () => {
-  router.push({ name: 'PaymentPage', query: { amount: total.value } });
+  router.push({ name: 'payment'});
 };
   </script>
