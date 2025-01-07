@@ -9,7 +9,7 @@ jobs:
         with:
           node-version: 20
       - name: Create .env file
-        uses: SpicyPizza/create-envfile@v2.0
+        uses: SpicyPizza/create-envfile@v2.0.3
         with:
           envkey_DB_USERNAME: esgi
           envkey_DB_PASSWORD: esgi
