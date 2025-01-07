@@ -1,5 +1,6 @@
 <script setup lang="ts">
 import { onMounted, ref } from 'vue'
+import api from '@/services/api'
 
 interface Validation {
   pattern?: RegExp
@@ -81,24 +82,24 @@ async function handleSubmit() {
     return
 
   try {
-    const response = await fetch(props.submitUrl, {
+    const response = await api.request({
+      url: props.submitUrl,
       method: props.method,
       headers: {
         'Content-Type': 'application/json',
       },
-      body: JSON.stringify(formData.value),
+      data: formData.value,
     })
 
-    const data = await response.json()
-
-    if (!response.ok) {
-      throw new Error(data.message || 'Erreur lors de la soumission du formulaire')
+    if (!response.data) {
+      throw new Error('Erreur lors de la soumission du formulaire')
     }
 
-    emit('submitSuccess', data)
+    emit('submitSuccess', response.data)
   }
   catch (error: any) {
-    emit('submitError', error.message)
+    const errorMessage = error.response?.data?.message || error.message || 'Une erreur est survenue'
+    emit('submitError', errorMessage)
   }
 }
 </script>

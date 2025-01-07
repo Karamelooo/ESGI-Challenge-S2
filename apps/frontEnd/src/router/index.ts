@@ -1,6 +1,8 @@
 import { authMiddleware } from '@/middlewares/auth.middleware'
-import AdminView from '@/views/AdminView.vue'
+import { useAuthStore } from '@/stores/auth'
 import AdminProductView from '@/views/AdminProductView.vue'
+import AdminView from '@/views/AdminView.vue'
+import ConfirmEmailView from '@/views/ConfirmEmailView.vue'
 import HomeView from '@/views/HomeView.vue'
 import LoginView from '@/views/LoginView.vue'
 import LogoutView from '@/views/LogoutView.vue'
@@ -11,6 +13,15 @@ import AdminUserView from '@/views/AdminUserView.vue'
 import RequestResetPassword from '../views/RequestResetPassword.vue'
 import ResetPassword from '../views/ResetPassword.vue'
 import { createRouter, createWebHistory } from 'vue-router'
+
+function adminGuard(to, from, next) {
+  const authStore = useAuthStore()
+  if (!authStore.isAdmin) {
+    next('/')
+    return
+  }
+  next()
+}
 
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
@@ -44,16 +55,19 @@ const router = createRouter({
       path: '/admin',
       name: 'admin',
       component: AdminView,
-    },
-    {
-      path: '/admin/products',
-      name: 'admin-products',
-      component: AdminProductView,
-    },
-    {
-      path: '/admin/products/create',
-      name: 'admin-products-create',
-      component: AdminProductView,
+      beforeEnter: adminGuard,
+      children: [
+        {
+          path: 'products',
+          name: 'admin-products',
+          component: AdminProductView,
+        },
+        {
+          path: 'products/create',
+          name: 'admin-products-create',
+          component: AdminProductView,
+        },
+      ],
     },
     {
       path: '/confirm-email/:token',
@@ -88,7 +102,17 @@ const router = createRouter({
       path: '/reset-password/:token',
       name: 'ResetPassword',
       component: ResetPassword
-    }
+    },
+    {
+      path: '/request-reset-password',
+      name: 'request-reset-password',
+      component: () => import('@/views/RequestResetPasswordView.vue'),
+    },
+    {
+      path: '/reset-password/:token',
+      name: 'reset-password',
+      component: () => import('@/views/ResetPasswordView.vue'),
+    },
   ],
 })
 

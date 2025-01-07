@@ -87,12 +87,12 @@ if [ "$SELECTED" == "Créer .env de developpement" ]; then
 # Front End
 FRONT_APP_ENV=development
 FRONT_APP_DEBUG=true
-FRONT_APP_URL=http://localhost:3000
+FRONT_APP_URL=http://localhost:9000
 
 # Back End
 BACK_APP_ENV=development
 BACK_APP_DEBUG=true
-BACK_APP_URL=http://localhost:8080
+BACK_APP_URL=http://localhost:9080
 
 # Base de Données
 DB_HOST=database

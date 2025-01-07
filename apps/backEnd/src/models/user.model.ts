@@ -6,12 +6,14 @@ interface IUser extends Document {
   lastname: string
   email: string
   password: string
-  roles: object
+  roles: string[]
   address: object
   createdAt: Date
   confirmationToken: string
   confirmationTokenExpiration: Date
   isActive: boolean
+  loginAttempts: number
+  lockUntil: Date | null
   resetPasswordToken: string
   resetPasswordExpiration: Date
 }
@@ -21,7 +23,11 @@ const userSchema = new Schema({
   lastname: { type: String, required: true },
   email: { type: String, required: true, unique: true },
   password: { type: String, required: true },
-  roles: [{ type: Schema.Types.ObjectId, ref: 'Role' }],
+  roles: {
+    type: [String],
+    default: ['ROLE_USER'],
+    enum: ['ROLE_USER', 'ROLE_ADMIN']
+  },
   address: {
     street: String,
     city: String,
@@ -35,8 +41,11 @@ const userSchema = new Schema({
     type: Boolean,
     default: false
   },
+  loginAttempts: { type: Number, default: 0 },
+  lockUntil: { type: Date, default: null },
   resetPasswordToken: String,
   resetPasswordExpiration: Date,
+  },
 })
 
 const User = mongoose.model<IUser>('User', userSchema)

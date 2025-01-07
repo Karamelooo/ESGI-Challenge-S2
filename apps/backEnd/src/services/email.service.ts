@@ -27,6 +27,19 @@ export async function sendConfirmationEmail(email: string, token: string) {
   })
 }
 
+export async function sendLockoutEmail(email: string, lockUntil: Date) {
+  await transporter.sendMail({
+    from: '"Deckorama" <noreply@deckorama.com>',
+    to: email,
+    subject: "Deckorama - Compte temporairement bloqué",
+    html: `
+      <h1>Compte temporairement bloqué</h1>
+      <p>Suite à plusieurs tentatives de connexion échouées, votre compte a été temporairement bloqué.</p>
+      <p>Vous pourrez réessayer de vous connecter à partir de : ${lockUntil.toLocaleString()}</p>
+    `
+  })
+}
+
 export async function sendResetPasswordEmail(email: string, token: string) {
   const resetLink = `${process.env.FRONT_APP_URL}/reset-password/${token}`
 
@@ -39,7 +52,6 @@ export async function sendResetPasswordEmail(email: string, token: string) {
       <p>Pour réinitialiser votre mot de passe, veuillez cliquer sur le lien suivant :</p>
       <a href="${resetLink}">Réinitialiser mon mot de passe</a>
       <p>Ce lien expire dans 1 heure.</p>
-      <p>Si vous n'avez pas demandé cette réinitialisation, vous pouvez ignorer cet email.</p>
     `
   })
 }
