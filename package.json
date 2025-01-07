@@ -20,6 +20,7 @@
   "license": "ISC",
   "dependencies": {
     "chart.js": "^4.4.7",
+    "chartjs": "^0.3.24",
     "cors": "^2.8.5",
     "jsonwebtoken": "^9.0.2",
     "rimraf": "^6.0.1"
