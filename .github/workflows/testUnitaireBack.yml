@@ -13,7 +13,7 @@ jobs:
         with:
           envkey_DB_USERNAME: esgi
           envkey_DB_PASSWORD: esgi
-          directory: /docker
+          directory: docker
       - name: start only MongoDB
         run: npm run dev:db
       - name: Test
