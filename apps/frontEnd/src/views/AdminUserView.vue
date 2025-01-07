@@ -142,7 +142,6 @@ async function requestPasswordReset(email: string) {
   }
 }
 
-// Ajout de la configuration du tableau
 const headers = [
   { key: 'firstname', label: 'Prénom', searchable: true },
   { key: 'lastname', label: 'Nom', searchable: true },
