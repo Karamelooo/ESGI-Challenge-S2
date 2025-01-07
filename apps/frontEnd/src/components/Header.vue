@@ -1,5 +1,6 @@
 <script setup lang="ts">
 import { useAuthStore } from '@/stores/auth'
+import { showToast } from '@/utils/toast'
 import { onMounted, ref, watch } from 'vue'
 import { RouterLink, useRouter } from 'vue-router'
 import { authMiddleware } from '../middlewares/auth.middleware'

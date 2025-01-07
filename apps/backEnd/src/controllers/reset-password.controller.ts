@@ -89,5 +89,3 @@ export async function resetPassword(req: Request, res: Response): Promise<any> {
     return res.status(500).json({ message: error })
   }
 }
-
-}
