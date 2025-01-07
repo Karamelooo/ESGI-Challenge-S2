@@ -4,6 +4,7 @@ import cors from 'cors'
 import express from 'express'
 import mongoose from 'mongoose'
 import authRoutes from './routes/auth.routes'
+import exportbddRoutes from './routes/exportbdd.routes'
 import orderRoutes from './routes/order.routes'
 import productRoutes from './routes/product.routes'
 import userRoutes from './routes/user.routes'
@@ -35,6 +36,7 @@ app.use('/auth', authRoutes)
 app.use('/products', productRoutes)
 app.use('/users', userRoutes)
 app.use('/orders', orderRoutes)
+app.use('/exportbdd', exportbddRoutes)
 
 app.use('/uploads', express.static(path.join(__dirname, '../../uploads')))
 
