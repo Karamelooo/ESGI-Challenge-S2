@@ -4,6 +4,8 @@ import type { Application, Request, Response } from 'express'
 import express from 'express'
 import mongoose from 'mongoose'
 import authRoutes from './routes/auth.routes'
+import cartRoutes from './routes/cart.routes'
+import paymentRoutes from './routes/payment.routes'
 import productRoutes from './routes/product.routes'
 // const mongoString = process.env.DB_URL;
 const mongoString = 'mongodb://esgi:esgi@database:27017'
@@ -30,6 +32,7 @@ app.get('/test', (req: Request, res: Response) => {
 app.use('/auth', authRoutes)
 app.use('/products', productRoutes)
 app.use('/cart',cartRoutes)
+app.use('/payment',paymentRoutes)
 console.log(authRoutes)
 
 app.listen(8080, () => {
