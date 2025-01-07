@@ -1,6 +1,7 @@
+
 <script setup lang="ts">
-import axios from 'axios'
-import { onMounted, ref, watch } from 'vue'
+import axios from 'axios';
+import { onMounted, ref, watch } from 'vue';
 
 const currentSlide = ref(2)
 const slides = 3 // Nombre total d'images

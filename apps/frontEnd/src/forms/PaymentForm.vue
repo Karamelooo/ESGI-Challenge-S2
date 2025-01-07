@@ -30,6 +30,7 @@ const baseUrl = import.meta.env.VITE_BACKEND_URL;
   
   // à ajouter: publishable key
   const stripePromise = loadStripe('pk_test_your_publishable_key');
+  const amount = ref(parseFloat(route.query.amount as string) || 0);
   
   const isProcessing = ref(false);
   const paymentError = ref<string | null>(null);
@@ -58,7 +59,7 @@ const baseUrl = import.meta.env.VITE_BACKEND_URL;
   
       
       const { data } = await axios.post(`${baseUrl}/create-payment-intent`, {
-        amount: 1000,
+        amount: amount.value * 1000,
         currency: 'eur',
       });
   
@@ -73,6 +74,7 @@ const baseUrl = import.meta.env.VITE_BACKEND_URL;
       if (result.error) {
         paymentError.value = result.error.message || 'An unknown error occurred.';
       } else if (result.paymentIntent?.status === 'succeeded') {
+        
         alert('Payment succeeded!');
       }
     } catch (error) {

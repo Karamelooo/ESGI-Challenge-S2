@@ -10,13 +10,21 @@
         </div>
         <h2>Total: €{{ cartStore.total }}</h2>
         <button @click="cartStore.clearCart">Vider le panier</button>
+        <button @click="goToPayment">Payer</button>
       </div>
     </div>
   </template>
   
   <script setup lang="ts">
   import { useCartStore } from '@/stores/cart';
-  
+import { computed } from 'vue';
+import { useRouter } from 'vue-router';
+  const router = useRouter();
   const cartStore = useCartStore();
   cartStore.fetchCart();
+  const total = computed(() => cartStore.total);
+
+const goToPayment = () => {
+  router.push({ name: 'PaymentPage', query: { amount: total.value } });
+};
   </script>
