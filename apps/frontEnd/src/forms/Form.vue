@@ -106,25 +106,34 @@ async function handleSubmit() {
   if (!isFormValid()) return
 
   try {
-    const formDataToSend = new FormData()
-    
-    for (const [key, value] of Object.entries(formData.value)) {
-      if (Array.isArray(value) && value[0] instanceof File) {
-        value.forEach((file) => {
-          formDataToSend.append('images', file)
-        })
-      } else {
-        formDataToSend.append(key, value)
+    const hasFiles = Object.values(formData.value).some(value => 
+      Array.isArray(value) && value[0] instanceof File
+    )
+
+    let dataToSend: FormData | Record<string, any>
+    let headers: Record<string, string> = {}
+
+    if (hasFiles) {
+      dataToSend = new FormData()
+      for (const [key, value] of Object.entries(formData.value)) {
+        if (Array.isArray(value) && value[0] instanceof File) {
+          value.forEach((file) => {
+            dataToSend.append('images', file)
+          })
+        } else {
+          dataToSend.append(key, value)
+        }
       }
+    } else {
+      dataToSend = formData.value
+      headers['Content-Type'] = 'application/json'
     }
 
     const response = await api.request({
       url: props.submitUrl,
       method: props.method,
-      data: formDataToSend,
-      headers: {
-        'Content-Type': 'multipart/form-data'
-      }
+      data: dataToSend,
+      headers
     })
 
     if (!response.data) {
