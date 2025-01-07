@@ -133,7 +133,7 @@ th button {
   border: none;
   cursor: pointer;
   font-weight: bold;
-  color: black;
+  color: var(--pico-color);
 }
 
 th input {
