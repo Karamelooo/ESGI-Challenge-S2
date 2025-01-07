@@ -18,4 +18,5 @@
   import { useCartStore } from '@/stores/cart';
   
   const cartStore = useCartStore();
+  cartStore.fetchCart();
   </script>

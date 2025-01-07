@@ -1,6 +1,10 @@
 import axios from 'axios';
 import { defineStore } from 'pinia';
 import { useUserStore } from './user';
+import { authMiddleware } from '@/middlewares/auth.middleware';
+
+const baseUrl = import.meta.env.VITE_BACK_APP_URL;
+
 
 export const useCartStore = defineStore('cart', {
   state: () => ({
@@ -10,10 +14,10 @@ export const useCartStore = defineStore('cart', {
 
   actions: {
     async fetchCart() {
-      const userStore = useUserStore();
-      if (!userStore.userId) throw new Error('Utilisateur non authentifié');
+      const userStore = authMiddleware();
+      if (!userStore) throw new Error('Utilisateur non authentifié');
       try {
-        const response = await axios.get(`/api/cart/${userStore.userId}`);
+        const response = await axios.get(`${baseUrl}/cart/`);
         this.items = response.data.cart.items.map((item: any) => ({
           id: item.productId._id,
           name: item.productId.name,
@@ -27,11 +31,10 @@ export const useCartStore = defineStore('cart', {
     },
 
     async addToCart(product: { id: string; name: string; price: number }) {
-      const userStore = useUserStore();
-      if (!userStore.userId) throw new Error('Utilisateur non authentifié');
+      const userStore = authMiddleware();
+      if (!userStore) throw new Error('Utilisateur non authentifié');
       try {
-        await axios.post('/api/cart/add', {
-          userId: userStore.userId,
+        await axios.post(`${baseUrl}/cart/add`, {
           productId: product.id,
           quantity: 1,
         });
@@ -42,10 +45,10 @@ export const useCartStore = defineStore('cart', {
     },
 
     async removeFromCart(productId: string) {
-      const userStore = useUserStore();
-      if (!userStore.userId) throw new Error('Utilisateur non authentifié');
+      const userStore = authMiddleware();
+      if (!userStore) throw new Error('Utilisateur non authentifié');
       try {
-        await axios.post('/api/cart/remove', { userId: userStore.userId, productId });
+        await axios.post(`${baseUrl}/cart/remove`, { productId });
         await this.fetchCart(); // Refresh cart
       } catch (error) {
         console.error('Erreur lors de la suppression du produit du panier:', error);
@@ -53,10 +56,10 @@ export const useCartStore = defineStore('cart', {
     },
 
     async clearCart() {
-      const userStore = useUserStore();
-      if (!userStore.userId) throw new Error('Utilisateur non authentifié');
+      const userStore = authMiddleware();
+      if (!userStore) throw new Error('Utilisateur non authentifié');
       try {
-        await axios.post('/api/cart/clear', { userId: userStore.userId });
+        await axios.post(`${baseUrl}/cart/clear`);
         this.items = [];
         this.total = 0;
       } catch (error) {
