@@ -32,7 +32,7 @@ app.get('/test', (req: Request, res: Response) => {
 app.use('/auth', authRoutes)
 app.use('/products', productRoutes)
 
-app.use('/uploads', express.static(path.join(__dirname, '../uploads')))
+app.use('/uploads', express.static(path.join(__dirname, '../../uploads')))
 
 console.log(authRoutes)
 
