@@ -129,7 +129,7 @@ onMounted(() => {
 }
 
 button.contrast {
-  position: fixed;
+  position: absolute;
   background: rgba(0, 0, 0, 0.5);
   color: white;
   border: none;
