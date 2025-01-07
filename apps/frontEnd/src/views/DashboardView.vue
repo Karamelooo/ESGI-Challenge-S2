@@ -1,7 +1,7 @@
 <script>
 import { showToast } from '@/utils/toast'
-import { ref, onMounted } from 'vue'
 import Chart from 'chart.js/auto'
+import { onMounted, ref } from 'vue'
 
 export default {
   data() {
@@ -12,6 +12,13 @@ export default {
       customersChart: null,
       selectedTimeframe: 'month',
     }
+  },
+  mounted() {
+    this.initCharts()
+    window.addEventListener('resize', this.handleResize)
+  },
+  beforeUnmount() {
+    window.removeEventListener('resize', this.handleResize)
   },
   methods: {
     initCharts() {
@@ -24,8 +31,9 @@ export default {
     },
     initRevenueChart() {
       const ctx = document.getElementById('revenueChart')
-      if (!ctx) return
-      
+      if (!ctx)
+        return
+
       this.revenueChart = new Chart(ctx, {
         type: 'line',
         data: {
@@ -34,8 +42,8 @@ export default {
             label: 'Chiffre d\'affaires (€)',
             data: [12000, 19000, 15000, 25000, 22000, 30000],
             borderColor: 'rgb(75, 192, 192)',
-            tension: 0.1
-          }]
+            tension: 0.1,
+          }],
         },
         options: {
           maintainAspectRatio: false,
@@ -43,20 +51,13 @@ export default {
           plugins: {
             title: {
               display: true,
-              text: 'Évolution du chiffre d\'affaires'
-            }
-          }
-        }
+              text: 'Évolution du chiffre d\'affaires',
+            },
+          },
+        },
       })
     },
   },
-  mounted() {
-    this.initCharts()
-    window.addEventListener('resize', this.handleResize)
-  },
-  beforeUnmount() {
-    window.removeEventListener('resize', this.handleResize)
-  }
 }
 </script>
 
@@ -64,24 +65,21 @@ export default {
   <div>
     <div class="timeframe-selector">
       <select v-model="selectedTimeframe">
-        <option value="day">Par jour</option>
-        <option value="month">Par mois</option>
-        <option value="year">Par année</option>
+        <option value="day">
+          Par jour
+        </option>
+        <option value="month">
+          Par mois
+        </option>
+        <option value="year">
+          Par année
+        </option>
       </select>
     </div>
 
     <main class="dashboard">
       <div class="chart-container">
-        <canvas id="revenueChart"></canvas>
-      </div>
-      <div class="chart-container">
-        <canvas id="categoryChart"></canvas>
-      </div>
-      <div class="chart-container">
-        <canvas id="basketChart"></canvas>
-      </div>
-      <div class="chart-container">
-        <canvas id="customersChart"></canvas>
+        <canvas id="revenueChart" />
       </div>
     </main>
   </div>
@@ -138,4 +136,4 @@ select {
     height: 250px;
   }
 }
-</style> 
+</style>
