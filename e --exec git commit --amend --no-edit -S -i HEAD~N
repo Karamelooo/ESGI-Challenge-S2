@@ -1,0 +1,586 @@
+[33mcommit 0c50c6fb4087ba0b7fc322a8a38172cc4d3bdb92[m[33m ([m[1;36mHEAD -> [m[1;32m#stripe_side2[m[33m, [m[1;31morigin/#stripe_side2[m[33m, [m[1;31morigin/#stripe[m[33m, [m[1;32m#stripe[m[33m)[m
+Author: lbouzar <lyzabouzar@gmail.com>
+Date:   Wed Dec 11 18:34:54 2024 +0100
+
+    ajout de la route payment
+
+[33mcommit 384051aefb32dc5cb32709b63b6052d48215b90e[m
+Author: lbouzar <lyzabouzar@gmail.com>
+Date:   Wed Dec 11 15:54:16 2024 +0100
+
+    test signature 2
+
+[33mcommit 6ae652e70d972ad312daa8ff7cd35510dcc92b53[m
+Author: lbouzar <lyzabouzar@gmail.com>
+Date:   Wed Dec 11 15:33:40 2024 +0100
+
+    test signature
+
+[33mcommit 098020a04bb5eebf0d60c77d4fee8a3a221e7f54[m
+Author: lbouzar <lyzabouzar@gmail.com>
+Date:   Wed Dec 11 15:09:51 2024 +0100
+
+    mise en place de stripe
+
+[33mcommit 889635746add20c27ee193cbdc49c43c87757f52[m
+Merge: 3151ad0 d2eafb7
+Author: Hugo PETIT <42684851+Karamelooo@users.noreply.github.com>
+Date:   Sat Dec 7 16:34:23 2024 +0100
+
+    Merge pull request #59 from Karamelooo/feat/homePage
+    
+    #35 ✨ Home Page + Header
+
+[33mcommit d2eafb7cf1de0fe828e1858c11f3abdb6923f138[m
+Author: Hugo PETIT <hugo.petitleneuder@gmail.com>
+Date:   Sat Dec 7 16:33:39 2024 +0100
+
+    code review
+
+[33mcommit a57461fb5f68381266c7f48fbd3b3b0f40c30c55[m
+Author: leo P <Theoasis953@gmail.com>
+Date:   Sat Dec 7 10:32:43 2024 +0100
+
+    v1.5 : ajout des catégories
+
+[33mcommit 27b1552dac305e7a7f38f6e7904137152eca1b2e[m
+Author: leo P <Theoasis953@gmail.com>
+Date:   Wed Nov 27 23:21:09 2024 +0100
+
+    v1 : header + carousel + best Product + new Product
+
+[33mcommit 483cc59f141d25980605302bddad2fdcbcb8fc52[m
+Author: leo P <Theoasis953@gmail.com>
+Date:   Wed Nov 27 21:54:10 2024 +0100
+
+    feat: :sparkles: Home Page + Header
+
+[33mcommit 3151ad06624e533d07c8338f921577cabfb87176[m
+Merge: 85b440a cda3777
+Author: Hugo PETIT <42684851+Karamelooo@users.noreply.github.com>
+Date:   Thu Nov 21 22:48:56 2024 +0100
+
+    Merge pull request #58 from Karamelooo/#9_form
+    
+    #9 Composant de formulaire
+
+[33mcommit cda37775b09aaae4c53f86081d21f9c28f4f7602[m
+Author: Hugo PETIT <hugo.petitleneuder@gmail.com>
+Date:   Thu Nov 21 22:42:35 2024 +0100
+
+    refacto form login register
+
+[33mcommit da99e06f1b3a9ba78ff09ba4c260f0d38b1baab4[m
+Author: Hugo PETIT <hugo.petitleneuder@gmail.com>
+Date:   Thu Nov 21 19:21:10 2024 +0100
+
+    add Form component + refacto product
+
+[33mcommit 073378e7c04d2ebfd96335398b81e5c6b70684c0[m
+Author: Hugo PETIT <hugo.petitleneuder@gmail.com>
+Date:   Thu Nov 21 18:19:08 2024 +0100
+
+    toast js to ts
+
+[33mcommit 85b440a9fd7674d6b0c386990c39640aacd23e61[m
+Merge: 25c2111 9996978
+Author: Hugo PETIT <42684851+Karamelooo@users.noreply.github.com>
+Date:   Wed Nov 20 18:25:29 2024 +0100
+
+    Merge pull request #57 from Karamelooo/#16_product_signed
+    
+    #16 Création et modification des produits + Cleanup de l'app global
+
+[33mcommit 99969788ef741275f05468e32bc1e6ef760b398d[m
+Author: Hugo PETIT <hugo.petitleneuder@gmail.com>
+Date:   Wed Nov 20 18:24:34 2024 +0100
+
+    Merge branch '#16_product' (squashed and signed)
+
+[33mcommit 25c21118bc4b3eb030b58f484625f647de043a10[m
+Merge: ac27375 ae61c53
+Author: Hugo PETIT <42684851+Karamelooo@users.noreply.github.com>
+Date:   Fri Nov 15 16:47:14 2024 +0100
+
+    Merge pull request #55 from Karamelooo/fix-error-ts
+    
+    fix errors ts
+
+[33mcommit ae61c53243f01309a8bbac0e40fecb2c8e1120cf[m
+Author: Hugo PETIT <hugo.petitleneuder@gmail.com>
+Date:   Fri Nov 15 16:46:53 2024 +0100
+
+    cleanup
+
+[33mcommit a24f8c4abe273cfba676140694d45de3b1398ba1[m
+Author: Hugo PETIT <hugo.petitleneuder@gmail.com>
+Date:   Fri Nov 15 16:46:30 2024 +0100
+
+    fix errors ts
+
+[33mcommit ac27375d2baec9bde0c629898745234a5b6d37a2[m
+Merge: 31dd1a8 de9840b
+Author: Hugo PETIT <42684851+Karamelooo@users.noreply.github.com>
+Date:   Fri Nov 15 14:43:43 2024 +0100
+
+    Merge pull request #54 from Karamelooo/#1_auth_jwt
+    
+    #1 Authentification : Déconnexion, middleware front
+
+[33mcommit de9840b049d2c533986a3a9b5170274f4303f958[m
+Author: Hugo PETIT <hugo.petitleneuder@gmail.com>
+Date:   Fri Nov 15 14:40:33 2024 +0100
+
+    add logout
+
+[33mcommit db34885c74fa56fbab087eec5ee581efc183a3ef[m[33m ([m[1;31morigin/#1_auth_jwt[m[33m)[m
+Author: Hugo PETIT <hugo.petitleneuder@gmail.com>
+Date:   Sat Oct 19 19:25:35 2024 +0200
+
+    fix lint, add auth jwt
+
+[33mcommit c9127c7c826cb6f3b03c5dcb1caedd0e80414d8b[m
+Merge: 939052d 31dd1a8
+Author: Hugo PETIT <hugo.petitleneuder@gmail.com>
+Date:   Sat Oct 19 17:50:26 2024 +0200
+
+    Merge remote-tracking branch 'origin/main' into #1_auth_jwt
+
+[33mcommit 31dd1a8b520b1ccc4ed8622c8a5c7d3d03573a3e[m[33m ([m[1;32m#roles[m[33m)[m
+Merge: 4681443 7e1a9e9
+Author: Karamelooo <42684851+Karamelooo@users.noreply.github.com>
+Date:   Sat Oct 19 16:44:41 2024 +0200
+
+    Merge pull request #53 from Karamelooo/feat/db_schema
+    
+    feat: :sparkles: Schema DB Mongoose
+
+[33mcommit 7e1a9e9f75a75cfeb7e88c90adef95aa48cbf418[m
+Author: KomsteRr <Theoasis953@gmail.com>
+Date:   Sat Oct 19 16:12:05 2024 +0200
+
+    add label to role
+
+[33mcommit 066b04bd4d9d8d617257f39679e8e1ccf5db261b[m
+Author: KomsteRr <Theoasis953@gmail.com>
+Date:   Sat Oct 19 14:37:23 2024 +0200
+
+    feat: :sparkles: Schema DB Mongoose
+
+[33mcommit 939052d0cbd4837fa3a20fc0286fb595a4e9f6ba[m
+Author: Hugo PETIT <hugo.petitleneuder@gmail.com>
+Date:   Thu Oct 17 14:27:28 2024 +0200
+
+    verif password
+
+[33mcommit 46814432681f3536a47dee00493797ebf722b012[m
+Merge: f2a2152 ed28326
+Author: Karamelooo <42684851+Karamelooo@users.noreply.github.com>
+Date:   Thu Oct 17 12:19:47 2024 +0200
+
+    Merge pull request #52 from Karamelooo/#1_auth_verif
+    
+    #1 Authentification : Ajout retour d'erreur
+
+[33mcommit ed28326cafc607963b3224ce06d46da74dff5520[m
+Author: Hugo PETIT <hugo.petitleneuder@gmail.com>
+Date:   Thu Oct 17 12:18:30 2024 +0200
+
+    add verif front
+
+[33mcommit f2a2152b40edaaea3fa67ebcf2c7dee1287d858c[m
+Merge: 12d174b 4ddb86f
+Author: Karamelooo <42684851+Karamelooo@users.noreply.github.com>
+Date:   Thu Oct 17 11:09:33 2024 +0200
+
+    Merge pull request #51 from Karamelooo/#1_add_toast
+    
+    #1 Authentification : front
+
+[33mcommit 4ddb86f13f65d2156dc7c3c1874c9db7979f0a94[m
+Author: Hugo PETIT <hugo.petitleneuder@gmail.com>
+Date:   Thu Oct 17 11:06:26 2024 +0200
+
+    front, email regex, toast auth
+
+[33mcommit 12d174b450029b753bfeb50542bbbdf071f9cde9[m
+Merge: 6f41cca 9b42d88
+Author: Léo Poumailloux <Theoasis953@gmail.com>
+Date:   Thu Oct 17 10:00:24 2024 +0200
+
+    Merge pull request #50 from Karamelooo/feat/add_mailling_lib
+    
+    feat: :heavy_plus_sign: ajout de nodemailer dans le backend
+
+[33mcommit 9b42d8863767b542c4759c2de2bc5613ce2ffb2c[m
+Author: leo P <Theoasis953@gmail.com>
+Date:   Thu Oct 17 09:59:16 2024 +0200
+
+    feat: :heavy_plus_sign: ajout de nodemailer dans le backend
+
+[33mcommit 8fe8b0ee8e30b97dfb325c554be73639a4afa0cc[m
+Author: Hugo PETIT <hugo.petitleneuder@gmail.com>
+Date:   Thu Oct 17 09:58:59 2024 +0200
+
+    m helloworld
+
+[33mcommit d8cb96c0251f47847ff249ee0818ce7dec92a4b8[m
+Author: Hugo PETIT <hugo.petitleneuder@gmail.com>
+Date:   Thu Oct 17 09:43:06 2024 +0200
+
+    cleanup code, add controllers files
+
+[33mcommit e36bce5112166c36ba7baa14f382db4a278a0742[m
+Merge: bfc08df 6f41cca
+Author: Hugo PETIT <hugo.petitleneuder@gmail.com>
+Date:   Thu Oct 17 09:18:46 2024 +0200
+
+    Merge remote-tracking branch 'origin/main' into #1_add_toast
+
+[33mcommit bfc08df3d16f1b41cb5fc48e8bdc6e9d9b88a193[m
+Author: Hugo PETIT <hugo.petitleneuder@gmail.com>
+Date:   Thu Oct 17 09:18:33 2024 +0200
+
+    add toast
+
+[33mcommit 6f41ccacd1f64e4a0bd72c951677a6dcd716155f[m
+Merge: 9d08785 3eaf7ab
+Author: Léo Poumailloux <Theoasis953@gmail.com>
+Date:   Thu Oct 17 09:14:04 2024 +0200
+
+    Merge pull request #49 from Karamelooo/feat/add_libs
+    
+    feat: :heavy_plus_sign: ajout de librairie css
+
+[33mcommit 3eaf7abbfa131c79719b5dc8845eabd90c3076f6[m
+Author: leo P <Theoasis953@gmail.com>
+Date:   Thu Oct 17 09:12:24 2024 +0200
+
+    feat: :heavy_plus_sign: ajout de librairie css (pico et typescript toastify)
+
+[33mcommit 9d08785f33bb0284a06e72fe9235a1dc9c167d02[m
+Merge: fcfaa47 3bc4f34
+Author: Karamelooo <42684851+Karamelooo@users.noreply.github.com>
+Date:   Wed Oct 16 18:21:18 2024 +0200
+
+    Merge pull request #48 from Karamelooo/#_auth3
+    
+    #1 eslint and fix route
+
+[33mcommit 3bc4f34ab038599fc54101b57ec367d6ae85e2d1[m
+Author: Hugo PETIT <hugo.petitleneuder@gmail.com>
+Date:   Wed Oct 16 18:20:46 2024 +0200
+
+    eslint and fix route
+
+[33mcommit fcfaa47e6b6238c89bf5ef9712862610b162a7d0[m
+Merge: b8a6d3c b4480ff
+Author: Karamelooo <42684851+Karamelooo@users.noreply.github.com>
+Date:   Wed Oct 16 18:14:15 2024 +0200
+
+    Merge pull request #47 from Karamelooo/#_auth3
+    
+    #1 fix route
+
+[33mcommit b4480ff9ea78ccb869964b17fcb2993282726201[m
+Author: Hugo PETIT <hugo.petitleneuder@gmail.com>
+Date:   Wed Oct 16 18:13:43 2024 +0200
+
+    fix route
+
+[33mcommit b8a6d3c4b5b51e19a97c3d5c1c1c64f6237e9286[m
+Merge: 1a8ab5c b33122c
+Author: Karamelooo <42684851+Karamelooo@users.noreply.github.com>
+Date:   Wed Oct 16 18:04:22 2024 +0200
+
+    Merge pull request #46 from Karamelooo/#_auth3
+    
+    #1 Fix routes view
+
+[33mcommit b33122c758284b915311217c23caff57b8c27a43[m
+Author: Hugo PETIT <hugo.petitleneuder@gmail.com>
+Date:   Wed Oct 16 18:02:44 2024 +0200
+
+    fix route view
+
+[33mcommit 1a8ab5cfadfa2e68ba61c2a50c03fa8808034c9e[m
+Merge: 8e02bee 8f04cfa
+Author: Karamelooo <42684851+Karamelooo@users.noreply.github.com>
+Date:   Wed Oct 16 17:53:36 2024 +0200
+
+    Merge pull request #45 from Karamelooo/#_auth3
+    
+    #1 Authentification
+
+[33mcommit 8f04cfaf4cc13ff8cbe115ea30725cf124018e8f[m
+Author: Hugo PETIT <hugo.petitleneuder@gmail.com>
+Date:   Wed Oct 16 17:51:37 2024 +0200
+
+    add view login
+
+[33mcommit 76f7717ccc272a103dd9adfcc69f8530f7b65549[m
+Author: Hugo PETIT <hugo.petitleneuder@gmail.com>
+Date:   Wed Oct 16 17:47:36 2024 +0200
+
+    add login
+
+[33mcommit 6c6e6cc060180c22cdec9572926210131e6b9d2f[m
+Merge: 07b6fbb 8e02bee
+Author: Hugo PETIT <hugo.petitleneuder@gmail.com>
+Date:   Wed Oct 16 16:42:02 2024 +0200
+
+    Merge remote-tracking branch 'origin/main' into #_auth3
+
+[33mcommit 8e02beec9e5b9f273997623850a706e3588bb89f[m
+Merge: 7e8bc88 0fec02a
+Author: Karamelooo <42684851+Karamelooo@users.noreply.github.com>
+Date:   Wed Oct 16 16:15:51 2024 +0200
+
+    Merge pull request #44 from Karamelooo/fix_dockerignore_node_modules
+    
+    Add dockerignore
+
+[33mcommit 0fec02ac2b526d6c9f4dddd68f473a1c4187b430[m
+Author: Hugo PETIT <hugo.petitleneuder@gmail.com>
+Date:   Wed Oct 16 16:13:34 2024 +0200
+
+    fix gitignroe
+
+[33mcommit 2106c078c656fa9e291d1d7c9d546ac1e35d1817[m
+Author: Hugo PETIT <hugo.petitleneuder@gmail.com>
+Date:   Wed Oct 16 16:12:38 2024 +0200
+
+    fix docker ignore
+
+[33mcommit 07b6fbbb0249854474c4f0a2ed0829a82a141c87[m
+Merge: 2ebfbca 7e8bc88
+Author: Hugo PETIT <hugo.petitleneuder@gmail.com>
+Date:   Wed Oct 16 15:55:20 2024 +0200
+
+    Merge remote-tracking branch 'origin/main' into #_auth3
+
+[33mcommit 2ebfbca4b500c85a9f524d7b2b512d6fd795f68d[m
+Author: Hugo PETIT <hugo.petitleneuder@gmail.com>
+Date:   Wed Oct 16 15:55:14 2024 +0200
+
+    wip bcrypt
+
+[33mcommit 7e8bc881288e6f62e3c538d8c477089b33a9cb54[m
+Merge: e52a1c2 2733142
+Author: Léo Poumailloux <Theoasis953@gmail.com>
+Date:   Wed Oct 16 15:44:09 2024 +0200
+
+    Merge pull request #43 from Karamelooo/fix/quick-fix
+    
+    fix: :ambulance: quick-fix
+
+[33mcommit 27331428a57a5f54ce12b062c2e3013ef4374cf8[m
+Author: leo P <Theoasis953@gmail.com>
+Date:   Wed Oct 16 15:38:54 2024 +0200
+
+    fix package json
+
+[33mcommit d6e0d44b50d008c641e09207a8369c5993f81221[m
+Merge: ee954ee e52a1c2
+Author: Léo Poumailloux <Theoasis953@gmail.com>
+Date:   Wed Oct 16 15:36:16 2024 +0200
+
+    Merge branch 'main' into fix/quick-fix
+
+[33mcommit ee954eeff9ff8f84a27a35a8deeb3c725ad361c5[m
+Author: leo P <Theoasis953@gmail.com>
+Date:   Wed Oct 16 15:35:00 2024 +0200
+
+    fix: :ambulance: quick-fix
+
+[33mcommit 4fa97af4a490e128c8739981412b2dfe23f5f35c[m
+Author: Hugo PETIT <hugo.petitleneuder@gmail.com>
+Date:   Wed Oct 16 15:24:25 2024 +0200
+
+    fix type
+
+[33mcommit e52a1c29434a4d62c5f80777c12f2bd95deb0413[m
+Merge: 02ecc6c 838b538
+Author: Léo Poumailloux <Theoasis953@gmail.com>
+Date:   Wed Oct 16 15:22:21 2024 +0200
+
+    Merge pull request #42 from Karamelooo/fix/package_json
+    
+    fix: :bug: resolution pb avec le lintage et l'initialisation de proje…
+
+[33mcommit 838b538882a34e9fe4a78c54c4dc34175f41b158[m
+Author: leo P <Theoasis953@gmail.com>
+Date:   Wed Oct 16 15:21:15 2024 +0200
+
+    fix: :bug: resolution pb avec le lintage et l'initialisation de projet (entrypoint)
+
+[33mcommit 6a303ba0a21868a9a160eee97a0186e6ed512766[m
+Author: Hugo PETIT <hugo.petitleneuder@gmail.com>
+Date:   Wed Oct 16 15:13:21 2024 +0200
+
+    add user fonctionnel
+
+[33mcommit 0d4fcbcfdf035ac358c19c2f82891e81326e835b[m
+Merge: 9efcb48 02ecc6c
+Author: Hugo PETIT <hugo.petitleneuder@gmail.com>
+Date:   Wed Oct 16 14:50:50 2024 +0200
+
+    Merge remote-tracking branch 'origin/main' into #_auth3
+
+[33mcommit 9efcb48343a95b8cc72673aae608f5e70b00bde1[m
+Author: Hugo PETIT <hugo.petitleneuder@gmail.com>
+Date:   Wed Oct 16 14:50:33 2024 +0200
+
+    wip
+
+[33mcommit 02ecc6c64c539fa6cce20df0faba1cbbcece1583[m
+Merge: 5017f3b 3b12594
+Author: Léo Poumailloux <Theoasis953@gmail.com>
+Date:   Wed Oct 16 14:49:16 2024 +0200
+
+    Merge pull request #41 from Karamelooo/fix/dev-backend
+    
+    fix: :bug: corrige l'auto run du backend
+
+[33mcommit 3b12594dea36852dec3f7b76f0363eeec4273086[m
+Author: leo P <Theoasis953@gmail.com>
+Date:   Wed Oct 16 14:48:37 2024 +0200
+
+    fix: :bug: corrige l'auto run du backend
+
+[33mcommit 47ad98ba6512e90bf84a18c0054e44dd5314df89[m[33m ([m[1;31morigin/#_auth3[m[33m)[m
+Author: Hugo PETIT <hugo.petitleneuder@gmail.com>
+Date:   Wed Oct 16 13:54:11 2024 +0200
+
+    import
+
+[33mcommit 5017f3b217edeaa693c58eb66fc6b356a24f60b5[m[33m ([m[1;32m#admin[m[33m)[m
+Merge: 90f8283 cc45ace
+Author: Léo Poumailloux <Theoasis953@gmail.com>
+Date:   Wed Oct 16 13:18:57 2024 +0200
+
+    Merge pull request #40 from Karamelooo/feat/eslint-rules
+    
+    feat: :sparkles: Ajoute de regle strict eslint
+
+[33mcommit cc45ace7e0dd4f913a274ffec305b29552049778[m
+Author: leo P <Theoasis953@gmail.com>
+Date:   Wed Oct 16 13:18:03 2024 +0200
+
+    feat: :sparkles: eslint in backend
+
+[33mcommit 0cd0437660a287e3942c130c6aa1e9c5deb73746[m[33m ([m[1;31morigin/feat/eslint-rules[m[33m)[m
+Author: leo P <Theoasis953@gmail.com>
+Date:   Wed Oct 16 12:56:40 2024 +0200
+
+    feat: :sparkles: Ajoute de regle strict eslint
+
+[33mcommit 90f8283b95e8d3728f49a85bf02ea13497d46354[m
+Merge: 820ae64 ebbba01
+Author: Léo Poumailloux <Theoasis953@gmail.com>
+Date:   Wed Oct 16 12:38:10 2024 +0200
+
+    Merge pull request #39 from Karamelooo/hotfix/js_into_ts
+    
+    fix: :ambulance: passage du backend en typescript
+
+[33mcommit ebbba014a845a35036dd03cdd4c6647c6bb55ce9[m
+Author: leo P <Theoasis953@gmail.com>
+Date:   Wed Oct 16 12:36:43 2024 +0200
+
+    fix: :ambulance: passage du backend en typescript
+
+[33mcommit 820ae6492a694d3512f73131740345242a68d9bf[m
+Merge: 7dbd449 f7beb31
+Author: Léo Poumailloux <Theoasis953@gmail.com>
+Date:   Wed Oct 16 12:10:29 2024 +0200
+
+    Merge pull request #38 from Karamelooo/feat/exemple_env
+    
+    feat: :sparkles: .env exemple similaire a celui du dev
+
+[33mcommit f7beb31144ffb57253e19f5595c6981566ae3f1f[m
+Author: leo P <Theoasis953@gmail.com>
+Date:   Wed Oct 16 12:08:49 2024 +0200
+
+    feat: :sparkles: .env exemple similaire a celui du dev
+
+[33mcommit 7dbd449a6b3d577ea847951fb85b80b5e4cd0362[m
+Merge: 6a50ec8 9655e63
+Author: Léo Poumailloux <Theoasis953@gmail.com>
+Date:   Sun Sep 22 16:40:50 2024 +0200
+
+    Merge pull request #37 from Karamelooo/fix/dockerfile
+    
+    fix: :ambulance: erreur node:alpine
+
+[33mcommit 9655e63eb1ecd344c5e47ab1460eb91828cb93e2[m
+Author: KomsteRr <Theoasis953@gmail.com>
+Date:   Sun Sep 22 16:39:38 2024 +0200
+
+    fix: :ambulance: erreur node:alpine
+
+[33mcommit 6a50ec84edd815ea6738be8e6d3a82eefd900a39[m
+Author: Léo Poumailloux <Theoasis953@gmail.com>
+Date:   Sun Sep 22 16:11:00 2024 +0200
+
+    Update README.md
+    
+    modification dans le README.md pour implémenter le script de création de .env
+
+[33mcommit 6788a845b9f65fd4bb7fe10411529159d1be77f9[m
+Merge: 5d27ec8 9015761
+Author: Léo Poumailloux <Theoasis953@gmail.com>
+Date:   Sun Sep 22 16:09:39 2024 +0200
+
+    Merge pull request #36 from Karamelooo/feat/dockerisation-v2
+    
+    feat: :sparkles: V2 - Dockerisation
+
+[33mcommit 9015761e838a1a968c3fa3089152e4897ee3e1dc[m
+Author: KomsteRr <Theoasis953@gmail.com>
+Date:   Sun Sep 22 16:04:30 2024 +0200
+
+    feat: :sparkles: V2 - Dockerisation
+
+[33mcommit 5d27ec83752556c8cabe22396e086aa5886f285a[m
+Merge: 3e3a302 a415c4b
+Author: Léo Poumailloux <Theoasis953@gmail.com>
+Date:   Wed Sep 18 16:45:16 2024 +0200
+
+    Merge pull request #11 from Karamelooo/fix/dockerisation-win
+    
+    fix: :bug: Fix docker on windows
+
+[33mcommit a415c4b7fde506a3af28456a46533b322c1005fb[m
+Author: KomsteRr <Theoasis953@gmail.com>
+Date:   Wed Sep 18 16:44:11 2024 +0200
+
+    fix: :bug: Fix docker on windows
+
+[33mcommit 3e3a302689ee34685ba5489c860e47e105602176[m
+Merge: f5e968a 340482e
+Author: Karamelooo <42684851+Karamelooo@users.noreply.github.com>
+Date:   Wed Sep 18 15:00:30 2024 +0200
+
+    Merge pull request #7 from Karamelooo/feat/dockerisation
+    
+    feat: :sparkles: V1 - Dockerisation
+
+[33mcommit 340482e9000b4882e98be651f7b8e9799ecb879b[m
+Author: KomsteRr <Theoasis953@gmail.com>
+Date:   Wed Sep 18 14:51:46 2024 +0200
+
+    feat: :sparkles: V1 - Dockerisation
+
+[33mcommit f5e968ab14bcb85c173032fea1626f04cc08d383[m
+Author: Valouche <61144207+Valentin460@users.noreply.github.com>
+Date:   Thu Sep 12 11:28:05 2024 +0200
+
+    Create README.md
+
+[33mcommit 1c04c2b58f15c6eeb828d43449b8ca296aac6b59[m
+Author: Karamelooo <42684851+Karamelooo@users.noreply.github.com>
+Date:   Thu Sep 12 09:46:31 2024 +0200
+
+    Initial commit

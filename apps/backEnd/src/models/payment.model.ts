@@ -1,5 +1,5 @@
 import type { Document, ObjectId } from 'mongoose'
-import mongoose, { Schema } from 'mongoose'
+import mongoose from 'mongoose'
 
 interface IPayment extends Document {
   order: ObjectId
@@ -11,16 +11,17 @@ interface IPayment extends Document {
   createdAt: Date
 }
 
-const paymentSchema = new Schema({
-  order: { type: Schema.Types.ObjectId, ref: 'Order', required: true },
-  user: { type: Schema.Types.ObjectId, ref: 'User', required: true },
+const PaymentSchema = new mongoose.Schema({
+  paymentIntentId: { type: String, required: true },
   amount: { type: Number, required: true },
-  paymentMethod: { type: String, enum: ['CreditCard', 'PayPal'], required: true }, // a modifié
-  paymentStatus: { type: String, enum: ['Pending', 'Completed', 'Failed'], default: 'Pending' },
-  transactionId: { type: String },
+  currency: { type: String, required: true },
+  status: { type: String, required: true },
+  paymentMethod: { type: String, required: false}, 
+  user: { type: mongoose.Schema.Types.ObjectId, ref: 'User', required: false }, 
+  order: { type: mongoose.Schema.Types.ObjectId, ref: 'Order', required: false }, 
   createdAt: { type: Date, default: Date.now },
-}) // a retravailler psk je sais pas exactement comment ça fonctionne
+}); // a retravailler psk je sais pas exactement comment ça fonctionne
 
-const Payment = mongoose.model<IPayment>('Payment', paymentSchema)
+const Payment = mongoose.model<IPayment>('Payment', PaymentSchema)
 
 export default Payment
