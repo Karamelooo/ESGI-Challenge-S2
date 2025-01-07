@@ -89,7 +89,6 @@ const router = createRouter({
       name: 'admin-users-create',
       component: AdminUserView,
     },
-    },
     {
       path: '/payment',
       name: 'payment',
