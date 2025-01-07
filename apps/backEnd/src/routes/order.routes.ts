@@ -5,6 +5,7 @@ import { checkRole } from '../middlewares/role.middleware'
 
 const router = Router()
 
+router.get('/user', authMiddleware, orderController.getOrdersByUserId)
 router.get('/', orderController.getOrders)
 router.get('/:id', orderController.getOrderById)
 router.post('/create', orderController.createOrder)

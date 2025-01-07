@@ -61,6 +61,9 @@ export default {
           </div>
         </li>
         <li>
+          <router-link to="/admin/orders">Commandes</router-link>
+        </li>
+        <li>
           <router-link to="/admin/users">Utilisateurs</router-link>
         </li>
       </ul>
