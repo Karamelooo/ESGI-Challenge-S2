@@ -114,7 +114,6 @@ async function handleSubmit() {
     let headers: Record<string, string> = {}
 
     if (hasFiles) {
-      // Si on a des fichiers, on utilise FormData
       dataToSend = new FormData()
       for (const [key, value] of Object.entries(formData.value)) {
         if (Array.isArray(value) && value[0] instanceof File) {
