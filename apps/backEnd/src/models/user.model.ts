@@ -45,7 +45,6 @@ const userSchema = new Schema({
   lockUntil: { type: Date, default: null },
   resetPasswordToken: String,
   resetPasswordExpiration: Date,
-  },
 })
 
 const User = mongoose.model<IUser>('User', userSchema)
