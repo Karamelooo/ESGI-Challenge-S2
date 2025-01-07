@@ -1,6 +1,6 @@
-import { authMiddleware } from '@/middlewares/auth.middleware'
 import { Router } from 'express'
 import * as orderController from '../controllers/order.controller'
+import { authMiddleware } from '../middlewares/auth.middleware'
 import { checkRole } from '../middlewares/role.middleware'
 
 const router = Router()

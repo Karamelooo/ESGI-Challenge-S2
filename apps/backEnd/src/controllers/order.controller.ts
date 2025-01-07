@@ -1,6 +1,7 @@
 import type { Request, Response } from 'express'
+import jwt from 'jsonwebtoken'
 import Order from '../models/order.model'
-import Product from '../models/product.model'
+import User from '../models/user.model'
 
 // Obtenir toutes les commandes
 export async function getOrders(req: Request, res: Response): Promise<void> {
@@ -28,14 +29,18 @@ export async function getOrderById(req: Request, res: Response): Promise<void> {
 // Créer une commande
 export async function createOrder(req: Request, res: Response): Promise<void> {
   try {
-    const { user, products, totalAmount, status, shippingAddress, postalCode } = req.body
+    const { products, totalAmount, shippingAddress, postalCode } = req.body
+
+    const token = req.headers.authorization?.split(' ')[1]
+    const decoded = jwt.verify(token, process.env.JWT_SECRET as string) as any
+    const user = decoded.userId
 
     if (products === undefined || totalAmount === undefined || shippingAddress === undefined || postalCode === undefined) {
-      res.status(422).json({ message: 'Les champs : products, totalAmount, shippingAddress et postalCode sont requis' })
+      res.status(422).json({ message: `Les champs : products, totalAmount, shippingAddress et postalCode sont requis` })
       return
     }
 
-    const newOrder = new Order({ user, products, totalAmount, status, shippingAddress, postalCode })
+    const newOrder = new Order({ user, products, totalAmount, shippingAddress, postalCode })
     await newOrder.save()
     res.status(201).json(newOrder)
   }

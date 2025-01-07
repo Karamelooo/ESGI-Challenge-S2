@@ -1,4 +1,5 @@
 <script setup lang="ts">
+import Footer from '@/components/Footer.vue'
 import Header from '@/components/Header.vue'
 import { useAuthStore } from '@/stores/auth'
 import { onMounted } from 'vue'
@@ -17,8 +18,12 @@ onMounted(() => {
   <header>
     <Header />
   </header>
+
   <CookiePopup />
+
   <RouterView />
+
+  <Footer />
 </template>
 
 <style scoped>
