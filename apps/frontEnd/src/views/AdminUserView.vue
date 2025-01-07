@@ -5,6 +5,7 @@ import { onMounted, ref } from 'vue'
 import { useRoute, useRouter } from 'vue-router'
 import { showToast } from '@/utils/toast'
 import AdvancedTable from '../components/AdvancedTable.vue'
+import DeleteUserConfirmation from '../components/DeleteUserConfirmation.vue'
 
 const route = useRoute()
 const router = useRouter()
@@ -107,15 +108,26 @@ async function editUser(userId: string) {
   }
 }
 
+const deleteModal = ref(null)
+const userToDelete = ref<string | null>(null)
+
 async function deleteUser(userId: string) {
-  if (confirm('Êtes-vous sûr de vouloir supprimer cet utilisateur ?')) {
-    try {
-      await axios.delete(`${baseUrl}/users/${userId}`)
-      fetchUsers()
-    }
-    catch (error) {
-      console.error('Erreur lors de la suppression de l\'utilisateur:', error)
-    }
+  userToDelete.value = userId
+  deleteModal.value?.showDeleteConfirmation()
+}
+
+async function handleUserDeleted() {
+  try {
+    await axios.delete(`${baseUrl}/users/${userToDelete.value}`)
+    await fetchUsers()
+    showToast('Utilisateur supprimé avec succès')
+  }
+  catch (error) {
+    console.error('Erreur lors de la suppression de l\'utilisateur:', error)
+    showToast('Erreur lors de la suppression de l\'utilisateur')
+  }
+  finally {
+    userToDelete.value = null
   }
 }
 
@@ -219,6 +231,10 @@ onMounted(() => {
         Aucun utilisateur disponible
       </p>
     </div>
+    <DeleteUserConfirmation 
+      ref="deleteModal"
+      @user-deleted="handleUserDeleted"
+    />
   </div>
 </template>
 
