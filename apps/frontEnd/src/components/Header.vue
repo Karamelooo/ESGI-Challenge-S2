@@ -1,8 +1,8 @@
 <script setup lang="ts">
+import { useAuthStore } from '@/stores/auth'
 import { onMounted, ref, watch } from 'vue'
 import { RouterLink, useRouter } from 'vue-router'
 import { authMiddleware } from '../middlewares/auth.middleware'
-import { useAuthStore } from '@/stores/auth'
 
 const isLoggedIn = ref(false)
 const router = useRouter()
@@ -15,20 +15,6 @@ const navbarContent = [
   {
     label: 'Produits',
     route: '/products',
-  },
-  {
-    label: 'Licenses',
-    route: '/licenses',
-    sub: [
-      {
-        label: 'pokemon',
-        route: '/license/pokemon',
-      },
-      {
-        label: 'Magic',
-        route: '/license/magic',
-      },
-    ],
   },
 ]
 
