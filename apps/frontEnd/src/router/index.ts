@@ -17,6 +17,7 @@ import AdminOrderHistoryView from '@/views/AdminOrderHistoryView.vue'
 import AdminUserView from '@/views/AdminUserView.vue'
 import RequestResetPassword from '../views/RequestResetPassword.vue'
 import ResetPassword from '../views/ResetPassword.vue'
+import DashboardView from '@/views/DashboardView.vue'
 import { createRouter, createWebHistory } from 'vue-router'
 
 function adminGuard(to : any, from : any, next : any) {
@@ -72,22 +73,32 @@ const router = createRouter({
           name: 'admin-products-create',
           component: AdminProductView,
         },
+        {
+          path: '/admin/users',
+          name: 'admin-users',
+          component: AdminUserView,
+        },
+        {
+          path: '/admin/users/create',
+          name: 'admin-users-create',
+          component: AdminUserView,
+        },
+        {
+          path: '/admin/orders',
+          name: 'admin-orders',
+          component: AdminOrderHistoryView,
+          beforeEnter: authMiddleware,
+        },
+        {
+          path: 'dashboard',
+          component: DashboardView
+        },
       ],
     },
     {
       path: '/confirm-email/:token',
       name: 'confirm-email',
       component: ConfirmEmailView,
-    },
-    {
-      path: '/admin/users',
-      name: 'admin-users',
-      component: AdminUserView,
-    },
-    {
-      path: '/admin/users/create',
-      name: 'admin-users-create',
-      component: AdminUserView,
     },
     {
       path: '/payment',
@@ -132,12 +143,6 @@ const router = createRouter({
       path: '/orders',
       name: 'orders',
       component: OrderHistoryView,
-      beforeEnter: authMiddleware,
-    },
-    {
-      path: '/admin/orders',
-      name: 'admin-orders',
-      component: AdminOrderHistoryView,
       beforeEnter: authMiddleware,
     },
   ],
