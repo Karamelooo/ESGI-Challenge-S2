@@ -14,7 +14,7 @@
             :disabled="isProcessing"
           >
             <span v-if="isProcessing" class="loader"></span>
-            <span v-else>Payer</span>
+            <span v-else>Payer {{ cartStore.total }}€</span>
           </button>
         </form>
       </div>
@@ -25,16 +25,24 @@
   import { loadStripe, type StripeCardElement, type StripeElements } from '@stripe/stripe-js';
 import axios from 'axios';
 import { onMounted, ref } from 'vue';
+import { useRoute, useRouter } from 'vue-router';
+import { useCartStore } from '@/stores/cart';
 
-const baseUrl = import.meta.env.VITE_BACKEND_URL;
-  
+const route = useRoute();
+const baseUrl = import.meta.env.VITE_BACK_APP_URL;
+const stripePublicKey = import.meta.env.VITE_STRIPE_PUBLIC_KEY;
+const cartStore = useCartStore();
+cartStore.fetchCart();
   // à ajouter: publishable key
-  const stripePromise = loadStripe('pk_test_your_publishable_key');
+  const stripePromise = loadStripe(stripePublicKey);
+  const amount = ref(parseFloat(route.query.amount as string) || 0);
   
   const isProcessing = ref(false);
   const paymentError = ref<string | null>(null);
   const elements = ref<StripeElements | null>(null);
   const cardElement = ref<StripeCardElement | null>(null);
+  
+  const router = useRouter();
   
   onMounted(async () => {
     const stripe = await stripePromise;
@@ -56,9 +64,9 @@ const baseUrl = import.meta.env.VITE_BACKEND_URL;
         throw new Error('Stripe failed to load.');
       }
   
-      
-      const { data } = await axios.post(`${baseUrl}/create-payment-intent`, {
-        amount: 1000,
+      console.log(baseUrl)
+      const { data } = await axios.post(`${baseUrl}/payment/create-payment-intent`, {
+        amount: cartStore.total * 100,
         currency: 'eur',
       });
   
@@ -73,7 +81,25 @@ const baseUrl = import.meta.env.VITE_BACKEND_URL;
       if (result.error) {
         paymentError.value = result.error.message || 'An unknown error occurred.';
       } else if (result.paymentIntent?.status === 'succeeded') {
-        alert('Payment succeeded!');
+        try {
+          await axios.post(`${baseUrl}/orders/create`, {
+            products: cartStore.items.map(item => ({
+              productId: item.id,
+              quantity: item.quantity
+            })),
+            totalAmount: cartStore.total,
+            shippingAddress: "À remplir",
+            postalCode: "À remplir" 
+          });
+
+          await cartStore.clearCart();
+
+          alert('Paiement réussi et commande créée !');
+          router.push('/orders');
+        } catch (error) {
+          console.error('Erreur lors de la création de la commande:', error);
+          paymentError.value = "Erreur lors de la création de la commande";
+        }
       }
     } catch (error) {
       paymentError.value = (error as Error).message;
