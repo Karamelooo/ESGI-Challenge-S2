@@ -60,6 +60,9 @@ export default {
             </button>
           </div>
         </li>
+        <li>
+          <router-link to="/admin/orders">Commandes</router-link>
+        </li>
       </ul>
     </nav>
     <main>
