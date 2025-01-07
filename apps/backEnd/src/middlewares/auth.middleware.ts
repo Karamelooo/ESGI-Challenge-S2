@@ -26,7 +26,8 @@ export function authMiddleware(req: AuthRequest, res: Response, next: NextFuncti
   catch (error) {
     if (error instanceof Error) {
       res.status(401).json({ message: error.message })
-    } else {
+    }
+    else {
       res.status(401).json({ message: 'Erreur d\'authentification' })
     }
   }
