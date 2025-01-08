@@ -35,7 +35,7 @@ describe('Produits', () => {
     adminUser = new User({
       firstname: 'Admin',
       lastname: 'Test',
-      email: 'ok@ok.ok',
+      email: 'ok3@ok.ok',
       password: 'Azertyuiop!8!',
       roles: ['ROLE_ADMIN'],
       isActive: true
