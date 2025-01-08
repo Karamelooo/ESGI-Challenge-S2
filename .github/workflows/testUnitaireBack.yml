@@ -29,7 +29,7 @@ jobs:
       - name: start backend + db
         run: npm run dev:backend
       - name: Installation des packets
-        run: sudo npm --prefix ./apps/backEnd install -g --unsafe-perm=true --allow-root
+        run: sudo npm --prefix ./apps/backEnd install --unsafe-perm=true --allow-root
       - name: Test unitaire
         run: npm --prefix ./apps/backEnd run test:unit
       - name: Test Integration
