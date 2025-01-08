@@ -8,15 +8,29 @@ jobs:
       - uses: actions/setup-node@v4
         with:
           node-version: 20
-      - name: Create .env file
+      - name: Create .env file in docker folder
         uses: SpicyPizza/create-envfile@v2.0.3
         with:
           envkey_DB_USERNAME: esgi
           envkey_DB_PASSWORD: esgi
           directory: docker
-      - name: start only MongoDB
-        run: npm run dev:db
-      - name: Installation des packets
-        run: npm --prefix ./apps/backEnd install
-      - name: Test
+      - name: Create .env file in backend
+        uses: SpicyPizza/create-envfile@v2.0.3
+        with:
+          envkey_SMTP_HOST: ${{ secrets.smtp_host }}
+          envkey_SMTP_PORT: 465
+          envkey_SMTP_USER: ${{ secrets.smtp_user }}
+          envkey_SMTP_PASS: ${{ secrets.smtp_pass }}
+          envkey_SMTP_SECURE: true
+          envkey_JWT_SECRET: secret
+          directory: apps/backEnd
+      - name: build docker images
+        run: npm run build
+      - name: install package in backend
+        run: npm --prefix apps/backEnd install -f
+      - name: start backend + db
+        run: npm run dev:backend
+      - name: Test unitaire
         run: npm --prefix ./apps/backEnd run test:unit
+      - name: Test Integration
+        run: npm --prefix ./apps/backEnd run test:integration

@@ -14,7 +14,8 @@
     "dev:backend": "docker compose -f ./docker/compose.yml --profile database-only up -d && docker compose -f ./docker/compose.yml --profile back-only up -d",
     "dev:db": "docker compose -f ./docker/compose.yml --profile database-only up -d",
     "dev:clean": "rimraf **/dist **/node_modules ",
-    "test:unit": "npm --prefix ./apps/frontend run test:unit && npm --prefix ./apps/backend run test:unit"
+    "test:unit": "npm --prefix ./apps/frontend run test:unit && npm --prefix ./apps/backend run test:unit",
+    "test:integration": "npm --prefix ./apps/backend run test:integration"
   },
   "author": "Groupe du style",
   "license": "ISC",
