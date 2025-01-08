@@ -1,6 +1,6 @@
 import type { Request, Response } from 'express'
-import User from '../models/user.model'
 import bcrypt from 'bcrypt'
+import User from '../models/user.model'
 
 export async function getUsers(req: Request, res: Response): Promise<void> {
   try {
@@ -53,14 +53,14 @@ export async function updateUser(req: Request, res: Response): Promise<void> {
       firstname,
       lastname,
       email,
-      isActive
+      isActive,
     }
 
     if (password) {
       const passwordRegex = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[!@#$%^&*()_+\-=[\]{};':"\\|,.<>/?]).{12,}$/
       if (!passwordRegex.test(password)) {
-        res.status(422).json({ 
-          message: 'Le mot de passe doit contenir au moins 12 caractères, incluant des symboles, des chiffres, des lettres minuscules et majuscules' 
+        res.status(422).json({
+          message: 'Le mot de passe doit contenir au moins 12 caractères, incluant des symboles, des chiffres, des lettres minuscules et majuscules',
         })
         return
       }
@@ -71,7 +71,7 @@ export async function updateUser(req: Request, res: Response): Promise<void> {
     const updatedUser = await User.findByIdAndUpdate(
       id,
       updateData,
-      { new: true }
+      { new: true },
     )
 
     if (!updatedUser) {
@@ -118,8 +118,8 @@ export async function createUser(req: Request, res: Response): Promise<void> {
 
     const passwordRegex = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[!@#$%^&*()_+\-=[\]{};':"\\|,.<>/?]).{12,}$/
     if (!passwordRegex.test(password)) {
-      res.status(422).json({ 
-        message: 'Le mot de passe doit contenir au moins 12 caractères, incluant des symboles, des chiffres, des lettres minuscules et majuscules' 
+      res.status(422).json({
+        message: 'Le mot de passe doit contenir au moins 12 caractères, incluant des symboles, des chiffres, des lettres minuscules et majuscules',
       })
       return
     }
@@ -138,7 +138,7 @@ export async function createUser(req: Request, res: Response): Promise<void> {
       lastname,
       email,
       password: hashedPassword,
-      isActive: isActive !== undefined ? isActive : false
+      isActive: isActive !== undefined ? isActive : false,
     })
 
     await newUser.save()

@@ -7,7 +7,7 @@
     "start": "node --watch dist/index.js",
     "lint": "eslint .",
     "lint:fix": "eslint . --fix",
-    "test:unit": "vitest"
+    "test:unit": "vitest run"
   },
   "dependencies": {
     "@types/multer": "^1.4.12",
