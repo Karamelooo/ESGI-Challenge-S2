@@ -34,7 +34,7 @@ describe('Authentification', () => {
       const userData = {
         firstname: 'John',
         lastname: 'Doe',
-        email: 'ok@ok.ok',
+        email: 'ok5@ok.ok',
         password: 'Azertyuiop!8!',
         passwordVerification: 'Azertyuiop!8!'
       }
@@ -73,7 +73,7 @@ describe('Authentification', () => {
       const user = new User({
         firstname: 'John',
         lastname: 'Doe',
-        email: 'ok@ok.ok',
+        email: 'ok4@ok.ok',
         password: 'Azertyuiop!8!',
         isActive: true
       })
@@ -82,7 +82,7 @@ describe('Authentification', () => {
 
     it('indentifiant invalide', async () => {
       const loginData = {
-        email: 'ok@ok.ok',
+        email: 'ok4@ok.ok',
         password: 'Azertyuiop!9'
       }
 
@@ -96,7 +96,7 @@ describe('Authentification', () => {
 
     it('bloque le compte après 3 tentatives échouées', async () => {
       const loginData = {
-        email: 'ok@ok.ok',
+        email: 'ok4@ok.ok',
         password: 'Azertyuiop!9'
       }
 
