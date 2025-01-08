@@ -17,4 +17,4 @@ jobs:
       - name: start only MongoDB
         run: npm run dev:db
       - name: Test
-        run: npm --prefix ./apps/backend run test:unit
+        run: npm --prefix ./apps/backEnd run test:unit
