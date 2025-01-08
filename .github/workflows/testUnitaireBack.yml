@@ -26,6 +26,8 @@ jobs:
           directory: apps/backEnd
       - name: build docker images
         run: npm run build
+      - name: install vitest in backend
+        run: npm --prefix apps/backEnd install vitest
       - name: start backend + db
         run: npm run dev:backend
       - name: Test unitaire
