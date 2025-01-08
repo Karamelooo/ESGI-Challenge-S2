@@ -1,6 +1,6 @@
 import mongoose from 'mongoose'
 import { afterAll, afterEach, beforeAll, beforeEach, describe, expect, it } from 'vitest'
-import Order from '../src/models/order.model'
+import Order from '../src/models/order.model.ts'
 import Product from '../src/models/product.model.ts'
 import User from '../src/models/user.model.ts'
 
