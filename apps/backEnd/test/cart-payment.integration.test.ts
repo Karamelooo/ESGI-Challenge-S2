@@ -22,7 +22,7 @@ describe('Panier', () => {
   beforeAll(async () => {
     console.log('connexion à la BDD')
     try {
-      await mongoose.connect('mongodb://esgi:esgi@localhost:27017', {
+      await mongoose.connect('mongodb://esgi:esgi@database:27017', {
         serverSelectionTimeoutMS: 20000,
         connectTimeoutMS: 20000
       })
