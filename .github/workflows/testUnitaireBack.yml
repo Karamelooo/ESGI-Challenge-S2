@@ -16,5 +16,7 @@ jobs:
           directory: docker
       - name: start only MongoDB
         run: npm run dev:db
+      - name: Installation des packets
+        run: npm --prefix ./apps/backEnd install
       - name: Test
         run: npm --prefix ./apps/backEnd run test:unit
