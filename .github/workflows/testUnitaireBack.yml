@@ -28,8 +28,6 @@ jobs:
         run: npm run build
       - name: start backend + db
         run: npm run dev:backend
-      - name: Installation des packets
-        run: sudo npm --prefix ./apps/backEnd install -f
       - name: Test unitaire
         run: npm --prefix ./apps/backEnd run test:unit
       - name: Test Integration
