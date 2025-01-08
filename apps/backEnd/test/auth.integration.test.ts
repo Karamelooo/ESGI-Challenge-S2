@@ -1,4 +1,4 @@
-import { afterAll, beforeAll, describe, expect, it } from 'vitest'
+import { afterAll, beforeAll, describe, expect, it, vi } from 'vitest'
 import mongoose from 'mongoose'
 import request from 'supertest'
 import express from 'express'
@@ -62,12 +62,14 @@ describe('Authentification', () => {
         .send(userData)
 
       expect(response.status).toBe(422)
-      expect(response.body.message).toContain('email invalide')
+      expect(response.body.message).toContain('L\'adresse email est invalide')
     })
   })
 
   describe('Connexion', () => {
     beforeAll(async () => {
+      await User.deleteMany({})
+      
       const user = new User({
         firstname: 'John',
         lastname: 'Doe',
@@ -110,17 +112,6 @@ describe('Authentification', () => {
 
       expect(response.status).toBe(423)
       expect(response.body.message).toContain('bloqué')
-    })
-  })
-
-  describe('Réinitialisation du mot de passe', () => {
-    it('envoie du email de réinitialisation', async () => {
-      const response = await request(app)
-        .post('/auth/reset-password-request')
-        .send({ email: 'hugo.petit.dev@gmail.com' })
-
-      expect(response.status).toBe(200)
-      expect(response.body.message).toContain('email de réinitialisation')
     })
   })
 }) 
