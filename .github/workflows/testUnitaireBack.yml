@@ -6,7 +6,7 @@ jobs:
     steps:
       - uses: actions/checkout@v4
       - name: Reclaim directory
-        run: chown -R 1001:1001 /runner/home
+        run: chown -R 1001:1001 /home/runner/work
       - uses: actions/setup-node@v4
         with:
           node-version: 20
